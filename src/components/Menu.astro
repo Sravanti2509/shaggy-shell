@@ -1,0 +1,233 @@
+---
+import cakes from "../data/Products.js";
+---
+
+<section class="menu">
+
+  <div class="menu-heading">
+    <p class="subtitle">OUR MENU</p>
+
+    <h1>Freshly Baked for You</h1>
+
+    <p class="description">
+      Delicious cakes and treats made fresh with love.
+    </p>
+  </div>
+
+
+  <div class="cake-container">
+
+    {
+      cakes.map((cake) => (
+        <div class="cake-card">
+
+          <img
+            src={cake.image}
+            alt={cake.name}
+          />
+
+          <div class="cake-info">
+
+            <h3>{cake.name}</h3>
+
+            <p class="price">
+  &#8377;{cake.price}
+</p>    
+            <button>
+              Order Now
+            </button>
+
+          </div>
+
+        </div>
+      ))
+    }
+
+  </div>
+
+</section>
+
+
+<style>
+  .menu {
+    padding: 70px 40px;
+    background: linear-gradient(
+      135deg,
+      #fff5f5,
+      #fffaf0,
+      #fdf4ff
+    );
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  .menu-heading {
+    margin-bottom: 45px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #8f4058;
+    margin-bottom: 10px;
+  }
+
+  .menu-heading h1 {
+    font-size: 36px;
+    color: #3b2028;
+    margin: 0 0 12px;
+  }
+
+  .description {
+    color: #666;
+    font-size: 16px;
+  }
+
+
+  /* PRODUCTS */
+
+  .cake-container {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 30px;
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+  }
+
+
+  /* CARD */
+
+  .cake-card {
+    background: white;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    box-shadow:
+      0 5px 20px
+      rgba(0, 0, 0, 0.12);
+
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+
+  .cake-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+      0 12px 30px
+      rgba(0, 0, 0, 0.18);
+  }
+
+
+  /* IMAGE */
+
+  .cake-card img {
+    width: 100%;
+
+    height: 250px;
+
+    object-fit: cover;
+
+    display: block;
+  }
+
+
+  /* CARD INFO */
+
+  .cake-info {
+    padding: 20px;
+  }
+
+
+  .cake-info h3 {
+    margin: 0 0 10px;
+
+    font-size: 21px;
+
+    color: #222;
+  }
+
+
+  /* PRICE */
+
+  .price {
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #8f4058;
+
+    margin-bottom: 18px;
+  }
+
+
+  /* ORDER BUTTON */
+
+  button {
+    padding: 11px 24px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #8f4058;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+  }
+
+
+  button:hover {
+    background: #682c3e;
+
+    transform: translateY(-2px);
+  }
+
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+
+    .cake-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+  }
+
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+
+    .cake-container {
+      grid-template-columns: 1fr;
+    }
+
+    .menu {
+      padding: 50px 20px;
+    }
+
+    .menu-heading h1 {
+      font-size: 28px;
+    }
+
+    .cake-card img {
+      height: 230px;
+    }
+
+  }
+</style>

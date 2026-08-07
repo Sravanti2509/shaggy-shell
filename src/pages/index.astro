@@ -1,11 +1,269 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-	<Welcome />
+
+  <section class="hero">
+
+    <!-- LEFT SIDE - IMAGE -->
+    <div class="hero-image">
+
+      <img
+        src="/products/icon1.jpg"
+        alt="Sravs Bakery"
+      />
+
+    </div>
+
+
+    <!-- RIGHT SIDE - BAKERY INFORMATION -->
+    <div class="hero-content">
+
+      <p class="welcome">
+        WELCOME TO
+      </p>
+
+      <h1>
+        Sravs Bakery
+      </h1>
+
+      <h2>
+        Freshly Baked Happiness
+      </h2>
+
+      <p class="description">
+        Welcome to Sravs Bakery, where every bite is made
+        with love and care. We bring you freshly baked
+        treats that make every moment a little sweeter.
+      </p>
+
+      <p class="description">
+        From delicious cakes and creamy pastries to
+        crispy puffs, tasty sandwiches, fresh cookies,
+        croissants, donuts and refreshing milkshakes,
+        we have something for everyone.
+      </p>
+
+      <p class="description">
+        We use quality ingredients and prepare our
+        products fresh so that you can enjoy the best
+        taste and freshness every day.
+      </p>
+
+      <p class="highlight">
+        Fresh • Delicious • Made With Love ❤️
+      </p>
+
+      <a href="/menu" class="menu-button">
+        Explore Our Menu
+      </a>
+
+    </div>
+
+  </section>
+
 </Layout>
+
+
+<style>
+
+  .hero {
+    min-height: calc(100vh - 90px);
+
+    padding: 70px 8%;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+
+    gap: 80px;
+
+    background: linear-gradient(
+      135deg,
+      #fff5f5,
+      #fff0e6,
+      #fdf4ff
+    );
+  }
+
+
+  /* =========================
+     LEFT IMAGE
+  ========================= */
+
+  .hero-image {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+  }
+
+
+  .hero-image img {
+    width: 100%;
+
+    max-width: 560px;
+
+    height: 560px;
+
+    object-fit: cover;
+
+    border-radius: 30px;
+
+    box-shadow:
+      0 20px 50px
+      rgba(80, 40, 50, 0.20);
+
+    transition: transform 0.3s ease;
+  }
+
+
+  .hero-image img:hover {
+    transform: scale(1.02);
+  }
+
+
+  /* =========================
+     RIGHT INFORMATION
+  ========================= */
+
+  .hero-content {
+    max-width: 600px;
+  }
+
+
+  .welcome {
+    color: #9b4d63;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 12px;
+  }
+
+
+  .hero h1 {
+    font-size: 58px;
+
+    color: #3b2028;
+
+    margin: 0 0 12px;
+  }
+
+
+  .hero h2 {
+    font-size: 28px;
+
+    color: #8f4058;
+
+    margin: 0 0 25px;
+  }
+
+
+  .description {
+    color: #66545a;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    margin-bottom: 18px;
+  }
+
+
+  .highlight {
+    color: #8f4058;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    margin: 25px 0;
+  }
+
+
+  /* =========================
+     BUTTON
+  ========================= */
+
+  .menu-button {
+    display: inline-block;
+
+    padding: 14px 30px;
+
+    background: #8f4058;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+  }
+
+
+  .menu-button:hover {
+    background: #682c3e;
+
+    transform: translateY(-2px);
+  }
+
+
+  /* =========================
+     MOBILE
+  ========================= */
+
+  @media (max-width: 850px) {
+
+    .hero {
+      grid-template-columns: 1fr;
+
+      padding: 50px 25px;
+
+      gap: 45px;
+
+      text-align: center;
+    }
+
+
+    .hero-content {
+      margin: auto;
+    }
+
+
+    .hero-image img {
+      max-width: 420px;
+
+      height: 420px;
+    }
+
+
+    .hero h1 {
+      font-size: 45px;
+    }
+
+
+    .hero h2 {
+      font-size: 23px;
+    }
+
+
+    .description {
+      font-size: 16px;
+    }
+
+  }
+
+</style>

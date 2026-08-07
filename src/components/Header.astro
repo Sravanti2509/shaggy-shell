@@ -1,0 +1,124 @@
+<header class="header">
+  <div class="navbar">
+
+    <!-- Logo + Bakery Name -->
+    <a href="/" class="brand">
+
+      <img
+        src="/products/logo.jpg"
+        alt="Sravs Bakery"
+      />
+
+      <span>Sravs Bakery</span>
+
+    </a>
+
+
+    <!-- Navigation -->
+    <nav>
+      <a href="/">Home</a>
+      <a href="/menu">Menu</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<style>
+  .header {
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #eee;
+  }
+
+  .navbar {
+    max-width: 1200px;
+    margin: auto;
+    padding: 8px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+  /* LOGO + NAME */
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    text-decoration: none;
+  }
+
+  .brand img {
+    width: 110px;
+    height: 110px;
+
+    object-fit: contain;
+    display: block;
+  }
+
+  .brand span {
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #8f4058;
+
+    white-space: nowrap;
+  }
+
+
+  /* NAVIGATION */
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  nav a {
+    color: #333;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    transition: 0.3s;
+  }
+
+  nav a:hover {
+    color: #8f4058;
+  }
+
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+
+    .navbar {
+      padding: 8px 20px;
+    }
+
+    .brand img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .brand span {
+      font-size: 18px;
+    }
+
+    nav {
+      gap: 15px;
+    }
+
+    nav a {
+      font-size: 14px;
+    }
+  }
+</style>
