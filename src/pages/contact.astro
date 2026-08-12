@@ -1,99 +1,91 @@
 ---
-import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html>
-  <head>
-    <title>Contact - My Bakery</title>
-  </head>
+<Layout title="Contact - Sravs Bakery">
 
-  <body>
+  <main class="contact">
 
-    <Header />
+    <section class="contact-header">
+      <p class="subtitle">CONTACT US</p>
 
-    <main class="contact">
+      <h1>Get in Touch</h1>
 
-      <section class="contact-header">
-        <p class="subtitle">CONTACT US</p>
+      <p>
+        Have a question or want to place an order?
+        We'd love to hear from you.
+      </p>
+    </section>
 
-        <h1>Get in Touch</h1>
+
+    <section class="contact-container">
+
+      <div class="contact-info">
+
+        <h2>Visit Us</h2>
 
         <p>
-          Have a question or want to place an order?
-          We'd love to hear from you.
+          Hyderabad, Telangana
         </p>
-      </section>
+
+        <p>
+          +91 98765 43210
+        </p>
+
+        <p>
+          mybakery@gmail.com
+        </p>
+
+        <p>
+          Monday - Sunday: 9:00 AM - 9:00 PM
+        </p>
+
+      </div>
 
 
-      <section class="contact-container">
+      <div class="contact-form">
 
-        <div class="contact-info">
+        <h2>Send Us a Message</h2>
 
-          <h2>Visit Us</h2>
+        <form>
 
-          <p>
-            Hyderabad, Telangana
-          </p>
+          <input
+            type="text"
+            placeholder="Your Name"
+            required
+          />
 
-          <p>
-            +91 98765 43210
-          </p>
+          <input
+            type="email"
+            placeholder="Your Email"
+            required
+          />
 
-          <p>
-            mybakery@gmail.com
-          </p>
+          <input
+            type="text"
+            placeholder="Subject"
+            required
+          />
 
-          <p>
-            Monday - Sunday: 9:00 AM - 9:00 PM
-          </p>
+          <textarea
+            placeholder="Your Message"
+            rows="5"
+            required
+          ></textarea>
 
-        </div>
+          <button type="submit">
+            Send Message
+          </button>
 
+        </form>
 
-        <div class="contact-form">
+      </div>
 
-          <h2>Send Us a Message</h2>
+    </section>
 
-          <form>
+  </main>
 
-            <input
-              type="text"
-              placeholder="Your Name"
-              required
-            />
-
-            <input
-              type="email"
-              placeholder="Your Email"
-              required
-            />
-
-            <input
-              type="text"
-              placeholder="Subject"
-              required
-            />
-
-            <textarea
-              placeholder="Your Message"
-              rows="5"
-              required
-            ></textarea>
-
-            <button type="submit">
-              Send Message
-            </button>
-
-          </form>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  </body>
-</html>
+</Layout>
 
 <style>
   .contact {

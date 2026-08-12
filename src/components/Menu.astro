@@ -14,7 +14,6 @@ import cakes from "../data/Products.js";
     </p>
   </div>
 
-
   <div class="cake-container">
 
     {
@@ -31,11 +30,17 @@ import cakes from "../data/Products.js";
             <h3>{cake.name}</h3>
 
             <p class="price">
-  &#8377;{cake.price}
-</p>    
-            <button>
-              Order Now
-            </button>
+              &#8377;{cake.price}
+            </p>
+
+            <button
+  class="add-cart"
+  data-name={cake.name}
+  data-price={cake.price}
+  data-image={cake.image}
+>
+  Add to Cart &#128722;
+</button>
 
           </div>
 
@@ -46,6 +51,41 @@ import cakes from "../data/Products.js";
   </div>
 
 </section>
+
+<script>
+  const buttons = document.querySelectorAll(".add-cart");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const name = button.getAttribute("data-name");
+      const price = button.getAttribute("data-price");
+      const image = button.getAttribute("data-image");
+
+      const product = {
+        name,
+        price,
+        image,
+        quantity: 1
+      };
+
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      const existingProduct = cart.find(
+        (item) => item.name === product.name
+      );
+
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        cart.push(product);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      alert(`${name} added to cart!`);
+    });
+  });
+</script>
 
 
 <style>

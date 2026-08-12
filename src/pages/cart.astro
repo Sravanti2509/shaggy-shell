@@ -1,0 +1,477 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Cart - Sravs Bakery">
+
+  <section class="cart-page">
+
+    <h1>Your Cart 🛒</h1>
+
+    <div id="cart-container"></div>
+
+    <div class="cart-summary">
+
+      <h2>
+        Total: ₹<span id="total">0</span>
+      </h2>
+<button>
+      <a href="/checkout" class="checkout-btn">
+  Proceed to Checkout 🛍️
+</a>
+</button>
+
+    </div>
+
+  </section>
+
+</Layout>
+
+
+<script>
+
+  const cartContainer =
+    document.getElementById("cart-container");
+
+  const totalElement =
+    document.getElementById("total");
+
+  const checkoutButton =
+    document.getElementById("checkout-btn");
+
+
+  /*
+    Display Cart
+  */
+
+  function displayCart() {
+
+    const cart = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
+
+    cartContainer.innerHTML = "";
+
+
+    if (cart.length === 0) {
+
+      cartContainer.innerHTML = `
+
+        <div class="empty-cart">
+
+          <h2>Your cart is empty 🛒</h2>
+
+          <p>
+            Add some delicious items from our menu!
+          </p>
+
+          <a href="/menu">
+            Go to Menu
+          </a>
+
+        </div>
+
+      `;
+
+      totalElement.textContent = "0";
+
+      checkoutButton.style.display = "none";
+
+      return;
+    }
+
+
+    checkoutButton.style.display = "inline-block";
+
+
+    let total = 0;
+
+
+    cart.forEach((item, index) => {
+
+      const price = Number(
+        String(item.price)
+          .replace(/[^\d.]/g, "")
+      );
+
+
+      const itemTotal =
+        price * item.quantity;
+
+
+      total += itemTotal;
+
+
+      cartContainer.innerHTML += `
+
+        <div class="cart-item">
+
+          <img
+            src="${item.image}"
+            alt="${item.name}"
+          />
+
+          <div class="item-details">
+
+            <h3>
+              ${item.name}
+            </h3>
+
+            <p>
+              Price: ₹${price}
+            </p>
+
+
+            <div class="quantity">
+
+              <button
+                class="quantity-btn"
+                data-action="decrease"
+                data-index="${index}"
+              >
+                −
+              </button>
+
+
+              <span>
+                ${item.quantity}
+              </span>
+
+
+              <button
+                class="quantity-btn"
+                data-action="increase"
+                data-index="${index}"
+              >
+                +
+              </button>
+
+            </div>
+
+
+            <p>
+              Item Total: ₹${itemTotal}
+            </p>
+
+
+            <button
+              class="remove-btn"
+              data-index="${index}"
+            >
+              Remove
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+
+    totalElement.textContent = total;
+
+  }
+
+
+  /*
+    Quantity + / -
+  */
+
+  cartContainer.addEventListener(
+    "click",
+    (event) => {
+
+      const button =
+        event.target.closest("button");
+
+      if (!button) return;
+
+
+      const index =
+        Number(button.dataset.index);
+
+
+      const cart = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      );
+
+
+      if (
+        button.dataset.action ===
+        "increase"
+      ) {
+
+        cart[index].quantity += 1;
+
+      }
+
+
+      if (
+        button.dataset.action ===
+        "decrease"
+      ) {
+
+        if (cart[index].quantity > 1) {
+
+          cart[index].quantity -= 1;
+
+        } else {
+
+          cart.splice(index, 1);
+
+        }
+
+      }
+
+
+      if (
+        button.classList.contains(
+          "remove-btn"
+        )
+      ) {
+
+        cart.splice(index, 1);
+
+      }
+
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+      );
+
+
+      displayCart();
+
+    }
+  );
+
+
+  /*
+    Proceed to Checkout
+  */
+
+  checkoutButton.addEventListener(
+    "click",
+    () => {
+
+      const cart = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      );
+
+
+      if (cart.length === 0) {
+
+        alert(
+          "Your cart is empty!"
+        );
+
+        return;
+
+      }
+
+
+      window.location.href =
+        "/checkout";
+
+    }
+  );
+
+
+  /*
+    Load Cart
+  */
+
+  displayCart();
+
+</script>
+
+
+<style>
+
+  .cart-page {
+
+    max-width: 900px;
+
+    margin: 50px auto;
+
+    padding: 20px;
+
+  }
+
+
+  .cart-page h1 {
+
+    text-align: center;
+
+    margin-bottom: 40px;
+
+  }
+
+
+  .cart-item {
+
+    display: flex;
+
+    gap: 25px;
+
+    align-items: center;
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 12px;
+
+  }
+
+
+  .cart-item img {
+
+    width: 130px;
+
+    height: 130px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+  }
+
+
+  .item-details {
+
+    flex: 1;
+
+  }
+
+
+  .item-details h3 {
+
+    margin-bottom: 8px;
+
+  }
+
+
+  .quantity {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 15px 0;
+
+  }
+
+
+  .quantity-btn {
+
+    width: 35px;
+
+    height: 35px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+  }
+
+
+  .remove-btn {
+
+    border: none;
+
+    padding: 8px 15px;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+  }
+
+
+  .cart-summary {
+
+    text-align: right;
+
+    margin-top: 30px;
+
+  }
+
+
+  #checkout-btn {
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: black;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+  }
+
+
+  .empty-cart {
+
+    text-align: center;
+
+    padding: 50px;
+
+  }
+
+
+  .empty-cart a {
+
+    display: inline-block;
+
+    margin-top: 15px;
+
+  }
+
+
+  @media (max-width: 600px) {
+
+    .cart-item {
+
+      flex-direction: column;
+
+      text-align: center;
+
+    }
+
+
+    .cart-item img {
+
+      width: 180px;
+
+      height: 180px;
+
+    }
+
+
+    .cart-summary {
+
+      text-align: center;
+
+    }
+
+  }
+
+</style>

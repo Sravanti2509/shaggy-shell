@@ -1,44 +1,37 @@
 ---
-import Header from "../components/Header.astro";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<html>
-  <head>
-    <title>About - My Bakery</title>
-  </head>
+<Layout title="About - Sravs Bakery">
 
-  <body>
+  <main class="about">
 
-    <Header />
+    <section class="about-content">
 
-    <main class="about">
+      <p class="subtitle">ABOUT US</p>
 
-      <section class="about-content">
+      <h1>Welcome to My Bakery</h1>
 
-        <p class="subtitle">ABOUT US</p>
+      <p>
+        We believe every day deserves something sweet.
+        At My Bakery, we prepare fresh and delicious
+        cakes, pastries, puffs, sandwiches, cookies and
+        refreshing milkshakes.
+      </p>
 
-        <h1>Welcome to My Bakery</h1>
+      <p>
+        Our treats are made with quality ingredients,
+        care and lots of love. Whether you are celebrating
+        a special occasion or simply craving something
+        delicious, we are here to make your day sweeter.
+      </p>
 
-        <p>
-          We believe every day deserves something sweet.
-          At My Bakery, we prepare fresh and delicious
-          cakes, pastries, puffs, sandwiches, cookies and
-          refreshing milkshakes.
-        </p>
+    </section>
 
-        <p>
-          Our treats are made with quality ingredients,
-          care and lots of love. Whether you are celebrating
-          a special occasion or simply craving something
-          delicious, we are here to make your day sweeter.
-        </p>
+  </main>
 
-      </section>
+</Layout>
 
-    </main>
-
-  </body>
-</html>
 <style>
   .about {
     min-height: 100vh;
@@ -74,33 +67,24 @@ import Header from "../components/Header.astro";
     font-size: 14px;
     letter-spacing: 4px;
     font-weight: bold;
-
     color: #9b4d63;
-
     margin-bottom: 15px;
   }
 
   h1 {
     font-size: 44px;
-
     color: #3b2028;
-
     margin: 10px 0 25px;
   }
 
   p:not(.subtitle) {
     color: #66545a;
-
     font-size: 17px;
-
     line-height: 1.8;
-
     margin-bottom: 20px;
   }
 
-
   @media (max-width: 600px) {
-
     .about {
       padding: 50px 20px;
     }
@@ -116,6 +100,5 @@ import Header from "../components/Header.astro";
     p:not(.subtitle) {
       font-size: 15px;
     }
-
   }
 </style>

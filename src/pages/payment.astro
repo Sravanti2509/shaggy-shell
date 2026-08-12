@@ -1,0 +1,1375 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Payment - Sravs Bakery">
+
+  <main class="payment-page">
+
+    <div class="payment-container">
+
+      <div class="payment-header">
+        <h1>Complete Your Order</h1>
+        <p>Enter your delivery details and choose your payment method</p>
+      </div>
+
+      <div class="payment-card">
+
+        <!-- DELIVERY DETAILS -->
+        <section class="section">
+
+          <h2>Delivery Details</h2>
+
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input
+              id="name"
+              type="text"
+              placeholder="Enter your full name"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input
+              id="phone"
+              type="tel"
+              placeholder="10-digit mobile number"
+              maxlength="10"
+              autocomplete="tel"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="address">House / Flat / Street</label>
+            <textarea
+              id="address"
+              rows="3"
+              placeholder="Enter complete delivery address"
+              autocomplete="street-address"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="area">Area / Landmark</label>
+            <input
+              id="area"
+              type="text"
+              placeholder="Area or nearby landmark"
+            />
+          </div>
+
+          <div class="two-column">
+
+            <div class="form-group">
+              <label for="city">City</label>
+              <input
+                id="city"
+                type="text"
+                placeholder="City"
+                autocomplete="address-level2"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="pincode">Pincode</label>
+              <input
+                id="pincode"
+                type="text"
+                placeholder="Pincode"
+                maxlength="6"
+                autocomplete="postal-code"
+              />
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label for="state">State</label>
+            <input
+              id="state"
+              type="text"
+              placeholder="State"
+              value="Telangana"
+              autocomplete="address-level1"
+            />
+          </div>
+
+        </section>
+
+
+        <!-- ORDER SUMMARY -->
+        <section class="section order-section">
+
+          <h2>Order Summary</h2>
+
+          <div id="order-items"></div>
+
+          <div class="total-row">
+            <span>Total Amount</span>
+
+            <strong id="payment-total">
+              ₹0
+            </strong>
+          </div>
+
+        </section>
+
+
+        <!-- PAYMENT METHOD -->
+        <section class="section">
+
+          <h2>Payment Method</h2>
+
+          <p class="payment-info">
+            Choose how you would like to pay for your order.
+          </p>
+
+          <div class="payment-methods">
+
+            <!-- CASH ON DELIVERY -->
+            <button
+              id="cod-button"
+              type="button"
+              class="payment-option"
+            >
+
+              <span class="payment-icon">
+                💵
+              </span>
+
+              <span class="payment-text">
+                <strong>Cash on Delivery</strong>
+
+                <small>
+                  Pay when your order is delivered
+                </small>
+              </span>
+
+            </button>
+
+
+            <!-- ONLINE PAYMENT -->
+            <button
+              id="online-button"
+              type="button"
+              class="payment-option"
+            >
+
+              <span class="payment-icon">
+                💳
+              </span>
+
+              <span class="payment-text">
+                <strong>Online Payment</strong>
+
+                <small>
+                  UPI, Card, Net Banking & more
+                </small>
+              </span>
+
+            </button>
+
+          </div>
+
+          <p
+            id="payment-status"
+            class="payment-status"
+          ></p>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</Layout>
+
+
+<!-- RAZORPAY -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+<script>
+
+  /* =====================================================
+     GET CART
+  ===================================================== */
+
+  const cart =
+    JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    );
+
+
+  /* =====================================================
+     CALCULATE TOTAL
+  ===================================================== */
+
+  let total = 0;
+
+  const orderItems =
+    document.getElementById("order-items");
+
+
+  cart.forEach((item) => {
+
+    const price =
+      Number(
+        String(item.price)
+          .replace(/[^\d.]/g, "")
+      ) || 0;
+
+    const quantity =
+      Number(item.quantity) || 1;
+
+    const itemTotal =
+      price * quantity;
+
+    total += itemTotal;
+
+
+    if (orderItems) {
+
+      orderItems.innerHTML += `
+
+        <div class="order-item">
+
+          <span>
+            ${item.name} × ${quantity}
+          </span>
+
+          <strong>
+            ₹${itemTotal.toLocaleString("en-IN")}
+          </strong>
+
+        </div>
+
+      `;
+
+    }
+
+  });
+
+
+  /* =====================================================
+     SHOW TOTAL
+  ===================================================== */
+
+  const totalElement =
+    document.getElementById("payment-total");
+
+
+  if (totalElement) {
+
+    totalElement.textContent =
+      "₹" +
+      total.toLocaleString("en-IN");
+
+  }
+
+
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
+
+  const codButton =
+    document.getElementById("cod-button");
+
+  const onlineButton =
+    document.getElementById("online-button");
+
+  const status =
+    document.getElementById("payment-status");
+
+
+  /* =====================================================
+     EMPTY CART
+  ===================================================== */
+
+  if (cart.length === 0) {
+
+    if (codButton) {
+      codButton.disabled = true;
+    }
+
+    if (onlineButton) {
+      onlineButton.disabled = true;
+    }
+
+    if (status) {
+      status.textContent =
+        "Your cart is empty.";
+    }
+
+  }
+
+
+  /* =====================================================
+     CUSTOMER DETAILS
+  ===================================================== */
+
+  function getCustomerDetails() {
+
+    const name =
+      document
+        .getElementById("name")
+        .value
+        .trim();
+
+    const phone =
+      document
+        .getElementById("phone")
+        .value
+        .trim();
+
+    const email =
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
+    const address =
+      document
+        .getElementById("address")
+        .value
+        .trim();
+
+    const area =
+      document
+        .getElementById("area")
+        .value
+        .trim();
+
+    const city =
+      document
+        .getElementById("city")
+        .value
+        .trim();
+
+    const pincode =
+      document
+        .getElementById("pincode")
+        .value
+        .trim();
+
+    const state =
+      document
+        .getElementById("state")
+        .value
+        .trim();
+
+
+    if (!name) {
+
+      alert(
+        "Please enter your full name."
+      );
+
+      return null;
+
+    }
+
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+
+      alert(
+        "Please enter a valid 10-digit phone number."
+      );
+
+      return null;
+
+    }
+
+
+    if (
+      !email ||
+      !email.includes("@")
+    ) {
+
+      alert(
+        "Please enter a valid email address."
+      );
+
+      return null;
+
+    }
+
+
+    if (!address) {
+
+      alert(
+        "Please enter your complete delivery address."
+      );
+
+      return null;
+
+    }
+
+
+    if (!city) {
+
+      alert(
+        "Please enter your city."
+      );
+
+      return null;
+
+    }
+
+
+    if (!/^[0-9]{6}$/.test(pincode)) {
+
+      alert(
+        "Please enter a valid 6-digit pincode."
+      );
+
+      return null;
+
+    }
+
+
+    if (!state) {
+
+      alert(
+        "Please enter your state."
+      );
+
+      return null;
+
+    }
+
+
+    return {
+
+      name,
+      phone,
+      email,
+      address,
+      area,
+      city,
+      pincode,
+      state
+
+    };
+
+  }
+
+
+  /* =====================================================
+     CASH ON DELIVERY
+     PAYMENT STATUS = PENDING
+  ===================================================== */
+
+  codButton?.addEventListener(
+    "click",
+    () => {
+
+      if (cart.length === 0) {
+
+        alert(
+          "Your cart is empty."
+        );
+
+        return;
+
+      }
+
+
+      const customer =
+        getCustomerDetails();
+
+
+      if (!customer) {
+        return;
+      }
+
+
+      if (total <= 0) {
+
+        alert(
+          "Invalid order amount."
+        );
+
+        return;
+
+      }
+
+
+      codButton.disabled = true;
+      onlineButton.disabled = true;
+
+
+      if (status) {
+
+        status.textContent =
+          "Placing Cash on Delivery order...";
+
+      }
+
+
+      /*
+       * IMPORTANT:
+       * COD IS NOT PAID
+       */
+
+      const codOrder = {
+
+        customer: customer,
+
+        items: cart,
+
+        total: total,
+
+        paymentMethod:
+          "Cash on Delivery",
+
+        paymentStatus:
+          "Pending",
+
+        orderId:
+          "COD-" + Date.now(),
+
+        orderDate:
+          new Date().toISOString()
+
+      };
+
+
+      /* SAVE COD ORDER */
+
+      localStorage.setItem(
+        "lastOrder",
+        JSON.stringify(codOrder)
+      );
+
+
+      /* CLEAR CART */
+
+      localStorage.removeItem(
+        "cart"
+      );
+
+
+      /* SUCCESS POPUP */
+
+      alert(
+        "🎉 Order Placed Successfully!\n\n" +
+
+        "Thank you " +
+        customer.name +
+        "!\n\n" +
+
+        "Payment Method: Cash on Delivery\n" +
+
+        "Payment Status: Pending\n\n" +
+
+        "Order Amount: ₹" +
+        total.toLocaleString("en-IN") +
+
+        "\n\n" +
+
+        "Please pay when your order is delivered."
+      );
+
+
+      /* GO TO SUCCESS PAGE */
+
+      window.location.href =
+        "/order-success";
+
+    }
+  );
+
+
+  /* =====================================================
+     ONLINE PAYMENT
+  ===================================================== */
+
+  onlineButton?.addEventListener(
+    "click",
+    async () => {
+
+      if (cart.length === 0) {
+
+        alert(
+          "Your cart is empty."
+        );
+
+        return;
+
+      }
+
+
+      const customer =
+        getCustomerDetails();
+
+
+      if (!customer) {
+        return;
+      }
+
+
+      if (total <= 0) {
+
+        alert(
+          "Invalid order amount."
+        );
+
+        return;
+
+      }
+
+
+      codButton.disabled = true;
+      onlineButton.disabled = true;
+
+
+      if (status) {
+
+        status.textContent =
+          "Creating secure payment...";
+
+      }
+
+
+      try {
+
+        /* =================================================
+           CREATE RAZORPAY ORDER
+        ================================================= */
+
+        const response =
+          await fetch(
+            "/api/create-order",
+            {
+
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body: JSON.stringify({
+                amount: total
+              })
+
+            }
+          );
+
+
+        const responseText =
+          await response.text();
+
+
+        if (!responseText) {
+
+          throw new Error(
+            "Create-order API returned empty response."
+          );
+
+        }
+
+
+        let order;
+
+
+        try {
+
+          order =
+            JSON.parse(responseText);
+
+        } catch {
+
+          throw new Error(
+            "Create-order API returned invalid response."
+          );
+
+        }
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            order.error ||
+            "Unable to create payment order."
+          );
+
+        }
+
+
+        /* =================================================
+           RAZORPAY OPTIONS
+        ================================================= */
+
+        const options = {
+
+          key:
+            import.meta.env
+              .PUBLIC_RAZORPAY_KEY_ID,
+
+          amount:
+            order.amount,
+
+          currency:
+            order.currency,
+
+          name:
+            "Sravs Bakery",
+
+          description:
+            "Bakery Order",
+
+          order_id:
+            order.id,
+
+
+          prefill: {
+
+            name:
+              customer.name,
+
+            email:
+              customer.email,
+
+            contact:
+              customer.phone
+
+          },
+
+
+          notes: {
+
+            address:
+              customer.address,
+
+            area:
+              customer.area,
+
+            city:
+              customer.city,
+
+            state:
+              customer.state,
+
+            pincode:
+              customer.pincode
+
+          },
+
+
+          theme: {
+
+            color:
+              "#8f4058"
+
+          },
+
+
+          /* =================================================
+             ONLINE PAYMENT SUCCESS
+          ================================================= */
+
+          handler:
+            async function(paymentResponse) {
+
+              try {
+
+                if (status) {
+
+                  status.textContent =
+                    "Verifying payment...";
+
+                }
+
+
+                /* VERIFY PAYMENT */
+
+                const verifyResponse =
+                  await fetch(
+                    "/api/verify-payment",
+                    {
+
+                      method: "POST",
+
+                      headers: {
+                        "Content-Type":
+                          "application/json"
+                      },
+
+                      body:
+                        JSON.stringify(
+                          paymentResponse
+                        )
+
+                    }
+                  );
+
+
+                const result =
+                  await verifyResponse.json();
+
+
+                if (
+                  !verifyResponse.ok ||
+                  !result.success
+                ) {
+
+                  throw new Error(
+                    result.error ||
+                    "Payment verification failed."
+                  );
+
+                }
+
+
+                /*
+                 * IMPORTANT:
+                 * ONLINE PAYMENT ONLY = PAID
+                 */
+
+                const onlineOrder = {
+
+                  customer: customer,
+
+                  items: cart,
+
+                  total: total,
+
+                  paymentMethod:
+                    "Online Payment",
+
+                  paymentStatus:
+                    "Paid",
+
+                  paymentId:
+                    result.paymentId,
+
+                  orderId:
+                    result.orderId,
+
+                  orderDate:
+                    new Date().toISOString()
+
+                };
+
+
+                /* SAVE ONLINE ORDER */
+
+                localStorage.setItem(
+                  "lastOrder",
+                  JSON.stringify(onlineOrder)
+                );
+
+
+                /* CLEAR CART */
+
+                localStorage.removeItem(
+                  "cart"
+                );
+
+
+                /* SUCCESS POPUP */
+
+                alert(
+                  "🎉 Order Placed Successfully!\n\n" +
+
+                  "Thank you " +
+                  customer.name +
+                  "!\n\n" +
+
+                  "Payment Method: Online Payment\n" +
+
+                  "Payment Status: Paid\n\n" +
+
+                  "Amount Paid: ₹" +
+                  total.toLocaleString("en-IN")
+                );
+
+
+                /* SUCCESS PAGE */
+
+                window.location.href =
+                  "/order-success";
+
+
+              } catch (error) {
+
+                console.error(error);
+
+
+                alert(
+                  error.message ||
+                  "Payment verification failed."
+                );
+
+
+                codButton.disabled =
+                  false;
+
+                onlineButton.disabled =
+                  false;
+
+              }
+
+            },
+
+
+          /* =================================================
+             RAZORPAY CLOSED
+          ================================================= */
+
+          modal: {
+
+            ondismiss:
+              function() {
+
+                codButton.disabled =
+                  false;
+
+                onlineButton.disabled =
+                  false;
+
+
+                if (status) {
+
+                  status.textContent =
+                    "";
+
+                }
+
+              }
+
+          }
+
+        };
+
+
+        /* =================================================
+           OPEN RAZORPAY
+        ================================================= */
+
+        if (
+          typeof window.Razorpay !==
+          "function"
+        ) {
+
+          throw new Error(
+            "Razorpay failed to load. Please refresh the page."
+          );
+
+        }
+
+
+        const razorpay =
+          new window.Razorpay(
+            options
+          );
+
+
+        /* PAYMENT FAILED */
+
+        razorpay.on(
+          "payment.failed",
+          function(response) {
+
+            console.error(
+              response.error
+            );
+
+
+            alert(
+              response.error.description ||
+              "Payment failed."
+            );
+
+
+            codButton.disabled =
+              false;
+
+            onlineButton.disabled =
+              false;
+
+
+            if (status) {
+
+              status.textContent =
+                "";
+
+            }
+
+          }
+        );
+
+
+        razorpay.open();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+          error.message ||
+          "Something went wrong."
+        );
+
+
+        codButton.disabled =
+          false;
+
+        onlineButton.disabled =
+          false;
+
+
+        if (status) {
+
+          status.textContent =
+            "";
+
+        }
+
+      }
+
+    }
+  );
+
+</script>
+
+
+<style>
+
+  .payment-page {
+    min-height: 100vh;
+    padding: 60px 20px;
+
+    background:
+      linear-gradient(
+        135deg,
+        #fff5f5,
+        #fff0e6,
+        #fdf4ff
+      );
+  }
+
+
+  .payment-container {
+    max-width: 700px;
+    margin: auto;
+  }
+
+
+  .payment-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+
+  .payment-header h1 {
+    font-size: 38px;
+    color: #3b2028;
+    margin: 0 0 10px;
+  }
+
+
+  .payment-header p {
+    color: #725c62;
+  }
+
+
+  .payment-card {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+
+    box-shadow:
+      0 10px 35px
+      rgba(80, 40, 50, 0.12);
+  }
+
+
+  .section {
+    margin-bottom: 35px;
+  }
+
+
+  .section h2 {
+    color: #3b2028;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+
+  .form-group {
+    margin-bottom: 17px;
+  }
+
+
+  .form-group label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #4a363c;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+
+  input,
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 13px;
+
+    border:
+      1px solid #ead5da;
+
+    border-radius: 8px;
+
+    background: #fffafa;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    outline: none;
+  }
+
+
+  input:focus,
+  textarea:focus {
+    border-color: #c77d92;
+  }
+
+
+  textarea {
+    resize: vertical;
+  }
+
+
+  .two-column {
+    display: grid;
+
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 15px;
+  }
+
+
+  .order-section {
+    padding-top: 25px;
+
+    border-top:
+      1px solid #eee;
+  }
+
+
+  .order-item {
+    display: flex;
+
+    justify-content:
+      space-between;
+
+    gap: 15px;
+
+    padding: 10px 0;
+
+    border-bottom:
+      1px solid #f0f0f0;
+
+    color: #555;
+
+    font-size: 14px;
+  }
+
+
+  .order-item strong {
+    color: #333;
+  }
+
+
+  .total-row {
+    display: flex;
+
+    justify-content:
+      space-between;
+
+    align-items: center;
+
+    margin-top: 20px;
+    padding-top: 18px;
+
+    border-top:
+      1px solid #ddd;
+
+    font-size: 18px;
+  }
+
+
+  .total-row strong {
+    color: #8f4058;
+    font-size: 24px;
+  }
+
+
+  .payment-info {
+    color: #725c62;
+
+    line-height: 1.6;
+
+    font-size: 14px;
+  }
+
+
+  .payment-methods {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    margin-top: 20px;
+  }
+
+
+  .payment-option {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 18px;
+
+    border:
+      2px solid #ead5da;
+
+    border-radius: 12px;
+
+    background: #fffafa;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition: 0.3s;
+  }
+
+
+  .payment-option:hover {
+    border-color: #8f4058;
+
+    background: #fff5f7;
+
+    transform:
+      translateY(-2px);
+  }
+
+
+  .payment-option:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+  }
+
+
+  .payment-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f8e7eb;
+
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    flex-shrink: 0;
+  }
+
+
+  .payment-text {
+    display: block;
+  }
+
+
+  .payment-option strong {
+    display: block;
+
+    color: #3b2028;
+
+    font-size: 16px;
+
+    margin-bottom: 4px;
+  }
+
+
+  .payment-option small {
+    display: block;
+
+    color: #725c62;
+
+    font-size: 13px;
+  }
+
+
+  .payment-status {
+    text-align: center;
+
+    color: #725c62;
+
+    font-size: 14px;
+
+    margin-top: 15px;
+  }
+
+
+  @media (max-width: 600px) {
+
+    .payment-page {
+      padding: 40px 15px;
+    }
+
+
+    .payment-card {
+      padding: 25px 20px;
+    }
+
+
+    .payment-header h1 {
+      font-size: 30px;
+    }
+
+
+    .two-column {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+  }
+
+</style>

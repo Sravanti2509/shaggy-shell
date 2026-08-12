@@ -1,0 +1,814 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Order Success - Sravs Bakery">
+
+  <main class="success-page">
+
+    <div class="success-card">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h1>Order Placed Successfully!</h1>
+
+      <p class="success-message">
+        Thank you for ordering from Sravs Bakery.
+      </p>
+
+
+      <!-- ORDER DETAILS -->
+
+      <section class="details-section">
+
+        <h2>Order Details</h2>
+
+        <div id="order-items"></div>
+
+        <div class="total-row">
+
+          <span>Total Amount</span>
+
+          <strong id="total-amount">
+            ₹0
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <!-- DELIVERY DETAILS -->
+
+      <section class="details-section">
+
+        <h2>Delivery Details</h2>
+
+        <div class="detail-row">
+          <span>Name:</span>
+          <strong id="customer-name">-</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Phone:</span>
+          <strong id="customer-phone">-</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Email:</span>
+          <strong id="customer-email">-</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Address:</span>
+          <strong id="customer-address">-</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Area:</span>
+          <strong id="customer-area">-</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>City:</span>
+          <strong id="customer-city">-</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>State:</span>
+          <strong id="customer-state">-</strong>
+        </div>
+
+        <div class="detail-row">
+          <span>Pincode:</span>
+          <strong id="customer-pincode">-</strong>
+        </div>
+
+      </section>
+
+
+      <!-- PAYMENT DETAILS -->
+
+      <section class="details-section">
+
+        <h2>Payment Details</h2>
+
+        <div class="detail-row">
+
+          <span>Payment Method:</span>
+
+          <strong id="payment-method">
+            -
+          </strong>
+
+        </div>
+
+
+        <div
+          class="detail-row"
+          id="payment-id-row"
+        >
+
+          <span>Payment ID:</span>
+
+          <strong id="payment-id">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="detail-row">
+
+          <span>Order ID:</span>
+
+          <strong id="order-id">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="status-box">
+
+          <span>Payment Status</span>
+
+          <strong id="payment-status">
+            -
+          </strong>
+
+        </div>
+
+      </section>
+
+
+      <a
+        href="/menu"
+        class="shopping-button"
+      >
+        Continue Shopping
+      </a>
+
+    </div>
+
+  </main>
+
+</Layout>
+
+
+<script>
+
+  /* =====================================================
+     GET LAST ORDER
+  ===================================================== */
+
+  const order =
+    JSON.parse(
+      localStorage.getItem("lastOrder") || "null"
+    );
+
+
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
+
+  const orderItems =
+    document.getElementById("order-items");
+
+  const totalAmount =
+    document.getElementById("total-amount");
+
+  const customerName =
+    document.getElementById("customer-name");
+
+  const customerPhone =
+    document.getElementById("customer-phone");
+
+  const customerEmail =
+    document.getElementById("customer-email");
+
+  const customerAddress =
+    document.getElementById("customer-address");
+
+  const customerArea =
+    document.getElementById("customer-area");
+
+  const customerCity =
+    document.getElementById("customer-city");
+
+  const customerState =
+    document.getElementById("customer-state");
+
+  const customerPincode =
+    document.getElementById("customer-pincode");
+
+  const paymentMethod =
+    document.getElementById("payment-method");
+
+  const paymentId =
+    document.getElementById("payment-id");
+
+  const paymentIdRow =
+    document.getElementById("payment-id-row");
+
+  const orderId =
+    document.getElementById("order-id");
+
+  const paymentStatus =
+    document.getElementById("payment-status");
+
+
+  /* =====================================================
+     NO ORDER
+  ===================================================== */
+
+  if (!order) {
+
+    if (orderItems) {
+
+      orderItems.innerHTML = `
+        <p class="empty-message">
+          No recent order found.
+        </p>
+      `;
+
+    }
+
+  } else {
+
+    /* ===================================================
+       CUSTOMER DETAILS
+    =================================================== */
+
+    const customer =
+      order.customer || {};
+
+
+    if (customerName) {
+      customerName.textContent =
+        customer.name || "-";
+    }
+
+
+    if (customerPhone) {
+      customerPhone.textContent =
+        customer.phone || "-";
+    }
+
+
+    if (customerEmail) {
+      customerEmail.textContent =
+        customer.email || "-";
+    }
+
+
+    if (customerAddress) {
+      customerAddress.textContent =
+        customer.address || "-";
+    }
+
+
+    if (customerArea) {
+      customerArea.textContent =
+        customer.area || "-";
+    }
+
+
+    if (customerCity) {
+      customerCity.textContent =
+        customer.city || "-";
+    }
+
+
+    if (customerState) {
+      customerState.textContent =
+        customer.state || "-";
+    }
+
+
+    if (customerPincode) {
+      customerPincode.textContent =
+        customer.pincode || "-";
+    }
+
+
+    /* ===================================================
+       ORDER ITEMS
+    =================================================== */
+
+    const items =
+      Array.isArray(order.items)
+        ? order.items
+        : [];
+
+
+    items.forEach((item) => {
+
+      const price =
+        Number(
+          String(item.price || 0)
+            .replace(/[^\d.]/g, "")
+        ) || 0;
+
+
+      const quantity =
+        Number(item.quantity) || 1;
+
+
+      const itemTotal =
+        price * quantity;
+
+
+      if (orderItems) {
+
+        orderItems.innerHTML += `
+
+          <div class="order-item">
+
+            <span>
+              ${item.name || "Product"} × ${quantity}
+            </span>
+
+            <strong>
+              ₹${itemTotal.toLocaleString("en-IN")}
+            </strong>
+
+          </div>
+
+        `;
+
+      }
+
+    });
+
+
+    /* ===================================================
+       TOTAL
+    =================================================== */
+
+    const total =
+      Number(order.total) || 0;
+
+
+    if (totalAmount) {
+
+      totalAmount.textContent =
+        "₹" +
+        total.toLocaleString("en-IN");
+
+    }
+
+
+    /* ===================================================
+       PAYMENT METHOD
+    =================================================== */
+
+    const method =
+      order.paymentMethod || "";
+
+
+    if (paymentMethod) {
+
+      paymentMethod.textContent =
+        method || "-";
+
+    }
+
+
+    /* ===================================================
+       PAYMENT ID
+       
+       COD DOES NOT HAVE PAYMENT ID
+    =================================================== */
+
+    if (
+      method === "Cash on Delivery"
+    ) {
+
+      if (paymentIdRow) {
+
+        paymentIdRow.style.display =
+          "none";
+
+      }
+
+    } else {
+
+      if (paymentIdRow) {
+
+        paymentIdRow.style.display =
+          "flex";
+
+      }
+
+
+      if (paymentId) {
+
+        paymentId.textContent =
+          order.paymentId || "-";
+
+      }
+
+    }
+
+
+    /* ===================================================
+       ORDER ID
+    =================================================== */
+
+    if (orderId) {
+
+      orderId.textContent =
+        order.orderId || "-";
+
+    }
+
+
+    /* ===================================================
+       PAYMENT STATUS
+    =================================================== */
+
+    const currentStatus =
+      order.paymentStatus || "Pending";
+
+
+    if (paymentStatus) {
+
+      paymentStatus.textContent =
+        currentStatus === "Paid"
+          ? "PAID ✓"
+          : "PENDING";
+
+      paymentStatus.classList.remove(
+        "paid",
+        "pending"
+      );
+
+
+      if (
+        currentStatus === "Paid"
+      ) {
+
+        paymentStatus.classList.add(
+          "paid"
+        );
+
+      } else {
+
+        paymentStatus.classList.add(
+          "pending"
+        );
+
+      }
+
+    }
+
+  }
+
+</script>
+
+
+<style>
+
+  .success-page {
+
+    min-height: 100vh;
+
+    padding: 60px 20px;
+
+    background:
+      linear-gradient(
+        135deg,
+        #fff5f5,
+        #fff0e6,
+        #fdf4ff
+      );
+
+  }
+
+
+  .success-card {
+
+    max-width: 700px;
+
+    margin: auto;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 22px;
+
+    box-shadow:
+      0 12px 40px
+      rgba(80, 40, 50, 0.12);
+
+  }
+
+
+  .success-icon {
+
+    width: 70px;
+
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #e8f7ec;
+
+    color: #24943c;
+
+    font-size: 38px;
+
+    font-weight: bold;
+
+  }
+
+
+  .success-card h1 {
+
+    text-align: center;
+
+    color: #3b2028;
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+
+  }
+
+
+  .success-message {
+
+    text-align: center;
+
+    color: #725c62;
+
+    margin-bottom: 35px;
+
+  }
+
+
+  .details-section {
+
+    margin-top: 30px;
+
+    padding-top: 25px;
+
+    border-top:
+      1px solid #eeeeee;
+
+  }
+
+
+  .details-section h2 {
+
+    color: #3b2028;
+
+    font-size: 20px;
+
+    margin-bottom: 18px;
+
+  }
+
+
+  .order-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 12px 0;
+
+    border-bottom:
+      1px solid #f1f1f1;
+
+    color: #555;
+
+    font-size: 15px;
+
+  }
+
+
+  .order-item strong {
+
+    color: #333;
+
+  }
+
+
+  .total-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 18px;
+
+    padding: 18px 0;
+
+    border-top:
+      2px solid #eeeeee;
+
+    font-size: 18px;
+
+  }
+
+
+  .total-row strong {
+
+    color: #8f4058;
+
+    font-size: 24px;
+
+  }
+
+
+  .detail-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 11px 0;
+
+    border-bottom:
+      1px solid #f4f4f4;
+
+    font-size: 14px;
+
+  }
+
+
+  .detail-row span {
+
+    color: #777;
+
+    flex-shrink: 0;
+
+  }
+
+
+  .detail-row strong {
+
+    color: #333;
+
+    text-align: right;
+
+    word-break: break-word;
+
+  }
+
+
+  .status-box {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+    background: #fafafa;
+
+  }
+
+
+  .status-box span {
+
+    color: #555;
+
+    font-weight: 600;
+
+  }
+
+
+  #payment-status {
+
+    font-weight: 800;
+
+  }
+
+
+  #payment-status.paid {
+
+    color: #24943c;
+
+  }
+
+
+  #payment-status.pending {
+
+    color: #d98a00;
+
+  }
+
+
+  .shopping-button {
+
+    display: block;
+
+    margin-top: 35px;
+
+    padding: 15px;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    color: white;
+
+    background: #8f4058;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+
+  }
+
+
+  .shopping-button:hover {
+
+    background: #753449;
+
+    transform:
+      translateY(-2px);
+
+  }
+
+
+  .empty-message {
+
+    text-align: center;
+
+    color: #777;
+
+    padding: 20px;
+
+  }
+
+
+  @media (max-width: 600px) {
+
+    .success-page {
+
+      padding: 35px 15px;
+
+    }
+
+
+    .success-card {
+
+      padding: 25px 20px;
+
+    }
+
+
+    .success-card h1 {
+
+      font-size: 27px;
+
+    }
+
+
+    .detail-row {
+
+      flex-direction: column;
+
+      gap: 4px;
+
+    }
+
+
+    .detail-row strong {
+
+      text-align: left;
+
+    }
+
+  }
+
+</style>
