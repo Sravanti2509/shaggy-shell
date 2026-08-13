@@ -1,6 +1,7 @@
 import Razorpay from "razorpay";
+import { env } from "cloudflare:workers";
 
-export async function POST({ request, locals }) {
+export async function POST({ request }) {
   try {
     const rawBody = await request.text();
 
@@ -37,10 +38,8 @@ export async function POST({ request, locals }) {
       );
     }
 
-    const runtimeEnv = locals?.runtime?.env;
-
-    const keyId = runtimeEnv?.RAZORPAY_KEY_ID;
-    const keySecret = runtimeEnv?.RAZORPAY_KEY_SECRET;
+    const keyId = env.RAZORPAY_KEY_ID;
+    const keySecret = env.RAZORPAY_KEY_SECRET;
 
     if (!keyId || !keySecret) {
       return new Response(

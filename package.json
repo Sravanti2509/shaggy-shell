@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.2.1",
     "@astrojs/node": "^11.1.1",
     "@emnapi/core": "1.11.3",
     "@emnapi/runtime": "1.11.3",
