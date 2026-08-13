@@ -1,53 +1,71 @@
 import Razorpay from "razorpay";
 
-export async function POST({ request }) {
+export async function POST({ request, locals }) {
   try {
-    const body = await request.json();
+    const rawBody = await request.text();
 
+    if (!rawBody) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: "Request body is empty"
+        }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+    }
+
+    const body = JSON.parse(rawBody);
     const amount = Number(body.amount);
 
     if (!amount || amount <= 0) {
       return new Response(
         JSON.stringify({
           success: false,
-          error: "Invalid amount",
+          error: "Invalid amount"
         }),
         {
           status: 400,
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
     }
 
-    const keyId = import.meta.env.RAZORPAY_KEY_ID;
-    const keySecret = import.meta.env.RAZORPAY_KEY_SECRET;
+    const runtimeEnv = locals?.runtime?.env;
+
+    const keyId = runtimeEnv?.RAZORPAY_KEY_ID;
+    const keySecret = runtimeEnv?.RAZORPAY_KEY_SECRET;
 
     if (!keyId || !keySecret) {
       return new Response(
         JSON.stringify({
           success: false,
-          error: "Razorpay environment variables are missing",
+          error: "Razorpay environment variables are missing"
         }),
         {
           status: 500,
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
     }
 
     const razorpay = new Razorpay({
       key_id: keyId,
-      key_secret: keySecret,
+      key_secret: keySecret
     });
 
     const order = await razorpay.orders.create({
       amount: Math.round(amount * 100),
       currency: "INR",
-      receipt: `sravs_${Date.now()}`,
+      receipt: `sravs_${Date.now()}`
     });
 
     return new Response(
@@ -55,18 +73,17 @@ export async function POST({ request }) {
         success: true,
         id: order.id,
         amount: order.amount,
-        currency: order.currency,
+        currency: order.currency
       }),
       {
         status: 200,
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
 
   } catch (error) {
-
     console.error("CREATE ORDER ERROR:", error);
 
     return new Response(
@@ -75,13 +92,13 @@ export async function POST({ request }) {
         error:
           error?.error?.description ||
           error?.message ||
-          "Razorpay order creation failed",
+          "Order creation failed"
       }),
       {
         status: 500,
         headers: {
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
   }
