@@ -1,7 +1,10 @@
+import { env } from "cloudflare:workers";
+
 export const prerender = false;
 
-export async function POST({ request, locals }) {
+export async function POST({ request }) {
   try {
+
     const body = await request.json();
 
     const amount = Number(body.amount);
@@ -20,18 +23,20 @@ export async function POST({ request, locals }) {
       );
     }
 
-    // Cloudflare production environment variables
-    const runtimeEnv = locals?.runtime?.env;
+
+    /* =========================
+       CLOUDFLARE ENVIRONMENT
+    ========================= */
 
     const keyId =
-      runtimeEnv?.RAZORPAY_KEY_ID ??
-      import.meta.env.RAZORPAY_KEY_ID;
+      env.RAZORPAY_KEY_ID;
 
     const keySecret =
-      runtimeEnv?.RAZORPAY_KEY_SECRET ??
-      import.meta.env.RAZORPAY_KEY_SECRET;
+      env.RAZORPAY_KEY_SECRET;
+
 
     if (!keyId || !keySecret) {
+
       console.error(
         "Razorpay environment variables are missing."
       );
@@ -44,14 +49,27 @@ export async function POST({ request, locals }) {
         {
           status: 500,
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type":
+              "application/json"
           }
         }
       );
     }
 
+
+    /* =========================
+       RAZORPAY AUTH
+    ========================= */
+
     const credentials =
-      btoa(`${keyId}:${keySecret}`);
+      btoa(
+        `${keyId}:${keySecret}`
+      );
+
+
+    /* =========================
+       CREATE RAZORPAY ORDER
+    ========================= */
 
     const razorpayResponse =
       await fetch(
@@ -68,21 +86,33 @@ export async function POST({ request, locals }) {
           },
 
           body: JSON.stringify({
-            amount:
-              Math.round(amount * 100),
 
-            currency: "INR",
+            amount:
+              Math.round(
+                amount * 100
+              ),
+
+            currency:
+              "INR",
 
             receipt:
               `sravs_${Date.now()}`
+
           })
         }
       );
 
+
     const data =
       await razorpayResponse.json();
 
+
+    /* =========================
+       RAZORPAY ERROR
+    ========================= */
+
     if (!razorpayResponse.ok) {
+
       console.error(
         "Razorpay order error:",
         data
@@ -106,6 +136,11 @@ export async function POST({ request, locals }) {
       );
     }
 
+
+    /* =========================
+       SUCCESS
+    ========================= */
+
     return new Response(
       JSON.stringify(data),
       {
@@ -118,12 +153,14 @@ export async function POST({ request, locals }) {
       }
     );
 
+
   } catch (error) {
 
     console.error(
       "Create order error:",
       error
     );
+
 
     return new Response(
       JSON.stringify({
