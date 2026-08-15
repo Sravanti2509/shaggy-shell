@@ -16,12 +16,14 @@ import Layout from "../layouts/Layout.astro";
       <div class="payment-card">
 
         <!-- DELIVERY DETAILS -->
+
         <section class="section">
 
           <h2>Delivery Details</h2>
 
           <div class="form-group">
             <label for="name">Full Name</label>
+
             <input
               id="name"
               type="text"
@@ -32,17 +34,20 @@ import Layout from "../layouts/Layout.astro";
 
           <div class="form-group">
             <label for="phone">Phone Number</label>
+
             <input
               id="phone"
               type="tel"
               placeholder="10-digit mobile number"
               maxlength="10"
+              inputmode="numeric"
               autocomplete="tel"
             />
           </div>
 
           <div class="form-group">
             <label for="email">Email</label>
+
             <input
               id="email"
               type="email"
@@ -53,6 +58,7 @@ import Layout from "../layouts/Layout.astro";
 
           <div class="form-group">
             <label for="address">House / Flat / Street</label>
+
             <textarea
               id="address"
               rows="3"
@@ -63,6 +69,7 @@ import Layout from "../layouts/Layout.astro";
 
           <div class="form-group">
             <label for="area">Area / Landmark</label>
+
             <input
               id="area"
               type="text"
@@ -74,6 +81,7 @@ import Layout from "../layouts/Layout.astro";
 
             <div class="form-group">
               <label for="city">City</label>
+
               <input
                 id="city"
                 type="text"
@@ -84,11 +92,13 @@ import Layout from "../layouts/Layout.astro";
 
             <div class="form-group">
               <label for="pincode">Pincode</label>
+
               <input
                 id="pincode"
                 type="text"
-                placeholder="Pincode"
+                placeholder="6-digit pincode"
                 maxlength="6"
+                inputmode="numeric"
                 autocomplete="postal-code"
               />
             </div>
@@ -97,6 +107,7 @@ import Layout from "../layouts/Layout.astro";
 
           <div class="form-group">
             <label for="state">State</label>
+
             <input
               id="state"
               type="text"
@@ -110,6 +121,7 @@ import Layout from "../layouts/Layout.astro";
 
 
         <!-- ORDER SUMMARY -->
+
         <section class="section order-section">
 
           <h2>Order Summary</h2>
@@ -117,71 +129,96 @@ import Layout from "../layouts/Layout.astro";
           <div id="order-items"></div>
 
           <div class="total-row">
+
             <span>Total Amount</span>
 
             <strong id="payment-total">
               ₹0
             </strong>
+
           </div>
 
         </section>
 
 
         <!-- PAYMENT METHOD -->
+
         <section class="section">
 
           <h2>Payment Method</h2>
 
-          <p class="payment-info">
-            Choose how you would like to pay for your order.
-          </p>
-
           <div class="payment-methods">
 
-            <!-- CASH ON DELIVERY -->
-            <button
-              id="cod-button"
-              type="button"
-              class="payment-option"
-            >
+            <label class="payment-option">
 
-              <span class="payment-icon">
-                💵
-              </span>
+              <input
+                type="radio"
+                name="payment-method"
+                value="cod"
+                checked
+              />
 
-              <span class="payment-text">
-                <strong>Cash on Delivery</strong>
+              <div class="payment-option-content">
 
-                <small>
-                  Pay when your order is delivered
-                </small>
-              </span>
+                <div class="payment-icon">
+                  💵
+                </div>
 
-            </button>
+                <div>
+                  <strong>Cash on Delivery</strong>
+
+                  <span>
+                    Pay when your order is delivered
+                  </span>
+                </div>
+
+              </div>
+
+            </label>
 
 
-            <!-- ONLINE PAYMENT -->
-            <button
-              id="online-button"
-              type="button"
-              class="payment-option"
-            >
+            <label class="payment-option">
 
-              <span class="payment-icon">
-                💳
-              </span>
+              <input
+                type="radio"
+                name="payment-method"
+                value="online"
+              />
 
-              <span class="payment-text">
-                <strong>Online Payment</strong>
+              <div class="payment-option-content">
 
-                <small>
-                  UPI, Card, Net Banking & more
-                </small>
-              </span>
+                <div class="payment-icon">
+                  💳
+                </div>
 
-            </button>
+                <div>
+                  <strong>Online Payment</strong>
+
+                  <span>
+                    UPI, Card, Net Banking and more
+                  </span>
+
+                </div>
+
+              </div>
+
+            </label>
 
           </div>
+
+        </section>
+
+
+        <!-- PAYMENT BUTTON -->
+
+        <section class="section payment-action">
+
+          <button
+            id="pay-button"
+            type="button"
+          >
+            Place Order - Cash on Delivery
+          </button>
 
           <p
             id="payment-status"
@@ -199,15 +236,14 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 
-<!-- RAZORPAY -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
 <script>
 
-  /* =====================================================
-     GET CART
-  ===================================================== */
+  /* =====================================
+     CART
+  ===================================== */
 
   const cart =
     JSON.parse(
@@ -215,11 +251,8 @@ import Layout from "../layouts/Layout.astro";
     );
 
 
-  /* =====================================================
-     CALCULATE TOTAL
-  ===================================================== */
-
   let total = 0;
+
 
   const orderItems =
     document.getElementById("order-items");
@@ -233,11 +266,14 @@ import Layout from "../layouts/Layout.astro";
           .replace(/[^\d.]/g, "")
       ) || 0;
 
+
     const quantity =
       Number(item.quantity) || 1;
 
+
     const itemTotal =
       price * quantity;
+
 
     total += itemTotal;
 
@@ -265,10 +301,6 @@ import Layout from "../layouts/Layout.astro";
   });
 
 
-  /* =====================================================
-     SHOW TOTAL
-  ===================================================== */
-
   const totalElement =
     document.getElementById("payment-total");
 
@@ -276,51 +308,81 @@ import Layout from "../layouts/Layout.astro";
   if (totalElement) {
 
     totalElement.textContent =
-      "₹" +
-      total.toLocaleString("en-IN");
+      "₹" + total.toLocaleString("en-IN");
 
   }
 
 
-  /* =====================================================
+  /* =====================================
      ELEMENTS
-  ===================================================== */
+  ===================================== */
 
-  const codButton =
-    document.getElementById("cod-button");
+  const payButton =
+    document.getElementById("pay-button");
 
-  const onlineButton =
-    document.getElementById("online-button");
 
   const status =
     document.getElementById("payment-status");
 
 
-  /* =====================================================
+  const paymentRadios =
+    document.querySelectorAll(
+      'input[name="payment-method"]'
+    );
+
+
+  /* =====================================
+     PAYMENT BUTTON TEXT
+  ===================================== */
+
+  paymentRadios.forEach((radio) => {
+
+    radio.addEventListener(
+      "change",
+      () => {
+
+        if (!payButton) return;
+
+
+        if (radio.value === "cod") {
+
+          payButton.textContent =
+            "Place Order - Cash on Delivery";
+
+        } else {
+
+          payButton.textContent =
+            "Pay Online";
+
+        }
+
+      }
+    );
+
+  });
+
+
+  /* =====================================
      EMPTY CART
-  ===================================================== */
+  ===================================== */
 
   if (cart.length === 0) {
 
-    if (codButton) {
-      codButton.disabled = true;
-    }
+    if (payButton) {
 
-    if (onlineButton) {
-      onlineButton.disabled = true;
-    }
+      payButton.disabled = true;
 
-    if (status) {
-      status.textContent =
-        "Your cart is empty.";
+      payButton.textContent =
+        "Cart is Empty";
+
     }
 
   }
 
 
-  /* =====================================================
+  /* =====================================
      CUSTOMER DETAILS
-  ===================================================== */
+  ===================================== */
 
   function getCustomerDetails() {
 
@@ -330,11 +392,13 @@ import Layout from "../layouts/Layout.astro";
         .value
         .trim();
 
+
     const phone =
       document
         .getElementById("phone")
         .value
         .trim();
+
 
     const email =
       document
@@ -342,11 +406,13 @@ import Layout from "../layouts/Layout.astro";
         .value
         .trim();
 
+
     const address =
       document
         .getElementById("address")
         .value
         .trim();
+
 
     const area =
       document
@@ -354,17 +420,20 @@ import Layout from "../layouts/Layout.astro";
         .value
         .trim();
 
+
     const city =
       document
         .getElementById("city")
         .value
         .trim();
 
+
     const pincode =
       document
         .getElementById("pincode")
         .value
         .trim();
+
 
     const state =
       document
@@ -397,7 +466,7 @@ import Layout from "../layouts/Layout.astro";
 
     if (
       !email ||
-      !email.includes("@")
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     ) {
 
       alert(
@@ -469,137 +538,514 @@ import Layout from "../layouts/Layout.astro";
   }
 
 
-  /* =====================================================
-     CASH ON DELIVERY
-     PAYMENT STATUS = PENDING
-  ===================================================== */
+  /* =====================================
+     CREATE COD ORDER
+  ===================================== */
 
-  codButton?.addEventListener(
-    "click",
-    () => {
+  function placeCODOrder(customer) {
 
-      if (cart.length === 0) {
+    const codOrderId =
+      "COD-" +
+      Date.now();
 
-        alert(
-          "Your cart is empty."
+
+    const order = {
+
+      customer,
+
+      items:
+        cart,
+
+      total,
+
+      paymentMethod:
+        "Cash on Delivery",
+
+      paymentStatus:
+        "Payment Pending",
+
+      paymentId:
+        null,
+
+      orderId:
+        codOrderId,
+
+      orderDate:
+        new Date().toISOString()
+
+    };
+
+
+    localStorage.setItem(
+      "lastOrder",
+      JSON.stringify(order)
+    );
+
+
+    localStorage.removeItem(
+      "cart"
+    );
+
+
+    alert(
+      "🎉 Order Placed Successfully!\n\n" +
+      "Payment Method: Cash on Delivery\n" +
+      "Order ID: " +
+      codOrderId
+    );
+
+
+    window.location.href =
+      "/order-success";
+
+  }
+
+
+  /* =====================================
+     ONLINE PAYMENT
+  ===================================== */
+
+  async function startOnlinePayment(
+    customer
+  ) {
+
+    try {
+
+      if (status) {
+
+        status.textContent =
+          "Creating secure payment...";
+
+      }
+
+
+      /* CREATE RAZORPAY ORDER */
+
+      const response =
+        await fetch(
+          "/api/create-order",
+          {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+              amount: total
+            })
+
+          }
         );
 
-        return;
 
-      }
-
-
-      const customer =
-        getCustomerDetails();
+      const responseText =
+        await response.text();
 
 
-      if (!customer) {
-        return;
-      }
+      if (!responseText) {
 
-
-      if (total <= 0) {
-
-        alert(
-          "Invalid order amount."
+        throw new Error(
+          "Create-order API returned empty response."
         );
 
-        return;
+      }
+
+
+      let order;
+
+      try {
+
+        order =
+          JSON.parse(responseText);
+
+      } catch {
+
+        console.error(
+          "Invalid create-order response:",
+          responseText
+        );
+
+        throw new Error(
+          "Create-order API returned invalid response."
+        );
 
       }
 
 
-      codButton.disabled = true;
-      onlineButton.disabled = true;
+      if (!response.ok) {
+
+        throw new Error(
+          order.error ||
+          "Unable to create payment order."
+        );
+
+      }
+
+
+      /* GET PUBLIC RAZORPAY KEY */
+
+      const keyResponse =
+        await fetch(
+          "/api/razorpay-key"
+        );
+
+
+      const keyData =
+        await keyResponse.json();
+
+
+      if (
+        !keyResponse.ok ||
+        !keyData.success ||
+        !keyData.keyId
+      ) {
+
+        throw new Error(
+          keyData.error ||
+          "Razorpay Key ID is missing."
+        );
+
+      }
+
+
+      const razorpayKey =
+        keyData.keyId;
+
+
+      /* RAZORPAY OPTIONS */
+
+      const options = {
+
+        key:
+          razorpayKey,
+
+        amount:
+          order.amount,
+
+        currency:
+          order.currency,
+
+        name:
+          "Sravs Bakery",
+
+        description:
+          "Bakery Order",
+
+        order_id:
+          order.id,
+
+        prefill: {
+
+          name:
+            customer.name,
+
+          email:
+            customer.email,
+
+          contact:
+            customer.phone
+
+        },
+
+        notes: {
+
+          address:
+            customer.address,
+
+          area:
+            customer.area,
+
+          city:
+            customer.city,
+
+          state:
+            customer.state,
+
+          pincode:
+            customer.pincode
+
+        },
+
+        theme: {
+
+          color:
+            "#8f4058"
+
+        },
+
+
+        handler:
+          async function(
+            paymentResponse
+          ) {
+
+            try {
+
+              if (status) {
+
+                status.textContent =
+                  "Verifying payment...";
+
+              }
+
+
+              /* VERIFY PAYMENT */
+
+              const verifyResponse =
+                await fetch(
+                  "/api/verify-payment",
+                  {
+
+                    method: "POST",
+
+                    headers: {
+
+                      "Content-Type":
+                        "application/json"
+
+                    },
+
+                    body:
+                      JSON.stringify(
+                        paymentResponse
+                      )
+
+                  }
+                );
+
+
+              const result =
+                await verifyResponse.json();
+
+
+              if (
+                !verifyResponse.ok ||
+                !result.success
+              ) {
+
+                throw new Error(
+                  result.error ||
+                  "Payment verification failed."
+                );
+
+              }
+
+
+              /* SAVE ONLINE ORDER */
+
+              const onlineOrder = {
+
+                customer,
+
+                items:
+                  cart,
+
+                total,
+
+                paymentMethod:
+                  "Online Payment",
+
+                paymentStatus:
+                  "PAID",
+
+                paymentId:
+                  result.paymentId,
+
+                orderId:
+                  result.orderId,
+
+                orderDate:
+                  new Date().toISOString()
+
+              };
+
+
+              localStorage.setItem(
+                "lastOrder",
+                JSON.stringify(
+                  onlineOrder
+                )
+              );
+
+
+              localStorage.removeItem(
+                "cart"
+              );
+
+
+              alert(
+                "🎉 Payment Successful!\n\n" +
+                "Your order has been placed successfully."
+              );
+
+
+              window.location.href =
+                "/order-success";
+
+
+            } catch (error) {
+
+              console.error(
+                "Payment verification error:",
+                error
+              );
+
+
+              alert(
+                "Payment was received, but verification failed. Please contact the bakery."
+              );
+
+
+              if (status) {
+
+                status.textContent =
+                  "Payment verification failed.";
+
+              }
+
+
+              if (payButton) {
+
+                payButton.disabled =
+                  false;
+
+                payButton.textContent =
+                  "Pay Online";
+
+              }
+
+            }
+
+          },
+
+
+        modal: {
+
+          ondismiss: function() {
+
+            if (payButton) {
+
+              payButton.disabled =
+                false;
+
+              payButton.textContent =
+                "Pay Online";
+
+            }
+
+
+            if (status) {
+
+              status.textContent =
+                "";
+
+            }
+
+          }
+
+        }
+
+      };
+
+
+      /* OPEN RAZORPAY */
+
+      if (
+        typeof window.Razorpay !==
+        "function"
+      ) {
+
+        throw new Error(
+          "Razorpay Checkout failed to load."
+        );
+
+      }
+
+
+      const razorpay =
+        new window.Razorpay(
+          options
+        );
+
+
+      razorpay.on(
+        "payment.failed",
+        function(response) {
+
+          console.error(
+            "Razorpay payment failed:",
+            response.error
+          );
+
+
+          alert(
+            response.error?.description ||
+            "Payment failed."
+          );
+
+
+          if (payButton) {
+
+            payButton.disabled =
+              false;
+
+            payButton.textContent =
+              "Pay Online";
+
+          }
+
+        }
+      );
+
+
+      razorpay.open();
+
+
+    } catch (error) {
+
+      console.error(
+        "Online payment error:",
+        error
+      );
+
+
+      alert(
+        error.message ||
+        "Something went wrong while opening Razorpay."
+      );
+
+
+      if (payButton) {
+
+        payButton.disabled =
+          false;
+
+        payButton.textContent =
+          "Pay Online";
+
+      }
 
 
       if (status) {
 
         status.textContent =
-          "Placing Cash on Delivery order...";
+          "";
 
       }
 
-
-      /*
-       * IMPORTANT:
-       * COD IS NOT PAID
-       */
-
-      const codOrder = {
-
-        customer: customer,
-
-        items: cart,
-
-        total: total,
-
-        paymentMethod:
-          "Cash on Delivery",
-
-        paymentStatus:
-          "Pending",
-
-        orderId:
-          "COD-" + Date.now(),
-
-        orderDate:
-          new Date().toISOString()
-
-      };
-
-
-      /* SAVE COD ORDER */
-
-      localStorage.setItem(
-        "lastOrder",
-        JSON.stringify(codOrder)
-      );
-
-
-      /* CLEAR CART */
-
-      localStorage.removeItem(
-        "cart"
-      );
-
-
-      /* SUCCESS POPUP */
-
-      alert(
-        "🎉 Order Placed Successfully!\n\n" +
-
-        "Thank you " +
-        customer.name +
-        "!\n\n" +
-
-        "Payment Method: Cash on Delivery\n" +
-
-        "Payment Status: Pending\n\n" +
-
-        "Order Amount: ₹" +
-        total.toLocaleString("en-IN") +
-
-        "\n\n" +
-
-        "Please pay when your order is delivered."
-      );
-
-
-      /* GO TO SUCCESS PAGE */
-
-      window.location.href =
-        "/order-success";
-
     }
-  );
+
+  }
 
 
-  /* =====================================================
-     ONLINE PAYMENT
-  ===================================================== */
+  /* =====================================
+     MAIN BUTTON
+  ===================================== */
 
-  onlineButton?.addEventListener(
+  payButton?.addEventListener(
     "click",
     async () => {
 
@@ -619,7 +1065,9 @@ import Layout from "../layouts/Layout.astro";
 
 
       if (!customer) {
+
         return;
+
       }
 
 
@@ -634,417 +1082,45 @@ import Layout from "../layouts/Layout.astro";
       }
 
 
-      codButton.disabled = true;
-      onlineButton.disabled = true;
+      const selectedMethod =
+        document.querySelector(
+          'input[name="payment-method"]:checked'
+        )?.value;
 
 
-      if (status) {
+      payButton.disabled =
+        true;
 
-        status.textContent =
-          "Creating secure payment...";
+
+      /* COD */
+
+      if (
+        selectedMethod === "cod"
+      ) {
+
+        payButton.textContent =
+          "Placing Order...";
+
+
+        placeCODOrder(
+          customer
+        );
+
+
+        return;
 
       }
 
 
-      try {
+      /* ONLINE */
 
-        /* =================================================
-           CREATE RAZORPAY ORDER
-        ================================================= */
+      payButton.textContent =
+        "Opening Payment...";
 
-        const response =
-          await fetch(
-            "/api/create-order",
-            {
 
-              method: "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json"
-              },
-
-              body: JSON.stringify({
-                amount: total
-              })
-
-            }
-          );
-
-
-        const responseText =
-          await response.text();
-
-
-        if (!responseText) {
-
-          throw new Error(
-            "Create-order API returned empty response."
-          );
-
-        }
-
-
-        let order;
-
-
-        try {
-
-          order =
-            JSON.parse(responseText);
-
-        } catch {
-
-          throw new Error(
-            "Create-order API returned invalid response."
-          );
-
-        }
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            order.error ||
-            "Unable to create payment order."
-          );
-
-        }
-
-
-        /* =================================================
-           RAZORPAY OPTIONS
-        ================================================= */
-
-        const options = {
-
-          key:
-            import.meta.env
-              .PUBLIC_RAZORPAY_KEY_ID,
-
-          amount:
-            order.amount,
-
-          currency:
-            order.currency,
-
-          name:
-            "Sravs Bakery",
-
-          description:
-            "Bakery Order",
-
-          order_id:
-            order.id,
-
-
-          prefill: {
-
-            name:
-              customer.name,
-
-            email:
-              customer.email,
-
-            contact:
-              customer.phone
-
-          },
-
-
-          notes: {
-
-            address:
-              customer.address,
-
-            area:
-              customer.area,
-
-            city:
-              customer.city,
-
-            state:
-              customer.state,
-
-            pincode:
-              customer.pincode
-
-          },
-
-
-          theme: {
-
-            color:
-              "#8f4058"
-
-          },
-
-
-          /* =================================================
-             ONLINE PAYMENT SUCCESS
-          ================================================= */
-
-          handler:
-            async function(paymentResponse) {
-
-              try {
-
-                if (status) {
-
-                  status.textContent =
-                    "Verifying payment...";
-
-                }
-
-
-                /* VERIFY PAYMENT */
-
-                const verifyResponse =
-                  await fetch(
-                    "/api/verify-payment",
-                    {
-
-                      method: "POST",
-
-                      headers: {
-                        "Content-Type":
-                          "application/json"
-                      },
-
-                      body:
-                        JSON.stringify(
-                          paymentResponse
-                        )
-
-                    }
-                  );
-
-
-                const result =
-                  await verifyResponse.json();
-
-
-                if (
-                  !verifyResponse.ok ||
-                  !result.success
-                ) {
-
-                  throw new Error(
-                    result.error ||
-                    "Payment verification failed."
-                  );
-
-                }
-
-
-                /*
-                 * IMPORTANT:
-                 * ONLINE PAYMENT ONLY = PAID
-                 */
-
-                const onlineOrder = {
-
-                  customer: customer,
-
-                  items: cart,
-
-                  total: total,
-
-                  paymentMethod:
-                    "Online Payment",
-
-                  paymentStatus:
-                    "Paid",
-
-                  paymentId:
-                    result.paymentId,
-
-                  orderId:
-                    result.orderId,
-
-                  orderDate:
-                    new Date().toISOString()
-
-                };
-
-
-                /* SAVE ONLINE ORDER */
-
-                localStorage.setItem(
-                  "lastOrder",
-                  JSON.stringify(onlineOrder)
-                );
-
-
-                /* CLEAR CART */
-
-                localStorage.removeItem(
-                  "cart"
-                );
-
-
-                /* SUCCESS POPUP */
-
-                alert(
-                  "🎉 Order Placed Successfully!\n\n" +
-
-                  "Thank you " +
-                  customer.name +
-                  "!\n\n" +
-
-                  "Payment Method: Online Payment\n" +
-
-                  "Payment Status: Paid\n\n" +
-
-                  "Amount Paid: ₹" +
-                  total.toLocaleString("en-IN")
-                );
-
-
-                /* SUCCESS PAGE */
-
-                window.location.href =
-                  "/order-success";
-
-
-              } catch (error) {
-
-                console.error(error);
-
-
-                alert(
-                  error.message ||
-                  "Payment verification failed."
-                );
-
-
-                codButton.disabled =
-                  false;
-
-                onlineButton.disabled =
-                  false;
-
-              }
-
-            },
-
-
-          /* =================================================
-             RAZORPAY CLOSED
-          ================================================= */
-
-          modal: {
-
-            ondismiss:
-              function() {
-
-                codButton.disabled =
-                  false;
-
-                onlineButton.disabled =
-                  false;
-
-
-                if (status) {
-
-                  status.textContent =
-                    "";
-
-                }
-
-              }
-
-          }
-
-        };
-
-
-        /* =================================================
-           OPEN RAZORPAY
-        ================================================= */
-
-        if (
-          typeof window.Razorpay !==
-          "function"
-        ) {
-
-          throw new Error(
-            "Razorpay failed to load. Please refresh the page."
-          );
-
-        }
-
-
-        const razorpay =
-          new window.Razorpay(
-            options
-          );
-
-
-        /* PAYMENT FAILED */
-
-        razorpay.on(
-          "payment.failed",
-          function(response) {
-
-            console.error(
-              response.error
-            );
-
-
-            alert(
-              response.error.description ||
-              "Payment failed."
-            );
-
-
-            codButton.disabled =
-              false;
-
-            onlineButton.disabled =
-              false;
-
-
-            if (status) {
-
-              status.textContent =
-                "";
-
-            }
-
-          }
-        );
-
-
-        razorpay.open();
-
-
-      } catch (error) {
-
-        console.error(error);
-
-
-        alert(
-          error.message ||
-          "Something went wrong."
-        );
-
-
-        codButton.disabled =
-          false;
-
-        onlineButton.disabled =
-          false;
-
-
-        if (status) {
-
-          status.textContent =
-            "";
-
-        }
-
-      }
+      await startOnlinePayment(
+        customer
+      );
 
     }
   );
@@ -1054,322 +1130,426 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
 
+.payment-page {
+
+  min-height: 100vh;
+
+  padding: 60px 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff5f5,
+      #fff0e6,
+      #fdf4ff
+    );
+
+}
+
+
+.payment-container {
+
+  max-width: 700px;
+
+  margin: auto;
+
+}
+
+
+.payment-header {
+
+  text-align: center;
+
+  margin-bottom: 30px;
+
+}
+
+
+.payment-header h1 {
+
+  font-size: 38px;
+
+  color: #3b2028;
+
+  margin: 0 0 10px;
+
+}
+
+
+.payment-header p {
+
+  color: #725c62;
+
+}
+
+
+.payment-card {
+
+  background: white;
+
+  padding: 35px;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 10px 35px
+    rgba(80, 40, 50, 0.12);
+
+}
+
+
+.section {
+
+  margin-bottom: 35px;
+
+}
+
+
+.section h2 {
+
+  color: #3b2028;
+
+  font-size: 22px;
+
+  margin-bottom: 20px;
+
+}
+
+
+.form-group {
+
+  margin-bottom: 17px;
+
+}
+
+
+.form-group label {
+
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #4a363c;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+}
+
+
+input,
+textarea {
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 13px;
+
+  border: 1px solid #ead5da;
+
+  border-radius: 8px;
+
+  background: #fffafa;
+
+  font-size: 15px;
+
+  font-family: inherit;
+
+  outline: none;
+
+}
+
+
+input:focus,
+textarea:focus {
+
+  border-color: #c77d92;
+
+}
+
+
+textarea {
+
+  resize: vertical;
+
+}
+
+
+.two-column {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 15px;
+
+}
+
+
+/* PAYMENT METHODS */
+
+.payment-methods {
+
+  display: grid;
+
+  gap: 14px;
+
+}
+
+
+.payment-option {
+
+  display: block;
+
+  cursor: pointer;
+
+}
+
+
+.payment-option input {
+
+  position: absolute;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+}
+
+
+.payment-option-content {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 17px;
+
+  border: 2px solid #ead5da;
+
+  border-radius: 12px;
+
+  background: #fffafa;
+
+  transition: 0.25s;
+
+}
+
+
+.payment-option-content:hover {
+
+  border-color: #c77d92;
+
+  background: #fff5f7;
+
+}
+
+
+.payment-option input:checked
++ .payment-option-content {
+
+  border-color: #8f4058;
+
+  background: #fff1f4;
+
+  box-shadow:
+    0 5px 15px
+    rgba(143, 64, 88, 0.10);
+
+}
+
+
+.payment-icon {
+
+  font-size: 28px;
+
+}
+
+
+.payment-option-content strong {
+
+  display: block;
+
+  color: #3b2028;
+
+  font-size: 16px;
+
+  margin-bottom: 4px;
+
+}
+
+
+.payment-option-content span {
+
+  display: block;
+
+  color: #725c62;
+
+  font-size: 13px;
+
+}
+
+
+/* ORDER */
+
+.order-section {
+
+  padding-top: 25px;
+
+  border-top: 1px solid #eee;
+
+}
+
+
+.order-item {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 10px 0;
+
+  border-bottom:
+    1px solid #f0f0f0;
+
+  color: #555;
+
+  font-size: 14px;
+
+}
+
+
+.order-item strong {
+
+  color: #333;
+
+}
+
+
+.total-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-top: 20px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #ddd;
+
+  font-size: 18px;
+
+}
+
+
+.total-row strong {
+
+  color: #8f4058;
+
+  font-size: 24px;
+
+}
+
+
+/* BUTTON */
+
+#pay-button {
+
+  width: 100%;
+
+  padding: 15px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #8f4058;
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+
+}
+
+
+#pay-button:hover {
+
+  background: #682c3e;
+
+}
+
+
+#pay-button:disabled {
+
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+}
+
+
+.payment-status {
+
+  text-align: center;
+
+  color: #725c62;
+
+  font-size: 14px;
+
+  margin-top: 15px;
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
   .payment-page {
-    min-height: 100vh;
-    padding: 60px 20px;
 
-    background:
-      linear-gradient(
-        135deg,
-        #fff5f5,
-        #fff0e6,
-        #fdf4ff
-      );
-  }
+    padding: 40px 15px;
 
-
-  .payment-container {
-    max-width: 700px;
-    margin: auto;
-  }
-
-
-  .payment-header {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-
-  .payment-header h1 {
-    font-size: 38px;
-    color: #3b2028;
-    margin: 0 0 10px;
-  }
-
-
-  .payment-header p {
-    color: #725c62;
   }
 
 
   .payment-card {
-    background: white;
-    padding: 35px;
-    border-radius: 20px;
 
-    box-shadow:
-      0 10px 35px
-      rgba(80, 40, 50, 0.12);
+    padding: 25px 20px;
+
   }
 
 
-  .section {
-    margin-bottom: 35px;
-  }
+  .payment-header h1 {
 
+    font-size: 30px;
 
-  .section h2 {
-    color: #3b2028;
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-
-
-  .form-group {
-    margin-bottom: 17px;
-  }
-
-
-  .form-group label {
-    display: block;
-    margin-bottom: 7px;
-
-    color: #4a363c;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-
-  input,
-  textarea {
-    width: 100%;
-    box-sizing: border-box;
-
-    padding: 13px;
-
-    border:
-      1px solid #ead5da;
-
-    border-radius: 8px;
-
-    background: #fffafa;
-
-    font-size: 15px;
-    font-family: inherit;
-
-    outline: none;
-  }
-
-
-  input:focus,
-  textarea:focus {
-    border-color: #c77d92;
-  }
-
-
-  textarea {
-    resize: vertical;
   }
 
 
   .two-column {
-    display: grid;
 
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns: 1fr;
 
-    gap: 15px;
+    gap: 0;
+
   }
 
-
-  .order-section {
-    padding-top: 25px;
-
-    border-top:
-      1px solid #eee;
-  }
-
-
-  .order-item {
-    display: flex;
-
-    justify-content:
-      space-between;
-
-    gap: 15px;
-
-    padding: 10px 0;
-
-    border-bottom:
-      1px solid #f0f0f0;
-
-    color: #555;
-
-    font-size: 14px;
-  }
-
-
-  .order-item strong {
-    color: #333;
-  }
-
-
-  .total-row {
-    display: flex;
-
-    justify-content:
-      space-between;
-
-    align-items: center;
-
-    margin-top: 20px;
-    padding-top: 18px;
-
-    border-top:
-      1px solid #ddd;
-
-    font-size: 18px;
-  }
-
-
-  .total-row strong {
-    color: #8f4058;
-    font-size: 24px;
-  }
-
-
-  .payment-info {
-    color: #725c62;
-
-    line-height: 1.6;
-
-    font-size: 14px;
-  }
-
-
-  .payment-methods {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 14px;
-
-    margin-top: 20px;
-  }
-
-
-  .payment-option {
-    width: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 16px;
-
-    padding: 18px;
-
-    border:
-      2px solid #ead5da;
-
-    border-radius: 12px;
-
-    background: #fffafa;
-
-    cursor: pointer;
-
-    text-align: left;
-
-    transition: 0.3s;
-  }
-
-
-  .payment-option:hover {
-    border-color: #8f4058;
-
-    background: #fff5f7;
-
-    transform:
-      translateY(-2px);
-  }
-
-
-  .payment-option:disabled {
-    opacity: 0.6;
-
-    cursor: not-allowed;
-
-    transform: none;
-  }
-
-
-  .payment-icon {
-    width: 45px;
-    height: 45px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #f8e7eb;
-
-    border-radius: 50%;
-
-    font-size: 22px;
-
-    flex-shrink: 0;
-  }
-
-
-  .payment-text {
-    display: block;
-  }
-
-
-  .payment-option strong {
-    display: block;
-
-    color: #3b2028;
-
-    font-size: 16px;
-
-    margin-bottom: 4px;
-  }
-
-
-  .payment-option small {
-    display: block;
-
-    color: #725c62;
-
-    font-size: 13px;
-  }
-
-
-  .payment-status {
-    text-align: center;
-
-    color: #725c62;
-
-    font-size: 14px;
-
-    margin-top: 15px;
-  }
-
-
-  @media (max-width: 600px) {
-
-    .payment-page {
-      padding: 40px 15px;
-    }
-
-
-    .payment-card {
-      padding: 25px 20px;
-    }
-
-
-    .payment-header h1 {
-      font-size: 30px;
-    }
-
-
-    .two-column {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-
-  }
+}
 
 </style>

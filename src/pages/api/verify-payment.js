@@ -1,10 +1,14 @@
+import { env } from "cloudflare:workers";
+
 export const prerender = false;
 
 export async function POST({ request }) {
 
   try {
 
-    const body = await request.json();
+    const body =
+      await request.json();
+
 
     const {
       razorpay_order_id,
@@ -25,11 +29,16 @@ export async function POST({ request }) {
 
       return new Response(
         JSON.stringify({
+
           success: false,
-          error: "Missing payment details"
+
+          error:
+            "Missing payment details"
+
         }),
         {
           status: 400,
+
           headers: {
             "Content-Type":
               "application/json"
@@ -41,23 +50,27 @@ export async function POST({ request }) {
 
 
     /* =========================
-       GET RAZORPAY SECRET
+       GET SECRET
     ========================= */
 
     const secret =
-      import.meta.env.RAZORPAY_KEY_SECRET;
+      env.RAZORPAY_KEY_SECRET;
 
 
     if (!secret) {
 
       return new Response(
         JSON.stringify({
+
           success: false,
+
           error:
-            "RAZORPAY_KEY_SECRET is missing"
+            "Razorpay secret is missing."
+
         }),
         {
           status: 500,
+
           headers: {
             "Content-Type":
               "application/json"
@@ -69,7 +82,7 @@ export async function POST({ request }) {
 
 
     /* =========================
-       CREATE HMAC SHA256
+       HMAC SHA256
        CLOUDFLARE WEB CRYPTO
     ========================= */
 
@@ -89,35 +102,46 @@ export async function POST({ request }) {
 
     const cryptoKey =
       await crypto.subtle.importKey(
+
         "raw",
+
         keyData,
+
         {
-          name: "HMAC",
-          hash: "SHA-256"
+          name:
+            "HMAC",
+
+          hash:
+            "SHA-256"
         },
+
         false,
+
         ["sign"]
+
       );
 
 
     const signatureBuffer =
       await crypto.subtle.sign(
+
         "HMAC",
+
         cryptoKey,
+
         message
+
       );
 
 
-    /* =========================
-       CONVERT TO HEX
-    ========================= */
-
     const generatedSignature =
       Array.from(
-        new Uint8Array(signatureBuffer)
+        new Uint8Array(
+          signatureBuffer
+        )
       )
         .map(
-          byte =>
+          (byte) =>
             byte
               .toString(16)
               .padStart(2, "0")
@@ -126,7 +150,7 @@ export async function POST({ request }) {
 
 
     /* =========================
-       VERIFY SIGNATURE
+       VERIFY
     ========================= */
 
     const isValid =
@@ -138,12 +162,16 @@ export async function POST({ request }) {
 
       return new Response(
         JSON.stringify({
+
           success: false,
+
           error:
             "Payment signature verification failed"
+
         }),
         {
           status: 400,
+
           headers: {
             "Content-Type":
               "application/json"
