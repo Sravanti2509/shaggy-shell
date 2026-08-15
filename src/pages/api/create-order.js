@@ -1,32 +1,17 @@
-import Razorpay from "razorpay";
-import { env } from "cloudflare:workers";
+export const prerender = false;
 
 export async function POST({ request }) {
+
   try {
-    const rawBody = await request.text();
 
-    if (!rawBody) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: "Request body is empty"
-        }),
-        {
-          status: 400,
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-    }
+    const body = await request.json();
 
-    const body = JSON.parse(rawBody);
     const amount = Number(body.amount);
 
     if (!amount || amount <= 0) {
+
       return new Response(
         JSON.stringify({
-          success: false,
           error: "Invalid amount"
         }),
         {
@@ -36,16 +21,23 @@ export async function POST({ request }) {
           }
         }
       );
+
     }
 
-    const keyId = env.RAZORPAY_KEY_ID;
-    const keySecret = env.RAZORPAY_KEY_SECRET;
+
+    const keyId =
+      import.meta.env.RAZORPAY_KEY_ID;
+
+    const keySecret =
+      import.meta.env.RAZORPAY_KEY_SECRET;
+
 
     if (!keyId || !keySecret) {
+
       return new Response(
         JSON.stringify({
-          success: false,
-          error: "Razorpay environment variables are missing"
+          error:
+            "Razorpay environment variables are missing."
         }),
         {
           status: 500,
@@ -54,51 +46,117 @@ export async function POST({ request }) {
           }
         }
       );
+
     }
 
-    const razorpay = new Razorpay({
-      key_id: keyId,
-      key_secret: keySecret
-    });
 
-    const order = await razorpay.orders.create({
-      amount: Math.round(amount * 100),
-      currency: "INR",
-      receipt: `sravs_${Date.now()}`
-    });
+    const credentials =
+      btoa(
+        `${keyId}:${keySecret}`
+      );
+
+
+    const razorpayResponse =
+      await fetch(
+        "https://api.razorpay.com/v1/orders",
+        {
+
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "Authorization":
+              `Basic ${credentials}`
+
+          },
+
+          body: JSON.stringify({
+
+            amount:
+              Math.round(amount * 100),
+
+            currency:
+              "INR",
+
+            receipt:
+              `sravs_${Date.now()}`
+
+          })
+
+        }
+      );
+
+
+    const data =
+      await razorpayResponse.json();
+
+
+    if (!razorpayResponse.ok) {
+
+      console.error(
+        "Razorpay order error:",
+        data
+      );
+
+
+      return new Response(
+        JSON.stringify({
+          error:
+            data.error?.description ||
+            "Razorpay order creation failed."
+        }),
+        {
+          status: razorpayResponse.status,
+          headers: {
+            "Content-Type":
+              "application/json"
+          }
+        }
+      );
+
+    }
+
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        id: order.id,
-        amount: order.amount,
-        currency: order.currency
-      }),
+      JSON.stringify(data),
       {
         status: 200,
+
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type":
+            "application/json"
         }
       }
     );
 
+
   } catch (error) {
-    console.error("CREATE ORDER ERROR:", error);
+
+    console.error(
+      "Create order error:",
+      error
+    );
+
 
     return new Response(
       JSON.stringify({
-        success: false,
         error:
-          error?.error?.description ||
-          error?.message ||
-          "Order creation failed"
+          error.message ||
+          "Unable to create Razorpay order."
       }),
       {
         status: 500,
+
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type":
+            "application/json"
         }
       }
     );
+
   }
+
 }
