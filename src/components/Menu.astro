@@ -4,10 +4,7 @@ import cakes from "../data/Products.js";
 
 <section class="menu">
 
-  <!-- =========================
-       MENU HERO
-  ========================== -->
-
+  <!-- MENU HERO -->
   <div class="menu-hero">
 
     <div class="menu-hero-content">
@@ -29,21 +26,21 @@ import cakes from "../data/Products.js";
 
       <div class="menu-highlights">
 
-        <div>
+        <div class="highlight">
           <strong>Freshly Baked</strong>
           <span>Made fresh with care</span>
         </div>
 
         <div class="divider"></div>
 
-        <div>
+        <div class="highlight">
           <strong>Quality Ingredients</strong>
           <span>Selected with purpose</span>
         </div>
 
         <div class="divider"></div>
 
-        <div>
+        <div class="highlight">
           <strong>Made to Delight</strong>
           <span>For every occasion</span>
         </div>
@@ -61,9 +58,7 @@ import cakes from "../data/Products.js";
   </div>
 
 
-  <!-- =========================
-       MENU HEADER
-  ========================== -->
+  <!-- COLLECTION HEADER -->
 
   <div class="collection-header">
 
@@ -86,9 +81,7 @@ import cakes from "../data/Products.js";
   </div>
 
 
-  <!-- =========================
-       PRODUCTS
-  ========================== -->
+  <!-- PRODUCTS -->
 
   <div class="cake-container">
 
@@ -156,9 +149,7 @@ import cakes from "../data/Products.js";
   </div>
 
 
-  <!-- =========================
-       BOTTOM MESSAGE
-  ========================== -->
+  <!-- BOTTOM MESSAGE -->
 
   <div class="menu-bottom">
 
@@ -202,13 +193,9 @@ import cakes from "../data/Products.js";
       );
 
       if (existingProduct) {
-
         existingProduct.quantity += 1;
-
       } else {
-
         cart.push(product);
-
       }
 
       localStorage.setItem(
@@ -226,582 +213,838 @@ import cakes from "../data/Products.js";
 
 <style>
 
-  /* =========================
-     MAIN
-  ========================== */
+/* =========================================
+   MAIN
+========================================= */
 
-  .menu {
-    background: #ffffff;
-    min-height: 100vh;
-    padding-bottom: 90px;
-  }
-
-
-  /* =========================
-     COMMON
-  ========================== */
-
-  .eyebrow {
-    margin: 0 0 16px;
-    color: #8a6a38;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-  }
+.menu {
+  background: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
 
 
-  /* =========================
-     MENU HERO
-  ========================== */
+/* =========================================
+   COMMON
+========================================= */
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: #8a6a38;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.menu-hero {
+  min-height: 460px;
+
+  padding: 75px 8%;
+
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+
+  align-items: center;
+
+  position: relative;
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f7fbff 55%,
+      #eaf2f8 100%
+    );
+}
+
+
+.menu-hero-content {
+  max-width: 700px;
+  position: relative;
+  z-index: 2;
+}
+
+
+.menu-hero h1 {
+  margin: 0;
+
+  max-width: 700px;
+
+  color: #0b1f3a;
+
+  font-size: clamp(45px, 5vw, 68px);
+
+  line-height: 1.08;
+
+  letter-spacing: -2px;
+}
+
+
+.menu-hero h1 span {
+  display: block;
+  color: #547896;
+}
+
+
+.menu-description {
+  max-width: 620px;
+
+  margin: 24px 0 34px;
+
+  color: #596878;
+
+  font-size: 16px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================
+   HIGHLIGHTS
+========================================= */
+
+.menu-highlights {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+
+.highlight {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+.menu-highlights strong {
+  color: #0b1f3a;
+  font-size: 12px;
+}
+
+
+.menu-highlights span {
+  color: #7a8794;
+  font-size: 10px;
+}
+
+
+.divider {
+  width: 1px;
+  height: 32px;
+  background: #c9d4de;
+}
+
+
+/* =========================================
+   HERO DECORATION
+========================================= */
+
+.menu-hero-decoration {
+  position: relative;
+  height: 350px;
+}
+
+
+.circle {
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  right: 5%;
+  top: 10px;
+
+  border-radius: 50%;
+
+  background: #dceaf4;
+}
+
+
+.small-circle {
+  position: absolute;
+
+  width: 95px;
+  height: 95px;
+
+  right: 0;
+  bottom: 20px;
+
+  border-radius: 50%;
+
+  background: #0b1f3a;
+}
+
+
+.gold-line {
+  position: absolute;
+
+  width: 130px;
+  height: 1px;
+
+  background: #c9a96e;
+
+  right: 22%;
+  top: 55%;
+
+  transform: rotate(-35deg);
+}
+
+
+/* =========================================
+   COLLECTION HEADER
+========================================= */
+
+.collection-header {
+  max-width: 1150px;
+
+  margin: 80px auto 42px;
+
+  padding: 0 25px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: end;
+
+  gap: 30px;
+}
+
+
+.collection-header h2 {
+  margin: 0;
+
+  color: #0b1f3a;
+
+  font-size: 40px;
+
+  letter-spacing: -1px;
+}
+
+
+.collection-header > p {
+  max-width: 330px;
+
+  margin: 0;
+
+  color: #718090;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   PRODUCTS
+========================================= */
+
+.cake-container {
+  max-width: 1150px;
+
+  margin: 0 auto;
+
+  padding: 0 25px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 24px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.cake-card {
+  min-width: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #e4e9ee;
+
+  overflow: hidden;
+
+  border-radius: 6px;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.cake-card:hover {
+  transform: translateY(-7px);
+
+  box-shadow:
+    0 20px 45px
+    rgba(11, 31, 58, 0.11);
+}
+
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.cake-image-wrapper {
+  height: 280px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background: #f2f5f8;
+}
+
+
+.cake-image-wrapper img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 0.45s ease;
+}
+
+
+.cake-card:hover
+.cake-image-wrapper img {
+  transform: scale(1.05);
+}
+
+
+/* =========================================
+   PRODUCT NUMBER
+========================================= */
+
+.product-number {
+  position: absolute;
+
+  top: 14px;
+  left: 14px;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.94);
+
+  color: #0b1f3a;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.cake-info {
+  padding: 21px;
+}
+
+
+.product-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+
+.cake-info h3 {
+  margin: 0;
+
+  color: #0b1f3a;
+
+  font-size: 18px;
+
+  line-height: 1.35;
+}
+
+
+.price {
+  margin: 0;
+
+  color: #8a6a38;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+.product-description {
+  margin: 12px 0 20px;
+
+  min-height: 42px;
+
+  color: #7a8794;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.add-cart {
+  width: 100%;
+
+  padding: 12px 15px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border: 1px solid #0b1f3a;
+
+  border-radius: 3px;
+
+  background: #0b1f3a;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.add-cart:hover {
+  background: #18395d;
+}
+
+
+.arrow {
+  font-size: 17px;
+
+  transition:
+    transform 0.25s ease;
+}
+
+
+.add-cart:hover .arrow {
+  transform: translateX(4px);
+}
+
+
+/* =========================================
+   BOTTOM
+========================================= */
+
+.menu-bottom {
+  max-width: 1150px;
+
+  margin: 75px auto 0;
+
+  padding: 0 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 22px;
+}
+
+
+.menu-bottom p {
+  margin: 0;
+
+  color: #7b8794;
+
+  font-size: 12px;
+
+  letter-spacing: 1px;
+
+  text-align: center;
+}
+
+
+.bottom-line {
+  height: 1px;
+
+  width: 100px;
+
+  background: #d8e0e7;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
 
   .menu-hero {
-    min-height: 470px;
-    padding: 80px 8%;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
+    grid-template-columns: 1fr;
 
-    background:
-      linear-gradient(
-        135deg,
-        #ffffff 0%,
-        #f7fbff 55%,
-        #eaf2f8 100%
-      );
+    padding: 65px 6%;
   }
 
-
-  .menu-hero-content {
-    max-width: 720px;
-    position: relative;
-    z-index: 2;
-  }
-
-
-  .menu-hero h1 {
-    margin: 0;
-    max-width: 700px;
-    color: #0b1f3a;
-    font-size: clamp(45px, 5vw, 68px);
-    line-height: 1.08;
-    letter-spacing: -2px;
-  }
-
-
-  .menu-hero h1 span {
-    display: block;
-    color: #547896;
-  }
-
-
-  .menu-description {
-    max-width: 620px;
-    margin: 25px 0 35px;
-    color: #596878;
-    font-size: 16px;
-    line-height: 1.8;
-  }
-
-
-  /* =========================
-     HIGHLIGHTS
-  ========================== */
-
-  .menu-highlights {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-  }
-
-
-  .menu-highlights div:not(.divider) {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-
-  .menu-highlights strong {
-    color: #0b1f3a;
-    font-size: 12px;
-  }
-
-
-  .menu-highlights span {
-    color: #7a8794;
-    font-size: 10px;
-  }
-
-
-  .divider {
-    width: 1px;
-    height: 32px;
-    background: #c9d4de;
-  }
-
-
-  /* =========================
-     DECORATION
-  ========================== */
 
   .menu-hero-decoration {
-    position: relative;
-    height: 350px;
+    display: none;
   }
 
-
-  .circle {
-    position: absolute;
-    width: 330px;
-    height: 330px;
-    right: 5%;
-    top: 10px;
-    border-radius: 50%;
-    background: #dceaf4;
-  }
-
-
-  .small-circle {
-    position: absolute;
-    width: 95px;
-    height: 95px;
-    right: 0;
-    bottom: 20px;
-    border-radius: 50%;
-    background: #0b1f3a;
-  }
-
-
-  .gold-line {
-    position: absolute;
-    width: 130px;
-    height: 1px;
-    background: #c9a96e;
-    right: 22%;
-    top: 55%;
-    transform: rotate(-35deg);
-  }
-
-
-  /* =========================
-     COLLECTION HEADER
-  ========================== */
-
-  .collection-header {
-    max-width: 1150px;
-    margin: 90px auto 45px;
-    padding: 0 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 30px;
-  }
-
-
-  .collection-header h2 {
-    margin: 0;
-    color: #0b1f3a;
-    font-size: 40px;
-    letter-spacing: -1px;
-  }
-
-
-  .collection-header > p {
-    max-width: 330px;
-    margin: 0;
-    color: #718090;
-    font-size: 14px;
-    line-height: 1.7;
-  }
-
-
-  /* =========================
-     PRODUCT GRID
-  ========================== */
 
   .cake-container {
-    max-width: 1150px;
-    margin: 0 auto;
-    padding: 0 25px;
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
 
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    gap: 20px;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+  .menu {
+    padding-bottom: 50px;
   }
 
 
-  /* =========================
-     CARD
-  ========================== */
+  /* HERO */
 
-  .cake-card {
-    background: #ffffff;
-    border: 1px solid #e4e9ee;
-    overflow: hidden;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-  }
+  .menu-hero {
+    min-height: auto;
 
+    padding: 48px 16px 50px;
 
-  .cake-card:hover {
-    transform: translateY(-7px);
-    box-shadow:
-      0 20px 45px
-      rgba(11, 31, 58, 0.11);
-  }
-
-
-  /* =========================
-     IMAGE
-  ========================== */
-
-  .cake-image-wrapper {
-    height: 285px;
-    position: relative;
-    overflow: hidden;
-    background: #f2f5f8;
-  }
-
-
-  .cake-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    transition: transform 0.45s ease;
-  }
-
-
-  .cake-card:hover
-  .cake-image-wrapper img {
-    transform: scale(1.05);
-  }
-
-
-  .product-number {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-
-    width: 34px;
-    height: 34px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255,255,255,0.94);
-    color: #0b1f3a;
-
-    font-size: 10px;
-    font-weight: 700;
-  }
-
-
-  /* =========================
-     CARD CONTENT
-  ========================== */
-
-  .cake-info {
-    padding: 23px;
-  }
-
-
-  .product-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    gap: 15px;
-  }
-
-
-  .cake-info h3 {
-    margin: 0;
-    color: #0b1f3a;
-    font-size: 19px;
-    line-height: 1.35;
-  }
-
-
-  .price {
-    margin: 0;
-    color: #8a6a38;
-    font-size: 17px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-
-  .product-description {
-    margin: 12px 0 22px;
-    min-height: 42px;
-
-    color: #7a8794;
-    font-size: 13px;
-    line-height: 1.65;
-  }
-
-
-  /* =========================
-     ADD CART
-  ========================== */
-
-  .add-cart {
-    width: 100%;
-    padding: 13px 17px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border: 1px solid #0b1f3a;
-    border-radius: 3px;
-
-    background: #0b1f3a;
-    color: #ffffff;
-
-    cursor: pointer;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    transition: all 0.25s ease;
-  }
-
-
-  .add-cart:hover {
-    background: #18395d;
-  }
-
-
-  .arrow {
-    font-size: 17px;
-    transition: transform 0.25s ease;
-  }
-
-
-  .add-cart:hover .arrow {
-    transform: translateX(4px);
-  }
-
-
-  /* =========================
-     BOTTOM
-  ========================== */
-
-  .menu-bottom {
-    max-width: 1150px;
-    margin: 80px auto 0;
-    padding: 0 25px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-  }
-
-
-  .menu-bottom p {
-    margin: 0;
-    color: #7b8794;
-    font-size: 12px;
-    letter-spacing: 1px;
     text-align: center;
   }
 
 
+  .menu-hero-content {
+    margin: auto;
+  }
+
+
+  .eyebrow {
+    font-size: 9px;
+
+    letter-spacing: 2.5px;
+
+    margin-bottom: 11px;
+  }
+
+
+  .menu-hero h1 {
+    font-size: 35px;
+
+    line-height: 1.08;
+
+    letter-spacing: -1px;
+  }
+
+
+  .menu-description {
+    margin: 18px auto 27px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+  }
+
+
+  /* HIGHLIGHTS */
+
+  .menu-highlights {
+    justify-content: center;
+
+    gap: 8px;
+
+    width: 100%;
+  }
+
+
+  .menu-highlights strong {
+    font-size: 8px;
+  }
+
+
+  .menu-highlights span {
+    font-size: 7px;
+  }
+
+
+  .divider {
+    height: 25px;
+  }
+
+
+  /* COLLECTION */
+
+  .collection-header {
+    margin: 48px auto 25px;
+
+    padding: 0 15px;
+
+    display: block;
+
+    text-align: left;
+  }
+
+
+  .collection-header h2 {
+    font-size: 29px;
+
+    line-height: 1.2;
+  }
+
+
+  .collection-header > p {
+    margin-top: 9px;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+  }
+
+
+  /* =================================
+     TWO COLUMN MOBILE PRODUCTS
+  ================================= */
+
+  .cake-container {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    padding: 0 12px;
+
+    gap: 12px;
+  }
+
+
+  /* CARD */
+
+  .cake-card {
+    border-radius: 8px;
+  }
+
+
+  /* IMAGE */
+
+  .cake-image-wrapper {
+    height: 155px;
+  }
+
+
+  /* NUMBER */
+
+  .product-number {
+    top: 7px;
+
+    left: 7px;
+
+    width: 27px;
+
+    height: 27px;
+
+    font-size: 8px;
+  }
+
+
+  /* CONTENT */
+
+  .cake-info {
+    padding: 11px;
+  }
+
+
+  .product-top {
+    display: block;
+  }
+
+
+  .cake-info h3 {
+    font-size: 14px;
+
+    line-height: 1.25;
+
+    margin-bottom: 5px;
+  }
+
+
+  .price {
+    font-size: 14px;
+  }
+
+
+  .product-description {
+    margin: 8px 0 12px;
+
+    min-height: auto;
+
+    font-size: 10px;
+
+    line-height: 1.45;
+  }
+
+
+  /* BUTTON */
+
+  .add-cart {
+    padding: 8px 9px;
+
+    font-size: 9px;
+
+    border-radius: 3px;
+  }
+
+
+  .arrow {
+    font-size: 13px;
+  }
+
+
+  /* BOTTOM */
+
+  .menu-bottom {
+    margin-top: 48px;
+
+    padding: 0 15px;
+
+    gap: 10px;
+  }
+
+
+  .menu-bottom p {
+    font-size: 9px;
+
+    letter-spacing: 0.5px;
+  }
+
+
   .bottom-line {
-    height: 1px;
-    width: 100px;
-    background: #d8e0e7;
+    width: 28px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+
+  .menu-hero {
+    padding-left: 13px;
+    padding-right: 13px;
   }
 
 
-  /* =========================
-     TABLET
-  ========================== */
-
-  @media (max-width: 950px) {
-
-    .menu-hero {
-      grid-template-columns: 1fr;
-      padding: 70px 6%;
-    }
-
-
-    .menu-hero-decoration {
-      display: none;
-    }
-
-
-    .cake-container {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
+  .menu-hero h1 {
+    font-size: 32px;
   }
 
 
-  /* =========================
-     MOBILE
-  ========================== */
-
-  @media (max-width: 650px) {
-
-    .menu {
-      padding-bottom: 60px;
-    }
-
-
-    .menu-hero {
-      min-height: auto;
-      padding: 55px 20px 60px;
-      text-align: center;
-    }
-
-
-    .menu-hero-content {
-      margin: auto;
-    }
-
-
-    .menu-hero h1 {
-      font-size: 42px;
-      letter-spacing: -1.3px;
-    }
-
-
-    .menu-description {
-      font-size: 14px;
-      line-height: 1.75;
-      margin: 22px auto 30px;
-    }
-
-
-    .menu-highlights {
-      justify-content: center;
-      gap: 9px;
-    }
-
-
-    .menu-highlights strong {
-      font-size: 9px;
-    }
-
-
-    .menu-highlights span {
-      font-size: 8px;
-    }
-
-
-    .divider {
-      height: 27px;
-    }
-
-
-    .collection-header {
-      margin: 60px auto 30px;
-      padding: 0 20px;
-
-      display: block;
-    }
-
-
-    .collection-header h2 {
-      font-size: 32px;
-    }
-
-
-    .collection-header > p {
-      margin-top: 12px;
-      font-size: 13px;
-    }
-
-
-    .cake-container {
-      grid-template-columns: 1fr;
-      padding: 0 20px;
-      gap: 20px;
-    }
-
-
-    .cake-image-wrapper {
-      height: 260px;
-    }
-
-
-    .cake-info {
-      padding: 20px;
-    }
-
-
-    .cake-info h3 {
-      font-size: 18px;
-    }
-
-
-    .product-description {
-      min-height: auto;
-    }
-
-
-    .menu-bottom {
-      padding: 0 20px;
-      gap: 12px;
-      margin-top: 60px;
-    }
-
-
-    .bottom-line {
-      width: 35px;
-    }
-
+  .menu-description {
+    font-size: 12px;
   }
 
 
-  /* =========================
-     SMALL PHONES
-  ========================== */
-
-  @media (max-width: 380px) {
-
-    .menu-hero {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-
-
-    .menu-hero h1 {
-      font-size: 36px;
-    }
-
-
-    .menu-highlights {
-      gap: 6px;
-    }
-
-
-    .menu-highlights strong {
-      font-size: 8px;
-    }
-
-
-    .menu-highlights span {
-      font-size: 7px;
-    }
-
-
-    .cake-container {
-      padding: 0 16px;
-    }
-
-
-    .collection-header {
-      padding: 0 16px;
-    }
-
+  .menu-highlights {
+    gap: 5px;
   }
+
+
+  .menu-highlights strong {
+    font-size: 7px;
+  }
+
+
+  .menu-highlights span {
+    font-size: 6px;
+  }
+
+
+  .cake-container {
+    padding: 0 9px;
+
+    gap: 9px;
+  }
+
+
+  .cake-image-wrapper {
+    height: 135px;
+  }
+
+
+  .cake-info {
+    padding: 9px;
+  }
+
+
+  .cake-info h3 {
+    font-size: 13px;
+  }
+
+
+  .price {
+    font-size: 13px;
+  }
+
+
+  .product-description {
+    font-size: 9px;
+  }
+
+
+  .add-cart {
+    padding: 7px;
+
+    font-size: 8px;
+  }
+
+
+  .arrow {
+    font-size: 11px;
+  }
+
+}
 
 </style>

@@ -19,257 +19,675 @@ const products = [
 ---
 
 <section class="products">
+
   <div class="section-heading">
-    <p class="subtitle">FRESHLY BAKED</p>
-    <h2>Our Products</h2>
-    <div class="heading-line"></div>
-    <p class="description">
-      Delicious treats made with love, fresh ingredients and a touch of sweetness.
+
+    <p class="subtitle">
+      FRESHLY BAKED
     </p>
+
+    <h2>
+      Our Products
+    </h2>
+
+    <div class="heading-line"></div>
+
+    <p class="description">
+      Delicious treats made with love, fresh ingredients
+      and a touch of sweetness.
+    </p>
+
   </div>
+
 
   <div class="product-container">
+
     {products.map((product) => (
-      <div class="card">
+
+      <article class="card">
 
         <div class="image-wrapper">
-          <img src={product.image} alt={product.name} />
-          <span class="fresh-badge">Fresh</span>
+
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+          />
+
+          <span class="fresh-badge">
+            Fresh
+          </span>
+
         </div>
+
 
         <div class="card-content">
-          <h3>{product.name}</h3>
+
+          <h3>
+            {product.name}
+          </h3>
 
           <div class="card-bottom">
-            <p class="price">{product.price}</p>
 
-            <button>
+            <p class="price">
+              {product.price}
+            </p>
+
+            <a
+              href="/menu"
+              class="order-button"
+            >
               Order Now
               <span>→</span>
-            </button>
+            </a>
+
           </div>
+
         </div>
 
-      </div>
+      </article>
+
     ))}
+
   </div>
+
 </section>
 
 
 <style>
+
+/* =========================
+   PRODUCTS
+========================= */
+
 .products {
-  padding: 80px 40px;
-  background: #fffaf5;
-  text-align: center;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 65px 25px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffaf5 0%,
+      #ffffff 100%
+    );
+
 }
 
-/* Heading */
+
+/* =========================
+   HEADING
+========================= */
 
 .section-heading {
-  max-width: 650px;
-  margin: 0 auto 50px;
+
+  max-width: 620px;
+
+  margin:
+    0 auto 42px;
+
+  text-align: center;
+
 }
+
 
 .subtitle {
-  margin: 0 0 10px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 3px;
+
+  margin:
+    0 0 8px;
+
   color: #a66a45;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
 }
+
 
 .section-heading h2 {
+
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 42px;
+
   color: #2b211c;
-  font-weight: 600;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 40px;
+
+  line-height: 1.15;
+
+  font-weight: 500;
+
 }
+
 
 .heading-line {
-  width: 55px;
+
+  width: 45px;
+
   height: 2px;
+
+  margin:
+    14px auto;
+
   background: #a66a45;
-  margin: 18px auto;
+
 }
+
 
 .description {
-  margin: 0;
+
+  max-width: 500px;
+
+  margin: 0 auto;
+
   color: #756a64;
-  font-size: 15px;
+
+  font-size: 14px;
+
   line-height: 1.7;
+
 }
 
-/* Products */
+
+/* =========================
+   PRODUCT GRID
+========================= */
 
 .product-container {
-  max-width: 1150px;
+
+  width: 100%;
+
+  max-width: 1120px;
+
   margin: 0 auto;
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+
 }
 
-/* Card */
+
+/* =========================
+   CARD
+========================= */
 
 .card {
-  background: #ffffff;
-  border-radius: 4px;
-  overflow: hidden;
-  text-align: left;
 
-  box-shadow: 0 10px 35px rgba(65, 43, 31, 0.08);
+  min-width: 0;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border:
+    1px solid #eee4dc;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 7px 25px
+    rgba(65, 43, 31, 0.07);
 
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
+
 }
+
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 45px rgba(65, 43, 31, 0.15);
+
+  transform:
+    translateY(-6px);
+
+  box-shadow:
+    0 15px 38px
+    rgba(65, 43, 31, 0.13);
+
 }
 
-/* Image */
+
+/* =========================
+   IMAGE
+========================= */
 
 .image-wrapper {
+
   position: relative;
-  height: 280px;
+
+  width: 100%;
+
+  height: 250px;
+
   overflow: hidden;
+
+  background: #f5eee8;
+
 }
+
 
 .card img {
+
+  display: block;
+
   width: 100%;
+
   height: 100%;
+
   object-fit: cover;
 
-  transition: transform 0.5s ease;
+  transition:
+    transform 0.5s ease;
+
 }
+
 
 .card:hover img {
-  transform: scale(1.06);
+
+  transform:
+    scale(1.05);
+
 }
+
+
+/* =========================
+   BADGE
+========================= */
 
 .fresh-badge {
+
   position: absolute;
-  top: 15px;
-  left: 15px;
 
-  padding: 7px 13px;
+  top: 12px;
 
-  background: #ffffff;
+  left: 12px;
+
+  padding:
+    6px 10px;
+
+  background:
+    rgba(255,255,255,0.95);
+
   color: #6d4936;
 
-  font-size: 11px;
+  border-radius: 20px;
+
+  font-size: 9px;
+
   font-weight: 700;
+
   letter-spacing: 1px;
 
-  border-radius: 20px;
 }
 
-/* Content */
+
+/* =========================
+   CONTENT
+========================= */
 
 .card-content {
-  padding: 24px;
+
+  padding: 18px;
+
 }
+
 
 .card-content h3 {
-  margin: 0 0 22px;
 
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 23px;
-  font-weight: 600;
+  margin:
+    0 0 16px;
 
   color: #2b211c;
-}
 
-.card-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.price {
-  margin: 0;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
   font-size: 20px;
-  font-weight: 700;
+
+  font-weight: 500;
+
+  line-height: 1.3;
+
+}
+
+
+/* =========================
+   BOTTOM
+========================= */
+
+.card-bottom {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 8px;
+
+}
+
+
+.price {
+
+  margin: 0;
 
   color: #a66a45;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
 }
 
-/* Button */
 
-button {
-  border: 1px solid #2b211c;
+/* =========================
+   BUTTON
+========================= */
+
+.order-button {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding:
+    9px 13px;
+
+  border:
+    1px solid #2b211c;
+
+  border-radius: 4px;
+
   background: #2b211c;
+
   color: #ffffff;
 
-  padding: 11px 16px;
+  font-size: 11px;
 
-  font-size: 13px;
   font-weight: 600;
 
-  cursor: pointer;
+  text-decoration: none;
 
-  transition: all 0.3s ease;
+  white-space: nowrap;
+
+  transition:
+    all 0.25s ease;
+
 }
 
-button span {
-  margin-left: 7px;
-  font-size: 16px;
+
+.order-button span {
+
+  margin-left: 5px;
+
+  font-size: 14px;
+
 }
 
-button:hover {
+
+.order-button:hover {
+
   background: transparent;
+
   color: #2b211c;
+
 }
 
 
-/* Tablet */
+/* =========================
+   TABLET
+========================= */
 
 @media (max-width: 900px) {
-  .product-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
-
-/* Mobile */
-
-@media (max-width: 600px) {
   .products {
-    padding: 60px 20px;
+
+    padding:
+      55px 20px;
+
   }
 
-  .section-heading {
-    margin-bottom: 35px;
-  }
-
-  .section-heading h2 {
-    font-size: 34px;
-  }
-
-  .description {
-    font-size: 14px;
-  }
 
   .product-container {
-    grid-template-columns: 1fr;
-    gap: 25px;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
   }
+
 
   .image-wrapper {
-    height: 250px;
+
+    height: 220px;
+
   }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+  .products {
+
+    padding:
+      42px 10px;
+
+  }
+
+
+  .section-heading {
+
+    margin-bottom: 28px;
+
+    padding:
+      0 8px;
+
+  }
+
+
+  .subtitle {
+
+    font-size: 9px;
+
+    letter-spacing: 2.5px;
+
+  }
+
+
+  .section-heading h2 {
+
+    font-size: 29px;
+
+  }
+
+
+  .heading-line {
+
+    width: 38px;
+
+    margin:
+      10px auto;
+
+  }
+
+
+  .description {
+
+    font-size: 12px;
+
+    line-height: 1.55;
+
+  }
+
+
+  /* TWO COLUMNS */
+
+  .product-container {
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+
+  }
+
+
+  .card {
+
+    border-radius: 9px;
+
+  }
+
+
+  .image-wrapper {
+
+    height: 145px;
+
+  }
+
+
+  .fresh-badge {
+
+    top: 7px;
+
+    left: 7px;
+
+    padding:
+      4px 7px;
+
+    font-size: 7px;
+
+  }
+
 
   .card-content {
-    padding: 20px;
+
+    padding: 11px;
+
   }
 
+
   .card-content h3 {
-    font-size: 21px;
+
+    margin-bottom: 11px;
+
+    font-size: 14px;
+
   }
+
+
+  .price {
+
+    font-size: 14px;
+
+  }
+
+
+  .order-button {
+
+    padding:
+      7px 8px;
+
+    font-size: 8px;
+
+  }
+
+
+  .order-button span {
+
+    margin-left: 3px;
+
+    font-size: 10px;
+
+  }
+
 }
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 380px) {
+
+  .products {
+
+    padding-left: 8px;
+
+    padding-right: 8px;
+
+  }
+
+
+  .product-container {
+
+    gap: 9px;
+
+  }
+
+
+  .image-wrapper {
+
+    height: 130px;
+
+  }
+
+
+  .card-content {
+
+    padding: 9px;
+
+  }
+
+
+  .card-content h3 {
+
+    font-size: 13px;
+
+  }
+
+
+  .price {
+
+    font-size: 13px;
+
+  }
+
+
+  .order-button {
+
+    padding:
+      6px 7px;
+
+    font-size: 7px;
+
+  }
+
+}
+
 </style>
