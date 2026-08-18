@@ -1,210 +1,857 @@
 ---
-import astroLogo from '../assets/astro.svg';
-import background from '../assets/background.svg';
+import Layout from "../layouts/Layout.astro";
+
+const products = [
+  {
+    name: "Chocolate Cake",
+    image: "/products/chocolate.jpg",
+    price: "₹500"
+  },
+  {
+    name: "Red Velvet Cake",
+    image: "/products/redvelvet.jpg",
+    price: "₹700"
+  },
+  {
+    name: "Cup Cake",
+    image: "/products/cupcake.jpg",
+    price: "₹100"
+  }
+];
 ---
 
-<div id="container">
-	<img id="background" src={background.src} alt="" fetchpriority="high" />
-	<main>
-		<section id="hero">
-			<a href="https://astro.build"
-				><img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" /></a
-			>
-			<h1>
-				To get started, open the <code><pre>src/pages</pre></code> directory in your project.
-			</h1>
-			<section id="links">
-				<a class="button" href="https://docs.astro.build">Read our docs</a>
-				<a href="https://astro.build/chat"
-					>Join our Discord <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36"
-						><path
-							fill="currentColor"
-							d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15ZM42.45 65.69C36.18 65.69 31 60 31 53s5-12.74 11.43-12.74S54 46 53.89 53s-5.05 12.69-11.44 12.69Zm42.24 0C78.41 65.69 73.25 60 73.25 53s5-12.74 11.44-12.74S96.23 46 96.12 53s-5.04 12.69-11.43 12.69Z"
-						></path></svg
-					>
-				</a>
-			</section>
-		</section>
-	</main>
+<Layout title="Sravs Bakery">
 
-	<a href="https://astro.build/blog/astro-6-beta/" id="news" class="box">
-		<svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"
-			><path
-				d="M24.667 12c1.333 1.414 2 3.192 2 5.334 0 4.62-4.934 5.7-7.334 12C18.444 28.567 18 27.456 18 26c0-4.642 6.667-7.053 6.667-14Zm-5.334-5.333c1.6 1.65 2.4 3.43 2.4 5.333 0 6.602-8.06 7.59-6.4 17.334C13.111 27.787 12 25.564 12 22.666c0-4.434 7.333-8 7.333-16Zm-6-5.333C15.111 3.555 16 5.556 16 7.333c0 8.333-11.333 10.962-5.333 22-3.488-.774-6-4-6-8 0-8.667 8.666-10 8.666-20Z"
-				fill="#111827"></path></svg
-		>
-		<h2>What's New in Astro 6.0?</h2>
-		<p>
-			Redesigned dev server, fonts, live collections, built-in CSP support, and more! Click to
-			explore Astro 6.0's new features.
-		</p>
-	</a>
-</div>
+  <!-- HERO SECTION -->
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <p class="eyebrow">WELCOME TO SRAVS BAKERY</p>
+
+      <h1>
+        Baked with love,
+        <span>made for you.</span>
+      </h1>
+
+      <p class="hero-text">
+        Fresh cakes, delicious pastries and delightful treats
+        made with the finest ingredients and lots of love.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="/menu" class="primary-btn">
+          Explore Our Menu
+          <span>→</span>
+        </a>
+
+        <a href="/contact" class="secondary-btn">
+          Contact Us
+        </a>
+      </div>
+
+    </div>
+
+    <div class="hero-image">
+      <img
+        src="/products/chocolate.jpg"
+        alt="Freshly baked chocolate cake"
+      />
+    </div>
+
+  </section>
+
+
+  <!-- PRODUCTS SECTION -->
+  <section class="products">
+
+    <div class="section-heading">
+
+      <p class="subtitle">OUR SPECIALITIES</p>
+
+      <h2>Made Fresh, Just for You</h2>
+
+      <div class="heading-line"></div>
+
+      <p>
+        Discover some of our favourite freshly baked treats.
+      </p>
+
+    </div>
+
+
+    <div class="product-container">
+
+      {products.map((product) => (
+
+        <div class="card">
+
+          <div class="image-wrapper">
+
+            <img
+              src={product.image}
+              alt={product.name}
+            />
+
+            <span class="fresh-badge">
+              Fresh
+            </span>
+
+          </div>
+
+
+          <div class="card-content">
+
+            <h3>{product.name}</h3>
+
+            <div class="card-bottom">
+
+              <p class="price">
+                {product.price}
+              </p>
+
+              <a href="/menu" class="order-btn">
+                Order Now
+                <span>→</span>
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+
+    <div class="view-menu">
+      <a href="/menu">
+        View Full Menu
+        <span>→</span>
+      </a>
+    </div>
+
+  </section>
+
+
+  <!-- ABOUT / QUALITY SECTION -->
+  <section class="story">
+
+    <div class="story-image">
+      <img
+        src="/products/redvelvet.jpg"
+        alt="Sravs Bakery cake"
+      />
+    </div>
+
+
+    <div class="story-content">
+
+      <p class="subtitle">
+        WHY SRAVS BAKERY
+      </p>
+
+      <h2>
+        A little sweetness
+        <span>in every bite.</span>
+      </h2>
+
+      <p>
+        At Sravs Bakery, we believe that every special moment
+        deserves something delicious. From everyday cravings
+        to celebrations, our treats are prepared with care
+        and served fresh.
+      </p>
+
+      <a href="/about" class="story-btn">
+        Our Story
+        <span>→</span>
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA SECTION -->
+  <section class="cta">
+
+    <p class="subtitle">
+      HAVE A SWEET CRAVING?
+    </p>
+
+    <h2>
+      Let us make your day
+      <span>a little sweeter.</span>
+    </h2>
+
+    <a href="/menu">
+      Explore Menu
+      <span>→</span>
+    </a>
+
+  </section>
+
+</Layout>
+
 
 <style>
-	#background {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: -1;
-		filter: blur(100px);
-	}
 
-	#container {
-		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-		height: 100%;
-	}
+  /* =========================
+     GLOBAL
+  ========================= */
 
-	main {
-		height: 100%;
-		display: flex;
-		justify-content: center;
-	}
+  :global(*) {
+    box-sizing: border-box;
+  }
 
-	#hero {
-		display: flex;
-		align-items: start;
-		flex-direction: column;
-		justify-content: center;
-		padding: 16px;
-	}
+  :global(body) {
+    margin: 0;
+    background: #fffaf5;
+    color: #2b211c;
+  }
 
-	h1 {
-		font-size: 22px;
-		margin-top: 0.25em;
-	}
 
-	#links {
-		display: flex;
-		gap: 16px;
-	}
+  /* =========================
+     HERO
+  ========================= */
 
-	#links a {
-		display: flex;
-		align-items: center;
-		padding: 10px 12px;
-		color: #111827;
-		text-decoration: none;
-		transition: color 0.2s;
-	}
+  .hero {
+    min-height: 650px;
 
-	#links a:hover {
-		color: rgb(78, 80, 86);
-	}
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
 
-	#links a svg {
-		height: 1em;
-		margin-left: 8px;
-	}
+    max-width: 1200px;
+    margin: auto;
 
-	#links a.button {
-		color: white;
-		background: linear-gradient(83.21deg, #3245ff 0%, #bc52ee 100%);
-		box-shadow:
-			inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-			inset 0 -2px 0 rgba(0, 0, 0, 0.24);
-		border-radius: 10px;
-	}
+    padding: 70px 40px;
+    gap: 70px;
+  }
 
-	#links a.button:hover {
-		color: rgb(230, 230, 230);
-		box-shadow: none;
-	}
 
-	pre {
-		font-family:
-			ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono',
-			monospace;
-		font-weight: normal;
-		background: linear-gradient(14deg, #d83333 0%, #f041ff 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-		margin: 0;
-	}
+  .hero-content {
+    max-width: 570px;
+  }
 
-	h2 {
-		margin: 0 0 1em;
-		font-weight: normal;
-		color: #111827;
-		font-size: 20px;
-	}
 
-	p {
-		color: #4b5563;
-		font-size: 16px;
-		line-height: 24px;
-		letter-spacing: -0.006em;
-		margin: 0;
-	}
+  .eyebrow,
+  .subtitle {
+    margin: 0 0 14px;
 
-	code {
-		display: inline-block;
-		background:
-			linear-gradient(66.77deg, #f3cddd 0%, #f5cee7 100%) padding-box,
-			linear-gradient(155deg, #d83333 0%, #f041ff 18%, #f5cee7 45%) border-box;
-		border-radius: 8px;
-		border: 1px solid transparent;
-		padding: 6px 8px;
-	}
+    color: #a66a45;
 
-	.box {
-		padding: 16px;
-		background: rgba(255, 255, 255, 1);
-		border-radius: 16px;
-		border: 1px solid white;
-	}
+    font-size: 12px;
+    font-weight: 700;
 
-	#news {
-		position: absolute;
-		bottom: 16px;
-		right: 16px;
-		max-width: 300px;
-		text-decoration: none;
-		transition: background 0.2s;
-		backdrop-filter: blur(50px);
-	}
+    letter-spacing: 3px;
+  }
 
-	#news:hover {
-		background: rgba(255, 255, 255, 0.55);
-	}
 
-	@media screen and (max-height: 368px) {
-		#news {
-			display: none;
-		}
-	}
+  .hero h1 {
+    margin: 0;
 
-	@media screen and (max-width: 768px) {
-		#container {
-			display: flex;
-			flex-direction: column;
-		}
+    font-family: Georgia, "Times New Roman", serif;
 
-		#hero {
-			display: block;
-			padding-top: 10%;
-		}
+    font-size: clamp(48px, 6vw, 76px);
 
-		#links {
-			flex-wrap: wrap;
-		}
+    line-height: 1.05;
+    font-weight: 500;
 
-		#links a.button {
-			padding: 14px 18px;
-		}
+    color: #2b211c;
+  }
 
-		#news {
-			right: 16px;
-			left: 16px;
-			bottom: 2.5rem;
-			max-width: 100%;
-		}
 
-		h1 {
-			line-height: 1.5;
-		}
-	}
+  .hero h1 span,
+  .story h2 span,
+  .cta h2 span {
+    display: block;
+    color: #a66a45;
+  }
+
+
+  .hero-text {
+    max-width: 500px;
+
+    margin: 28px 0 35px;
+
+    color: #756a64;
+
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+
+  .hero-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+
+  .primary-btn,
+  .secondary-btn {
+    text-decoration: none;
+
+    padding: 14px 22px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+  }
+
+
+  .primary-btn {
+    background: #2b211c;
+    color: white;
+  }
+
+
+  .primary-btn span,
+  .secondary-btn span {
+    margin-left: 8px;
+  }
+
+
+  .primary-btn:hover {
+    background: #a66a45;
+  }
+
+
+  .secondary-btn {
+    border: 1px solid #2b211c;
+    color: #2b211c;
+  }
+
+
+  .secondary-btn:hover {
+    background: #2b211c;
+    color: white;
+  }
+
+
+  /* HERO IMAGE */
+
+  .hero-image {
+    height: 500px;
+
+    overflow: hidden;
+
+    border-radius: 180px 180px 8px 8px;
+
+    box-shadow: 0 25px 60px rgba(60, 40, 25, 0.15);
+  }
+
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.6s ease;
+  }
+
+
+  .hero-image:hover img {
+    transform: scale(1.04);
+  }
+
+
+  /* =========================
+     PRODUCTS
+  ========================= */
+
+  .products {
+    padding: 100px 40px;
+
+    background: #fff;
+  }
+
+
+  .section-heading {
+    max-width: 650px;
+
+    margin: 0 auto 55px;
+
+    text-align: center;
+  }
+
+
+  .section-heading h2 {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 42px;
+    font-weight: 500;
+
+    color: #2b211c;
+  }
+
+
+  .heading-line {
+    width: 55px;
+    height: 2px;
+
+    background: #a66a45;
+
+    margin: 18px auto;
+  }
+
+
+  .section-heading > p:last-child {
+    margin: 0;
+
+    color: #756a64;
+
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+
+  .product-container {
+    max-width: 1150px;
+
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 30px;
+  }
+
+
+  .card {
+    overflow: hidden;
+
+    background: #fff;
+
+    border: 1px solid #eee4dc;
+
+    transition: all 0.35s ease;
+  }
+
+
+  .card:hover {
+    transform: translateY(-8px);
+
+    box-shadow: 0 20px 45px rgba(60, 40, 25, 0.12);
+  }
+
+
+  .image-wrapper {
+    position: relative;
+
+    height: 290px;
+
+    overflow: hidden;
+  }
+
+
+  .card img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform 0.5s ease;
+  }
+
+
+  .card:hover img {
+    transform: scale(1.06);
+  }
+
+
+  .fresh-badge {
+    position: absolute;
+
+    top: 16px;
+    left: 16px;
+
+    padding: 7px 13px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    color: #6d4936;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+  }
+
+
+  .card-content {
+    padding: 24px;
+  }
+
+
+  .card-content h3 {
+    margin: 0 0 22px;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 23px;
+    font-weight: 500;
+
+    color: #2b211c;
+  }
+
+
+  .card-bottom {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  .price {
+    margin: 0;
+
+    color: #a66a45;
+
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+
+  .order-btn {
+    text-decoration: none;
+
+    background: #2b211c;
+    color: white;
+
+    padding: 11px 15px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+  }
+
+
+  .order-btn span {
+    margin-left: 6px;
+  }
+
+
+  .order-btn:hover {
+    background: #a66a45;
+  }
+
+
+  .view-menu {
+    margin-top: 45px;
+
+    text-align: center;
+  }
+
+
+  .view-menu a {
+    color: #2b211c;
+
+    text-decoration: none;
+
+    border-bottom: 1px solid #2b211c;
+
+    padding-bottom: 5px;
+
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+
+  .view-menu span {
+    margin-left: 8px;
+  }
+
+
+  /* =========================
+     STORY
+  ========================= */
+
+  .story {
+    max-width: 1150px;
+
+    margin: auto;
+
+    padding: 100px 40px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+
+    gap: 80px;
+  }
+
+
+  .story-image {
+    height: 480px;
+
+    overflow: hidden;
+  }
+
+
+  .story-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+
+  .story-content h2 {
+    margin: 0 0 25px;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 48px;
+    line-height: 1.15;
+
+    font-weight: 500;
+  }
+
+
+  .story-content > p:not(.subtitle) {
+    margin: 0 0 30px;
+
+    color: #756a64;
+
+    font-size: 15px;
+
+    line-height: 1.9;
+  }
+
+
+  .story-btn {
+    display: inline-block;
+
+    padding: 13px 20px;
+
+    border: 1px solid #2b211c;
+
+    color: #2b211c;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+  }
+
+
+  .story-btn span {
+    margin-left: 8px;
+  }
+
+
+  .story-btn:hover {
+    background: #2b211c;
+    color: white;
+  }
+
+
+  /* =========================
+     CTA
+  ========================= */
+
+  .cta {
+    padding: 100px 30px;
+
+    text-align: center;
+
+    background: #f2e6dc;
+  }
+
+
+  .cta h2 {
+    max-width: 700px;
+
+    margin: 0 auto 30px;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 48px;
+    line-height: 1.15;
+
+    font-weight: 500;
+  }
+
+
+  .cta > a {
+    display: inline-block;
+
+    background: #2b211c;
+    color: white;
+
+    text-decoration: none;
+
+    padding: 15px 25px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+  }
+
+
+  .cta > a span {
+    margin-left: 8px;
+  }
+
+
+  .cta > a:hover {
+    background: #a66a45;
+  }
+
+
+  /* =========================
+     TABLET
+  ========================= */
+
+  @media (max-width: 900px) {
+
+    .hero {
+      grid-template-columns: 1fr;
+
+      text-align: center;
+
+      gap: 50px;
+    }
+
+    .hero-content {
+      margin: auto;
+    }
+
+    .hero-text {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      justify-content: center;
+    }
+
+    .hero-image {
+      max-width: 600px;
+      width: 100%;
+      margin: auto;
+    }
+
+    .product-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .story {
+      grid-template-columns: 1fr;
+
+      gap: 45px;
+    }
+
+    .story-content {
+      text-align: center;
+    }
+
+  }
+
+
+  /* =========================
+     MOBILE
+  ========================= */
+
+  @media (max-width: 600px) {
+
+    .hero {
+      padding: 55px 20px;
+      min-height: auto;
+    }
+
+
+    .hero h1 {
+      font-size: 46px;
+    }
+
+
+    .hero-text {
+      font-size: 14px;
+    }
+
+
+    .hero-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+
+    .primary-btn,
+    .secondary-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+
+    .hero-image {
+      height: 360px;
+
+      border-radius: 130px 130px 5px 5px;
+    }
+
+
+    .products {
+      padding: 70px 20px;
+    }
+
+
+    .section-heading h2 {
+      font-size: 34px;
+    }
+
+
+    .product-container {
+      grid-template-columns: 1fr;
+    }
+
+
+    .image-wrapper {
+      height: 260px;
+    }
+
+
+    .story {
+      padding: 70px 20px;
+    }
+
+
+    .story-image {
+      height: 350px;
+    }
+
+
+    .story-content h2 {
+      font-size: 38px;
+    }
+
+
+    .cta {
+      padding: 75px 20px;
+    }
+
+
+    .cta h2 {
+      font-size: 38px;
+    }
+
+  }
+
 </style>

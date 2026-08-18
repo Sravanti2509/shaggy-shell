@@ -1,65 +1,510 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import products from "../data/Products.js";
+
+const featuredProducts = products.slice(0, 4);
 ---
 
-<Layout>
+<Layout title="Sravs Bakery">
+
+  <!-- =========================
+       HERO
+  ========================== -->
 
   <section class="hero">
 
-    <!-- LEFT SIDE - IMAGE -->
-    <div class="hero-image">
+    <div class="hero-content">
+
+      <p class="eyebrow">WELCOME TO SRAVS BAKERY</p>
+
+      <h1>
+        Crafted with care.<br />
+        <span>Baked for moments.</span>
+      </h1>
+
+      <p class="hero-description">
+        Discover beautifully crafted cakes, pastries and freshly baked
+        favorites made with quality ingredients and a passion for
+        unforgettable flavor.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="/menu" class="primary-button">
+          Explore Our Menu
+        </a>
+
+        <a href="/about" class="secondary-button">
+          Our Story
+        </a>
+      </div>
+
+      <div class="hero-trust">
+
+        <div>
+          <strong>Fresh</strong>
+          <span>Every Day</span>
+        </div>
+
+        <div class="trust-line"></div>
+
+        <div>
+          <strong>Premium</strong>
+          <span>Ingredients</span>
+        </div>
+
+        <div class="trust-line"></div>
+
+        <div>
+          <strong>Made</strong>
+          <span>With Care</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="hero-image-wrapper">
+
+      <div class="hero-image-background"></div>
 
       <img
-        src="/products/icon1.jpg"
+        src="/products/icon7.jpg"
+        alt="Freshly baked treats from Sravs Bakery"
+        class="hero-image"
+      />
+
+      <div class="floating-card">
+
+        <div class="floating-icon">✦</div>
+
+        <div>
+          <strong>Freshly Baked</strong>
+          <span>Made with love & care</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       INTRODUCTION
+  ========================== -->
+
+  <section class="intro-section">
+
+    <div class="section-label">
+      THE SRAVS EXPERIENCE
+    </div>
+
+    <h2>
+      More than a bakery.<br />
+      <span>A little sweeter part of your day.</span>
+    </h2>
+
+    <p>
+      At Sravs Bakery, we believe that great food has the power to turn
+      ordinary moments into memorable ones. From beautifully decorated
+      cakes to comforting pastries and freshly baked treats, every item
+      is prepared with attention to quality, freshness and flavor.
+    </p>
+
+  </section>
+
+
+  <!-- =========================
+       SIGNATURE COLLECTION
+  ========================== -->
+
+  <section class="collection-section">
+
+    <div class="section-heading">
+
+      <div>
+        <p class="eyebrow">OUR FAVORITES</p>
+
+        <h2>
+          Signature Collection
+        </h2>
+      </div>
+
+      <a href="/menu" class="view-link">
+        View Full Menu →
+      </a>
+
+    </div>
+
+
+    <div class="product-grid">
+
+      {
+        featuredProducts.map((product) => (
+
+          <a
+            href="/menu"
+            class="product-card"
+          >
+
+            <div class="product-image-wrapper">
+
+              <img
+                src={product.image}
+                alt={product.name}
+              />
+
+              <span class="product-tag">
+                FAVORITE
+              </span>
+
+            </div>
+
+            <div class="product-info">
+
+              <h3>
+                {product.name}
+              </h3>
+
+              <p>
+                Freshly prepared with quality ingredients
+                and delicious flavor.
+              </p>
+
+              <div class="product-bottom">
+
+                <strong>
+                  ${Number(product.price).toFixed(2)}
+                </strong>
+
+                <span>
+                  Explore →
+                </span>
+
+              </div>
+
+            </div>
+
+          </a>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       WHY SRAVS
+  ========================== -->
+
+  <section class="why-section">
+
+    <div class="why-intro">
+
+      <p class="eyebrow">
+        WHY CHOOSE US
+      </p>
+
+      <h2>
+        Made with intention.<br />
+        <span>Served with warmth.</span>
+      </h2>
+
+      <p>
+        We focus on the little details that make a bakery experience
+        special — from the ingredients we choose to the care that goes
+        into every creation.
+      </p>
+
+    </div>
+
+
+    <div class="features-grid">
+
+      <div class="feature-card">
+
+        <div class="feature-number">
+          01
+        </div>
+
+        <h3>
+          Freshly Baked
+        </h3>
+
+        <p>
+          Our treats are prepared fresh so every bite feels as good
+          as the first.
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-number">
+          02
+        </div>
+
+        <h3>
+          Quality Ingredients
+        </h3>
+
+        <p>
+          We believe better ingredients create better flavor and a
+          better experience.
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-number">
+          03
+        </div>
+
+        <h3>
+          Crafted With Care
+        </h3>
+
+        <p>
+          Every cake, pastry and treat receives attention to detail
+          from preparation to presentation.
+        </p>
+
+      </div>
+
+
+      <div class="feature-card">
+
+        <div class="feature-number">
+          04
+        </div>
+
+        <h3>
+          Made For Moments
+        </h3>
+
+        <p>
+          From everyday cravings to special celebrations, we are here
+          to make every occasion sweeter.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       STORY SECTION
+  ========================== -->
+
+  <section class="story-section">
+
+    <div class="story-image">
+
+      <img
+        src="/products/icon8.jpg"
         alt="Sravs Bakery"
       />
 
     </div>
 
 
-    <!-- RIGHT SIDE - BAKERY INFORMATION -->
-    <div class="hero-content">
+    <div class="story-content">
 
-      <p class="welcome">
-        WELCOME TO
+      <p class="eyebrow">
+        OUR STORY
       </p>
-
-      <h1>
-        Sravs Bakery
-      </h1>
 
       <h2>
-        Freshly Baked Happiness
+        Where simple ingredients
+        become something special.
       </h2>
 
-      <p class="description">
-        Welcome to Sravs Bakery, where every bite is made
-        with love and care. We bring you freshly baked
-        treats that make every moment a little sweeter.
+      <p>
+        Sravs Bakery was created with a simple idea — to make delicious,
+        beautiful and comforting baked treats that people can enjoy
+        during both everyday moments and important celebrations.
       </p>
 
-      <p class="description">
-        From delicious cakes and creamy pastries to
-        crispy puffs, tasty sandwiches, fresh cookies,
-        croissants, donuts and refreshing milkshakes,
-        we have something for everyone.
+      <p>
+        We combine familiar flavors with thoughtful preparation to
+        create treats that feel homemade, fresh and memorable.
       </p>
 
-      <p class="description">
-        We use quality ingredients and prepare our
-        products fresh so that you can enjoy the best
-        taste and freshness every day.
-      </p>
-
-      <p class="highlight">
-        Fresh • Delicious • Made With Love ❤️
-      </p>
-
-      <a href="/menu" class="menu-button">
-        Explore Our Menu
+      <a href="/about" class="text-button">
+        Discover Our Story →
       </a>
 
     </div>
+
+  </section>
+
+
+  <!-- =========================
+       CATEGORIES
+  ========================== -->
+
+  <section class="categories-section">
+
+    <div class="center-heading">
+
+      <p class="eyebrow">
+        EXPLORE
+      </p>
+
+      <h2>
+        Something for every craving
+      </h2>
+
+      <p>
+        From celebrations to everyday indulgence,
+        find something made just for you.
+      </p>
+
+    </div>
+
+
+    <div class="category-grid">
+
+      <a href="/menu" class="category-card">
+
+        <div class="category-image">
+          <img
+            src="/products/icon2.jpg"
+            alt="Celebration Cakes"
+          />
+        </div>
+
+        <div class="category-content">
+          <span>01</span>
+          <h3>Celebration Cakes</h3>
+          <p>Make every occasion memorable.</p>
+          <strong>Explore →</strong>
+        </div>
+
+      </a>
+
+
+      <a href="/menu" class="category-card">
+
+        <div class="category-image">
+          <img
+            src="/products/icon3.jpg"
+            alt="Pastries and Desserts"
+          />
+        </div>
+
+        <div class="category-content">
+          <span>02</span>
+          <h3>Pastries & Desserts</h3>
+          <p>Sweet little moments of joy.</p>
+          <strong>Explore →</strong>
+        </div>
+
+      </a>
+
+
+      <a href="/menu" class="category-card">
+
+        <div class="category-image">
+          <img
+            src="/products/icon4.jpg"
+            alt="Fresh Bakes"
+          />
+        </div>
+
+        <div class="category-content">
+          <span>03</span>
+          <h3>Fresh Bakes</h3>
+          <p>Freshly prepared favorites.</p>
+          <strong>Explore →</strong>
+        </div>
+
+      </a>
+
+
+      <a href="/menu" class="category-card">
+
+        <div class="category-image">
+          <img
+            src="/products/icon5.jpg"
+            alt="Cookies and Treats"
+          />c:\Users\P.Sravanti\Desktop\Bakery-Website\images\icon2.jpeg
+        </div>
+
+        <div class="category-content">
+          <span>04</span>
+          <h3>Cookies & Treats</h3>
+          <p>Perfect for every little craving.</p>
+          <strong>Explore →</strong>
+        </div>
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       CTA
+  ========================== -->
+
+  <section class="cta-section">
+
+    <div class="cta-content">
+
+      <p class="eyebrow">
+        MADE FOR YOUR MOMENTS
+      </p>
+
+      <h2>
+        Make your next celebration<br />
+        a little sweeter.
+      </h2>
+
+      <p>
+        Explore our collection of freshly prepared cakes,
+        pastries and bakery favorites.
+      </p>
+
+      <a href="/menu" class="cta-button">
+        Shop Our Collection
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       CONTACT PREVIEW
+  ========================== -->
+
+  <section class="contact-preview">
+
+    <div>
+
+      <p class="eyebrow">
+        HAVE A QUESTION?
+      </p>
+
+      <h2>
+        We'd love to hear from you.
+      </h2>
+
+    </div>
+
+    <a href="/contact" class="secondary-button">
+      Contact Us →
+    </a>
 
   </section>
 
@@ -68,172 +513,724 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
 
-  .hero {
-    min-height: calc(100vh - 90px);
-
-    padding: 70px 8%;
-
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    align-items: center;
-
-    gap: 80px;
-
-    background: linear-gradient(
-      135deg,
-      #fff5f5,
-      #fff0e6,
-      #fdf4ff
-    );
-  }
-
-
   /* =========================
-     LEFT IMAGE
-  ========================= */
+     GLOBAL
+  ========================== */
 
-  .hero-image {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
+  * {
+    box-sizing: border-box;
   }
 
-
-  .hero-image img {
+  section {
     width: 100%;
-
-    max-width: 560px;
-
-    height: 560px;
-
-    object-fit: cover;
-
-    border-radius: 30px;
-
-    box-shadow:
-      0 20px 50px
-      rgba(80, 40, 50, 0.20);
-
-    transition: transform 0.3s ease;
   }
 
-
-  .hero-image img:hover {
-    transform: scale(1.02);
+  .eyebrow {
+    color: #8a6a38;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin: 0 0 18px;
   }
 
 
   /* =========================
-     RIGHT INFORMATION
-  ========================= */
+     HERO
+  ========================== */
+
+  .hero {
+    min-height: calc(100vh - 80px);
+    padding: 80px 8%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 70px;
+    background:
+      linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f7fbff 55%,
+        #eaf2f8 100%
+      );
+    overflow: hidden;
+  }
+
 
   .hero-content {
-    max-width: 600px;
-  }
-
-
-  .welcome {
-    color: #9b4d63;
-
-    font-size: 14px;
-
-    font-weight: bold;
-
-    letter-spacing: 4px;
-
-    margin-bottom: 12px;
+    max-width: 650px;
   }
 
 
   .hero h1 {
-    font-size: 58px;
-
-    color: #3b2028;
-
-    margin: 0 0 12px;
+    margin: 0;
+    color: #0b1f3a;
+    font-size: clamp(48px, 5.5vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    font-weight: 700;
   }
 
 
-  .hero h2 {
-    font-size: 28px;
-
-    color: #8f4058;
-
-    margin: 0 0 25px;
+  .hero h1 span {
+    color: #345c82;
   }
 
 
-  .description {
-    color: #66545a;
-
+  .hero-description {
+    max-width: 580px;
+    margin: 30px 0;
+    color: #536273;
     font-size: 17px;
-
     line-height: 1.8;
-
-    margin-bottom: 18px;
   }
 
 
-  .highlight {
-    color: #8f4058;
+  .hero-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 42px;
+  }
 
-    font-size: 16px;
 
-    font-weight: bold;
+  .primary-button,
+  .secondary-button,
+  .cta-button {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    transition: all 0.25s ease;
+  }
 
-    margin: 25px 0;
+
+  .primary-button {
+    background: #0b1f3a;
+    color: #ffffff;
+    padding: 15px 26px;
+    border-radius: 4px;
+  }
+
+
+  .primary-button:hover {
+    background: #18395d;
+    transform: translateY(-2px);
+  }
+
+
+  .secondary-button {
+    color: #0b1f3a;
+    border: 1px solid #b9c6d2;
+    padding: 14px 25px;
+    border-radius: 4px;
+    background: #ffffff;
+  }
+
+
+  .secondary-button:hover {
+    border-color: #0b1f3a;
+    transform: translateY(-2px);
+  }
+
+
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    color: #536273;
+  }
+
+
+  .hero-trust div:not(.trust-line) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+
+  .hero-trust strong {
+    color: #0b1f3a;
+    font-size: 13px;
+  }
+
+
+  .hero-trust span {
+    font-size: 11px;
+  }
+
+
+  .trust-line {
+    width: 1px;
+    height: 30px;
+    background: #c8d3dd;
   }
 
 
   /* =========================
-     BUTTON
-  ========================= */
+     HERO IMAGE
+  ========================== */
 
-  .menu-button {
-    display: inline-block;
+  .hero-image-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 580px;
+  }
 
-    padding: 14px 30px;
 
-    background: #8f4058;
+  .hero-image-background {
+    position: absolute;
+    width: 470px;
+    height: 470px;
+    border-radius: 50%;
+    background: #dceaf4;
+  }
 
-    color: white;
 
+  .hero-image {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 500px);
+    height: 550px;
+    object-fit: cover;
+    border-radius: 260px 260px 12px 12px;
+    box-shadow: 0 30px 70px rgba(11, 31, 58, 0.18);
+  }
+
+
+  .floating-card {
+    position: absolute;
+    z-index: 3;
+    bottom: 45px;
+    left: 5%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #ffffff;
+    padding: 15px 20px;
+    box-shadow: 0 15px 40px rgba(11, 31, 58, 0.13);
+    border-radius: 5px;
+  }
+
+
+  .floating-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eaf2f8;
+    color: #8a6a38;
+    border-radius: 50%;
+  }
+
+
+  .floating-card strong,
+  .floating-card span {
+    display: block;
+  }
+
+
+  .floating-card strong {
+    color: #0b1f3a;
+    font-size: 13px;
+  }
+
+
+  .floating-card span {
+    color: #7a8794;
+    font-size: 11px;
+    margin-top: 3px;
+  }
+
+
+  /* =========================
+     INTRO
+  ========================== */
+
+  .intro-section {
+    padding: 110px 20%;
+    text-align: center;
+    background: #ffffff;
+  }
+
+
+  .intro-section h2,
+  .why-intro h2,
+  .center-heading h2 {
+    color: #0b1f3a;
+    font-size: clamp(35px, 4vw, 52px);
+    line-height: 1.15;
+    margin: 0 0 25px;
+    letter-spacing: -1px;
+  }
+
+
+  .intro-section h2 span,
+  .why-intro h2 span {
+    color: #547896;
+  }
+
+
+  .intro-section > p:last-child {
+    max-width: 760px;
+    margin: auto;
+    color: #637181;
+    font-size: 17px;
+    line-height: 1.9;
+  }
+
+
+  /* =========================
+     COLLECTION
+  ========================== */
+
+  .collection-section {
+    padding: 100px 8%;
+    background: #f7f9fb;
+  }
+
+
+  .section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 45px;
+  }
+
+
+  .section-heading h2 {
+    color: #0b1f3a;
+    font-size: 42px;
+    margin: 0;
+  }
+
+
+  .view-link {
+    color: #0b1f3a;
+    font-size: 14px;
+    font-weight: 700;
     text-decoration: none;
+    border-bottom: 1px solid #0b1f3a;
+    padding-bottom: 5px;
+  }
 
-    border-radius: 8px;
 
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+
+
+  .product-card {
+    background: #ffffff;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #e7ebef;
+    transition: all 0.3s ease;
+  }
+
+
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(11, 31, 58, 0.10);
+  }
+
+
+  .product-image-wrapper {
+    position: relative;
+    height: 260px;
+    overflow: hidden;
+  }
+
+
+  .product-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+
+  .product-card:hover img {
+    transform: scale(1.05);
+  }
+
+
+  .product-tag {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background: #0b1f3a;
+    color: white;
+    padding: 6px 9px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+  }
+
+
+  .product-info {
+    padding: 22px;
+  }
+
+
+  .product-info h3 {
+    color: #0b1f3a;
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+
+
+  .product-info p {
+    color: #788594;
+    font-size: 13px;
+    line-height: 1.6;
+    min-height: 42px;
+    margin: 0 0 18px;
+  }
+
+
+  .product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #edf0f3;
+    padding-top: 16px;
+  }
+
+
+  .product-bottom strong {
+    color: #0b1f3a;
+  }
+
+
+  .product-bottom span {
+    color: #547896;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+
+  /* =========================
+     WHY
+  ========================== */
+
+  .why-section {
+    padding: 110px 8%;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 100px;
+    align-items: start;
+    background: #ffffff;
+  }
+
+
+  .why-intro {
+    position: sticky;
+    top: 100px;
+  }
+
+
+  .why-intro > p:last-child {
+    color: #687685;
+    line-height: 1.8;
     font-size: 16px;
+    max-width: 450px;
+  }
 
-    font-weight: 600;
 
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: #dfe6ec;
+    border: 1px solid #dfe6ec;
+  }
+
+
+  .feature-card {
+    background: #ffffff;
+    padding: 38px;
+    min-height: 230px;
+  }
+
+
+  .feature-number {
+    color: #8a6a38;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+
+  .feature-card h3 {
+    color: #0b1f3a;
+    font-size: 20px;
+    margin: 0 0 12px;
+  }
+
+
+  .feature-card p {
+    color: #748190;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+
+  /* =========================
+     STORY
+  ========================== */
+
+  .story-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+    background: #eaf2f8;
+  }
+
+
+  .story-image {
+    overflow: hidden;
+  }
+
+
+  .story-image img {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    object-fit: cover;
+  }
+
+
+  .story-content {
+    padding: 80px 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+
+  .story-content h2 {
+    color: #0b1f3a;
+    font-size: clamp(35px, 4vw, 50px);
+    line-height: 1.15;
+    margin: 0 0 25px;
+  }
+
+
+  .story-content p {
+    color: #536273;
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 550px;
+  }
+
+
+  .text-button {
+    margin-top: 20px;
+    color: #0b1f3a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+
+  /* =========================
+     CATEGORIES
+  ========================== */
+
+  .categories-section {
+    padding: 110px 8%;
+    background: #ffffff;
+  }
+
+
+  .center-heading {
+    text-align: center;
+    margin-bottom: 55px;
+  }
+
+
+  .center-heading > p:last-child {
+    color: #718090;
+    margin: 0;
+  }
+
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+
+  .category-card {
+    text-decoration: none;
+    border: 1px solid #e3e8ed;
+    background: white;
     transition: 0.3s;
   }
 
 
-  .menu-button:hover {
-    background: #682c3e;
+  .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 40px rgba(11, 31, 58, 0.09);
+  }
 
+
+  .category-image {
+    height: 220px;
+    overflow: hidden;
+  }
+
+
+  .category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+  .category-content {
+    padding: 25px;
+  }
+
+
+  .category-content span {
+    color: #8a6a38;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+
+  .category-content h3 {
+    color: #0b1f3a;
+    margin: 12px 0 8px;
+    font-size: 20px;
+  }
+
+
+  .category-content p {
+    color: #7a8794;
+    font-size: 13px;
+    margin: 0 0 18px;
+  }
+
+
+  .category-content strong {
+    color: #547896;
+    font-size: 12px;
+  }
+
+
+  /* =========================
+     CTA
+  ========================== */
+
+  .cta-section {
+    padding: 110px 8%;
+    background: #0b1f3a;
+    text-align: center;
+  }
+
+
+  .cta-content {
+    max-width: 750px;
+    margin: auto;
+  }
+
+
+  .cta-section .eyebrow {
+    color: #c9a96e;
+  }
+
+
+  .cta-section h2 {
+    color: #ffffff;
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.15;
+    margin: 0 0 22px;
+  }
+
+
+  .cta-section p {
+    color: #c7d2dd;
+    line-height: 1.7;
+    margin-bottom: 35px;
+  }
+
+
+  .cta-button {
+    background: #ffffff;
+    color: #0b1f3a;
+    padding: 16px 30px;
+    border-radius: 4px;
+  }
+
+
+  .cta-button:hover {
+    background: #eaf2f8;
     transform: translateY(-2px);
   }
 
 
   /* =========================
-     MOBILE
-  ========================= */
+     CONTACT
+  ========================== */
 
-  @media (max-width: 850px) {
+  .contact-preview {
+    padding: 70px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7f9fb;
+  }
+
+
+  .contact-preview h2 {
+    color: #0b1f3a;
+    font-size: 34px;
+    margin: 0;
+  }
+
+
+  /* =========================
+     TABLET
+  ========================== */
+
+  @media (max-width: 1050px) {
+
+    .hero {
+      padding: 70px 5%;
+      gap: 40px;
+    }
+
+    .product-grid,
+    .category-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-section {
+      gap: 50px;
+    }
+
+  }
+
+
+  /* =========================
+     MOBILE
+  ========================== */
+
+  @media (max-width: 800px) {
 
     .hero {
       grid-template-columns: 1fr;
-
-      padding: 50px 25px;
-
-      gap: 45px;
-
+      padding: 60px 25px;
       text-align: center;
     }
 
@@ -243,25 +1240,176 @@ import Layout from "../layouts/Layout.astro";
     }
 
 
-    .hero-image img {
-      max-width: 420px;
+    .hero-buttons {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-      height: 420px;
+
+    .hero-trust {
+      justify-content: center;
+      gap: 12px;
+    }
+
+
+    .hero-image-wrapper {
+      min-height: 450px;
+    }
+
+
+    .hero-image {
+      height: 440px;
+      width: min(90%, 400px);
+    }
+
+
+    .hero-image-background {
+      width: 350px;
+      height: 350px;
+    }
+
+
+    .floating-card {
+      left: 5%;
+      bottom: 15px;
+    }
+
+
+    .intro-section {
+      padding: 80px 25px;
+    }
+
+
+    .section-heading {
+      align-items: start;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+
+    .collection-section,
+    .categories-section,
+    .why-section {
+      padding: 80px 25px;
+    }
+
+
+    .product-grid,
+    .category-grid {
+      grid-template-columns: 1fr;
+    }
+
+
+    .why-section {
+      grid-template-columns: 1fr;
+    }
+
+
+    .why-intro {
+      position: static;
+    }
+
+
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+
+
+    .story-section {
+      grid-template-columns: 1fr;
+    }
+
+
+    .story-image img {
+      min-height: 400px;
+    }
+
+
+    .story-content {
+      padding: 70px 25px;
+    }
+
+
+    .cta-section {
+      padding: 85px 25px;
+    }
+
+
+    .contact-preview {
+      padding: 60px 25px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 25px;
+    }
+
+  }
+
+
+  @media (max-width: 500px) {
+
+    .hero {
+      padding: 45px 18px;
     }
 
 
     .hero h1 {
-      font-size: 45px;
+      font-size: 43px;
     }
 
 
-    .hero h2 {
-      font-size: 23px;
+    .hero-description {
+      font-size: 15px;
     }
 
 
-    .description {
-      font-size: 16px;
+    .hero-trust {
+      gap: 8px;
+    }
+
+
+    .hero-trust span {
+      font-size: 9px;
+    }
+
+
+    .hero-trust strong {
+      font-size: 11px;
+    }
+
+
+    .trust-line {
+      height: 25px;
+    }
+
+
+    .hero-image {
+      height: 390px;
+    }
+
+
+    .hero-image-background {
+      width: 300px;
+      height: 300px;
+    }
+
+
+    .floating-card {
+      padding: 11px 13px;
+    }
+
+
+    .section-heading h2 {
+      font-size: 34px;
+    }
+
+
+    .feature-card {
+      padding: 28px;
+    }
+
+
+    .contact-preview h2 {
+      font-size: 28px;
     }
 
   }

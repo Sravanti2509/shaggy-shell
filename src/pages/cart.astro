@@ -6,20 +6,48 @@ import Layout from "../layouts/Layout.astro";
 
   <section class="cart-page">
 
-    <h1>Your Cart 🛒</h1>
+    <!-- HEADER -->
+    <div class="cart-header">
 
+      <p class="subtitle">YOUR ORDER</p>
+
+      <h1>Your Shopping Cart</h1>
+
+      <p>
+        Review your delicious selections before checkout.
+      </p>
+
+    </div>
+
+
+    <!-- CART -->
     <div id="cart-container"></div>
 
-    <div class="cart-summary">
 
-      <h2>
-        Total: ₹<span id="total">0</span>
-      </h2>
-<button>
-      <a href="/checkout" class="checkout-btn">
-  Proceed to Checkout 🛍️
-</a>
-</button>
+    <!-- SUMMARY -->
+    <div class="cart-summary" id="cart-summary">
+
+      <div class="summary-content">
+
+        <p class="summary-label">
+          ORDER TOTAL
+        </p>
+
+        <h2>
+          ₹<span id="total">0</span>
+        </h2>
+
+      </div>
+
+
+      <a
+        href="/checkout"
+        id="checkout-btn"
+        class="checkout-btn"
+      >
+        Proceed to Checkout
+        <span>→</span>
+      </a>
 
     </div>
 
@@ -38,6 +66,9 @@ import Layout from "../layouts/Layout.astro";
 
   const checkoutButton =
     document.getElementById("checkout-btn");
+
+  const cartSummary =
+    document.getElementById("cart-summary");
 
 
   /*
@@ -59,14 +90,21 @@ import Layout from "../layouts/Layout.astro";
 
         <div class="empty-cart">
 
-          <h2>Your cart is empty 🛒</h2>
+          <div class="empty-icon">
+            🛒
+          </div>
+
+          <h2>
+            Your cart is empty
+          </h2>
 
           <p>
-            Add some delicious items from our menu!
+            Looks like you haven't added any delicious treats yet.
           </p>
 
-          <a href="/menu">
-            Go to Menu
+          <a href="/menu" class="menu-btn">
+            Explore Our Menu
+            <span>→</span>
           </a>
 
         </div>
@@ -75,13 +113,13 @@ import Layout from "../layouts/Layout.astro";
 
       totalElement.textContent = "0";
 
-      checkoutButton.style.display = "none";
+      cartSummary.style.display = "none";
 
       return;
     }
 
 
-    checkoutButton.style.display = "inline-block";
+    cartSummary.style.display = "flex";
 
 
     let total = 0;
@@ -95,8 +133,12 @@ import Layout from "../layouts/Layout.astro";
       );
 
 
+      const quantity =
+        Number(item.quantity) || 1;
+
+
       const itemTotal =
-        price * item.quantity;
+        price * quantity;
 
 
       total += itemTotal;
@@ -106,60 +148,82 @@ import Layout from "../layouts/Layout.astro";
 
         <div class="cart-item">
 
-          <img
-            src="${item.image}"
-            alt="${item.name}"
-          />
+          <div class="product-image">
+
+            <img
+              src="${item.image}"
+              alt="${item.name}"
+            />
+
+          </div>
+
 
           <div class="item-details">
 
-            <h3>
-              ${item.name}
-            </h3>
+            <div class="item-info">
 
-            <p>
-              Price: ₹${price}
-            </p>
+              <p class="item-category">
+                SRAVS BAKERY
+              </p>
 
+              <h3>
+                ${item.name}
+              </h3>
 
-            <div class="quantity">
-
-              <button
-                class="quantity-btn"
-                data-action="decrease"
-                data-index="${index}"
-              >
-                −
-              </button>
-
-
-              <span>
-                ${item.quantity}
-              </span>
-
-
-              <button
-                class="quantity-btn"
-                data-action="increase"
-                data-index="${index}"
-              >
-                +
-              </button>
+              <p class="item-price">
+                ₹${price}
+              </p>
 
             </div>
 
 
-            <p>
-              Item Total: ₹${itemTotal}
-            </p>
+            <div class="item-actions">
+
+              <div class="quantity">
+
+                <button
+                  type="button"
+                  class="quantity-btn"
+                  data-action="decrease"
+                  data-index="${index}"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
 
 
-            <button
-              class="remove-btn"
-              data-index="${index}"
-            >
-              Remove
-            </button>
+                <span>
+                  ${quantity}
+                </span>
+
+
+                <button
+                  type="button"
+                  class="quantity-btn"
+                  data-action="increase"
+                  data-index="${index}"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+
+              </div>
+
+
+              <p class="item-total">
+                ₹${itemTotal}
+              </p>
+
+
+              <button
+                type="button"
+                class="remove-btn"
+                data-index="${index}"
+              >
+                Remove
+              </button>
+
+            </div>
 
           </div>
 
@@ -170,13 +234,15 @@ import Layout from "../layouts/Layout.astro";
     });
 
 
-    totalElement.textContent = total;
+    totalElement.textContent =
+      total.toLocaleString("en-IN");
 
   }
 
 
   /*
     Quantity + / -
+    Remove Item
   */
 
   cartContainer.addEventListener(
@@ -198,24 +264,41 @@ import Layout from "../layouts/Layout.astro";
       );
 
 
+      if (!cart[index]) return;
+
+
+      /*
+        Increase
+      */
+
       if (
         button.dataset.action ===
         "increase"
       ) {
 
-        cart[index].quantity += 1;
+        cart[index].quantity =
+          (Number(cart[index].quantity) || 1) + 1;
 
       }
 
+
+      /*
+        Decrease
+      */
 
       if (
         button.dataset.action ===
         "decrease"
       ) {
 
-        if (cart[index].quantity > 1) {
+        const currentQuantity =
+          Number(cart[index].quantity) || 1;
 
-          cart[index].quantity -= 1;
+
+        if (currentQuantity > 1) {
+
+          cart[index].quantity =
+            currentQuantity - 1;
 
         } else {
 
@@ -225,6 +308,10 @@ import Layout from "../layouts/Layout.astro";
 
       }
 
+
+      /*
+        Remove
+      */
 
       if (
         button.classList.contains(
@@ -250,12 +337,12 @@ import Layout from "../layouts/Layout.astro";
 
 
   /*
-    Proceed to Checkout
+    Checkout
   */
 
   checkoutButton.addEventListener(
     "click",
-    () => {
+    (event) => {
 
       const cart = JSON.parse(
         localStorage.getItem("cart") || "[]"
@@ -264,17 +351,13 @@ import Layout from "../layouts/Layout.astro";
 
       if (cart.length === 0) {
 
+        event.preventDefault();
+
         alert(
           "Your cart is empty!"
         );
 
-        return;
-
       }
-
-
-      window.location.href =
-        "/checkout";
 
     }
   );
@@ -291,185 +374,516 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
 
+  /* =========================
+     CART PAGE
+  ========================= */
+
   .cart-page {
+    max-width: 1050px;
 
-    max-width: 900px;
+    margin: 0 auto;
 
-    margin: 50px auto;
-
-    padding: 20px;
-
+    padding: 80px 30px 100px;
   }
 
 
-  .cart-page h1 {
+  /* =========================
+     HEADER
+  ========================= */
 
+  .cart-header {
     text-align: center;
 
-    margin-bottom: 40px;
-
+    margin-bottom: 55px;
   }
 
+
+  .subtitle {
+    margin: 0 0 12px;
+
+    color: #a66a45;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+  }
+
+
+  .cart-header h1 {
+    margin: 0;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    color: #2b211c;
+
+    font-size: 46px;
+    font-weight: 500;
+  }
+
+
+  .cart-header > p:last-child {
+    margin: 15px 0 0;
+
+    color: #756a64;
+
+    font-size: 15px;
+  }
+
+
+  /* =========================
+     CART ITEM
+  ========================= */
 
   .cart-item {
-
     display: flex;
 
-    gap: 25px;
+    gap: 28px;
 
-    align-items: center;
+    padding: 22px;
 
-    padding: 20px;
+    margin-bottom: 18px;
 
-    margin-bottom: 20px;
+    background: #ffffff;
 
-    border: 1px solid #ddd;
+    border: 1px solid #eee3da;
 
-    border-radius: 12px;
-
+    transition: all 0.3s ease;
   }
 
 
-  .cart-item img {
+  .cart-item:hover {
+    box-shadow:
+      0 12px 35px rgba(60, 40, 25, 0.08);
 
-    width: 130px;
+    transform: translateY(-2px);
+  }
 
-    height: 130px;
+
+  /* IMAGE */
+
+  .product-image {
+    width: 145px;
+    height: 145px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+  }
+
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
 
     object-fit: cover;
 
-    border-radius: 10px;
-
+    transition: transform 0.4s ease;
   }
 
+
+  .cart-item:hover .product-image img {
+    transform: scale(1.05);
+  }
+
+
+  /* DETAILS */
 
   .item-details {
-
     flex: 1;
 
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 25px;
   }
 
 
-  .item-details h3 {
+  .item-category {
+    margin: 0 0 7px;
 
-    margin-bottom: 8px;
+    color: #a66a45;
 
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+  }
+
+
+  .item-info h3 {
+    margin: 0 0 10px;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    color: #2b211c;
+
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+
+  .item-price {
+    margin: 0;
+
+    color: #756a64;
+
+    font-size: 14px;
+  }
+
+
+  /* ACTIONS */
+
+  .item-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
   }
 
 
   .quantity {
-
     display: flex;
 
     align-items: center;
 
     gap: 12px;
 
-    margin: 15px 0;
+    border: 1px solid #ded3ca;
 
+    padding: 5px;
+  }
+
+
+  .quantity span {
+    min-width: 22px;
+
+    text-align: center;
+
+    color: #2b211c;
+
+    font-size: 14px;
+    font-weight: 600;
   }
 
 
   .quantity-btn {
-
-    width: 35px;
-
-    height: 35px;
+    width: 30px;
+    height: 30px;
 
     border: none;
 
-    border-radius: 6px;
+    background: #f7f0eb;
+
+    color: #2b211c;
+
+    font-size: 18px;
 
     cursor: pointer;
 
-    font-size: 20px;
+    transition: all 0.2s ease;
+  }
 
+
+  .quantity-btn:hover {
+    background: #2b211c;
+
+    color: white;
+  }
+
+
+  .item-total {
+    min-width: 80px;
+
+    margin: 0;
+
+    color: #a66a45;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    text-align: right;
   }
 
 
   .remove-btn {
-
     border: none;
 
-    padding: 8px 15px;
+    background: none;
 
-    border-radius: 6px;
+    color: #8a7770;
+
+    padding: 5px 0;
+
+    font-size: 12px;
 
     cursor: pointer;
 
+    text-decoration: underline;
+
+    text-underline-offset: 3px;
   }
 
+
+  .remove-btn:hover {
+    color: #a66a45;
+  }
+
+
+  /* =========================
+     SUMMARY
+  ========================= */
 
   .cart-summary {
+    display: flex;
 
-    text-align: right;
+    justify-content: space-between;
 
-    margin-top: 30px;
+    align-items: center;
 
+    margin-top: 40px;
+
+    padding: 30px 0;
+
+    border-top: 1px solid #ded3ca;
   }
 
 
-  #checkout-btn {
+  .summary-label {
+    margin: 0 0 5px;
 
-    padding: 12px 25px;
+    color: #8a7770;
 
-    border: none;
+    font-size: 10px;
+    font-weight: 700;
 
-    border-radius: 8px;
+    letter-spacing: 2px;
+  }
 
-    background: black;
+
+  .summary-content h2 {
+    margin: 0;
+
+    color: #2b211c;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 32px;
+    font-weight: 500;
+  }
+
+
+  .checkout-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 15px 25px;
+
+    background: #2b211c;
 
     color: white;
 
-    cursor: pointer;
+    text-decoration: none;
 
-    font-size: 16px;
+    font-size: 13px;
+    font-weight: 600;
 
+    transition: all 0.3s ease;
   }
 
+
+  .checkout-btn span {
+    margin-left: 10px;
+
+    font-size: 17px;
+  }
+
+
+  .checkout-btn:hover {
+    background: #a66a45;
+
+    transform: translateY(-2px);
+  }
+
+
+  /* =========================
+     EMPTY CART
+  ========================= */
 
   .empty-cart {
-
     text-align: center;
 
-    padding: 50px;
+    padding: 75px 25px;
 
+    background: #ffffff;
+
+    border: 1px solid #eee3da;
   }
 
 
-  .empty-cart a {
+  .empty-icon {
+    width: 70px;
+    height: 70px;
 
-    display: inline-block;
+    display: flex;
 
-    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
 
+    margin: 0 auto 20px;
+
+    background: #f7eee8;
+
+    border-radius: 50%;
+
+    font-size: 28px;
   }
 
 
-  @media (max-width: 600px) {
+  .empty-cart h2 {
+    margin: 0 0 10px;
 
-    .cart-item {
+    font-family: Georgia, "Times New Roman", serif;
 
-      flex-direction: column;
+    color: #2b211c;
 
-      text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+  }
 
+
+  .empty-cart p {
+    margin: 0;
+
+    color: #756a64;
+
+    font-size: 14px;
+  }
+
+
+  .menu-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-top: 25px;
+
+    padding: 13px 22px;
+
+    background: #2b211c;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+
+  .menu-btn span {
+    margin-left: 8px;
+  }
+
+
+  .menu-btn:hover {
+    background: #a66a45;
+  }
+
+
+  /* =========================
+     MOBILE
+  ========================= */
+
+  @media (max-width: 700px) {
+
+    .cart-page {
+      padding: 60px 18px 80px;
     }
 
 
-    .cart-item img {
+    .cart-header {
+      margin-bottom: 40px;
+    }
 
-      width: 180px;
 
-      height: 180px;
+    .cart-header h1 {
+      font-size: 36px;
+    }
 
+
+    .cart-header > p:last-child {
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+
+    .cart-item {
+      flex-direction: column;
+
+      padding: 18px;
+
+      gap: 20px;
+    }
+
+
+    .product-image {
+      width: 100%;
+      height: 230px;
+    }
+
+
+    .item-details {
+      width: 100%;
+
+      flex-direction: column;
+
+      align-items: flex-start;
+
+      gap: 20px;
+    }
+
+
+    .item-info h3 {
+      font-size: 22px;
+    }
+
+
+    .item-actions {
+      width: 100%;
+
+      flex-wrap: wrap;
+
+      justify-content: space-between;
+
+      gap: 12px;
+    }
+
+
+    .item-total {
+      min-width: auto;
     }
 
 
     .cart-summary {
+      flex-direction: column;
+
+      align-items: stretch;
+
+      gap: 25px;
 
       text-align: center;
+    }
 
+
+    .checkout-btn {
+      justify-content: center;
     }
 
   }

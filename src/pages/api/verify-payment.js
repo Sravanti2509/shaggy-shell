@@ -3,12 +3,13 @@ import { env } from "cloudflare:workers";
 export const prerender = false;
 
 export async function POST({ request }) {
-
   try {
 
-    const body =
-      await request.json();
+    // =========================
+    // GET PAYMENT DETAILS
+    // =========================
 
+    const body = await request.json();
 
     const {
       razorpay_order_id,
@@ -17,82 +18,66 @@ export async function POST({ request }) {
     } = body;
 
 
-    /* =========================
-       CHECK PAYMENT DETAILS
-    ========================= */
+    // =========================
+    // VALIDATE
+    // =========================
 
     if (
       !razorpay_order_id ||
       !razorpay_payment_id ||
       !razorpay_signature
     ) {
-
       return new Response(
         JSON.stringify({
-
           success: false,
-
-          error:
-            "Missing payment details"
-
+          error: "Missing payment details"
         }),
         {
           status: 400,
-
           headers: {
-            "Content-Type":
-              "application/json"
+            "Content-Type": "application/json"
           }
         }
       );
-
     }
 
 
-    /* =========================
-       GET SECRET
-    ========================= */
+    // =========================
+    // GET SECRET
+    // =========================
 
     const secret =
       env.RAZORPAY_KEY_SECRET;
 
-
     if (!secret) {
+
+      console.error(
+        "RAZORPAY_KEY_SECRET is missing"
+      );
 
       return new Response(
         JSON.stringify({
-
           success: false,
-
           error:
             "Razorpay secret is missing."
-
         }),
         {
           status: 500,
-
           headers: {
             "Content-Type":
               "application/json"
           }
         }
       );
-
     }
 
 
-    /* =========================
-       HMAC SHA256
-       CLOUDFLARE WEB CRYPTO
-    ========================= */
+    // =========================
+    // CREATE HMAC SHA256
+    // =========================
 
     const encoder =
       new TextEncoder();
-
-
-    const keyData =
-      encoder.encode(secret);
-
 
     const message =
       encoder.encode(
@@ -100,37 +85,32 @@ export async function POST({ request }) {
       );
 
 
-    const cryptoKey =
+    const key =
       await crypto.subtle.importKey(
-
         "raw",
 
-        keyData,
+        encoder.encode(secret),
 
         {
-          name:
-            "HMAC",
-
-          hash:
-            "SHA-256"
+          name: "HMAC",
+          hash: "SHA-256"
         },
 
         false,
 
         ["sign"]
-
       );
 
 
+    // =========================
+    // GENERATE SIGNATURE
+    // =========================
+
     const signatureBuffer =
       await crypto.subtle.sign(
-
         "HMAC",
-
-        cryptoKey,
-
+        key,
         message
-
       );
 
 
@@ -140,51 +120,47 @@ export async function POST({ request }) {
           signatureBuffer
         )
       )
-        .map(
-          (byte) =>
-            byte
-              .toString(16)
-              .padStart(2, "0")
+        .map((byte) =>
+          byte
+            .toString(16)
+            .padStart(2, "0")
         )
         .join("");
 
 
-    /* =========================
-       VERIFY
-    ========================= */
+    // =========================
+    // COMPARE
+    // =========================
 
-    const isValid =
-      generatedSignature ===
-      razorpay_signature;
+    if (
+      generatedSignature !==
+      razorpay_signature
+    ) {
 
-
-    if (!isValid) {
+      console.error(
+        "Invalid Razorpay payment signature"
+      );
 
       return new Response(
         JSON.stringify({
-
           success: false,
-
           error:
             "Payment signature verification failed"
-
         }),
         {
           status: 400,
-
           headers: {
             "Content-Type":
               "application/json"
           }
         }
       );
-
     }
 
 
-    /* =========================
-       SUCCESS
-    ========================= */
+    // =========================
+    // VERIFIED
+    // =========================
 
     return new Response(
       JSON.stringify({
@@ -219,7 +195,6 @@ export async function POST({ request }) {
       error
     );
 
-
     return new Response(
       JSON.stringify({
 
@@ -239,7 +214,5 @@ export async function POST({ request }) {
         }
       }
     );
-
   }
-
 }

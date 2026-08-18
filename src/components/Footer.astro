@@ -1,11 +1,45 @@
-<footer>
-  <p>© 2026 My Bakery. All rights reserved.</p>
+<footer class="footer">
+
+  <div class="footer-bottom">
+    <span>© 2026 Sravs Bakery</span>
+    <span class="dot">•</span>
+    <span>Crafted with love</span>
+  </div>
+
 </footer>
+
+
 <style>
-  footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
+
+.footer {
+  background: #292621;
+  margin-top: 70px;
+}
+
+.footer-bottom {
+  padding: 22px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  color: #aaa49b;
+
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.dot {
+  color: #b89a6a;
+}
+
+@media (max-width: 500px) {
+
+  .footer-bottom {
+    font-size: 10px;
+    gap: 9px;
   }
+
+}
+
 </style>

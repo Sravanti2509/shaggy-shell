@@ -1,13 +1,29 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Sravs Bakery" } = Astro.props;
 ---
 
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Bakery</title>
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="Sravs Bakery - Freshly baked cakes, pastries and delicious treats made with love."
+    />
+
+    <title>{title}</title>
   </head>
 
   <body>
@@ -25,12 +41,55 @@ import Footer from "../components/Footer.astro";
 
 
 <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+
+  :global(*) {
+    box-sizing: border-box;
   }
 
-  main {
-    min-height: 80vh;
+
+  :global(html) {
+    scroll-behavior: smooth;
   }
+
+
+  :global(body) {
+    margin: 0;
+
+    padding: 0;
+
+    min-width: 320px;
+
+    font-family:
+      Arial,
+      Helvetica,
+      sans-serif;
+
+    background: #fffaf5;
+
+    color: #2b211c;
+
+    -webkit-font-smoothing: antialiased;
+  }
+
+
+  :global(a) {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+
+  main {
+    min-height: 70vh;
+
+    overflow: hidden;
+  }
+
+
+  @media (max-width: 600px) {
+
+    main {
+      min-height: 75vh;
+    }
+
+  }
+
 </style>

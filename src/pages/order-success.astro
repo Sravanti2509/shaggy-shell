@@ -8,28 +8,56 @@ import Layout from "../layouts/Layout.astro";
 
     <div class="success-card">
 
-      <div class="success-icon">
-        ✓
+      <!-- SUCCESS HEADER -->
+
+      <div class="success-header">
+
+        <div class="success-icon">
+          ✓
+        </div>
+
+        <p class="subtitle">
+          ORDER CONFIRMED
+        </p>
+
+        <h1>
+          Thank You for Your Order
+        </h1>
+
+        <p class="success-message">
+          Your order has been placed successfully.
+          We appreciate you choosing Sravs Bakery.
+        </p>
+
       </div>
-
-      <h1>Order Placed Successfully!</h1>
-
-      <p class="success-message">
-        Thank you for ordering from Sravs Bakery.
-      </p>
 
 
       <!-- ORDER DETAILS -->
 
       <section class="details-section">
 
-        <h2>Order Details</h2>
+        <div class="section-heading">
+
+          <span class="section-number">
+            01
+          </span>
+
+          <div>
+            <p>YOUR ORDER</p>
+            <h2>Order Details</h2>
+          </div>
+
+        </div>
+
 
         <div id="order-items"></div>
 
+
         <div class="total-row">
 
-          <span>Total Amount</span>
+          <span>
+            Total Amount
+          </span>
 
           <strong id="total-amount">
             ₹0
@@ -44,46 +72,62 @@ import Layout from "../layouts/Layout.astro";
 
       <section class="details-section">
 
-        <h2>Delivery Details</h2>
+        <div class="section-heading">
 
-        <div class="detail-row">
-          <span>Name:</span>
-          <strong id="customer-name">-</strong>
+          <span class="section-number">
+            02
+          </span>
+
+          <div>
+            <p>DELIVERY</p>
+            <h2>Delivery Details</h2>
+          </div>
+
         </div>
 
-        <div class="detail-row">
-          <span>Phone:</span>
-          <strong id="customer-phone">-</strong>
-        </div>
 
-        <div class="detail-row">
-          <span>Email:</span>
-          <strong id="customer-email">-</strong>
-        </div>
+        <div class="details-list">
 
-        <div class="detail-row">
-          <span>Address:</span>
-          <strong id="customer-address">-</strong>
-        </div>
+          <div class="detail-row">
+            <span>Name</span>
+            <strong id="customer-name">-</strong>
+          </div>
 
-        <div class="detail-row">
-          <span>Area:</span>
-          <strong id="customer-area">-</strong>
-        </div>
+          <div class="detail-row">
+            <span>Phone</span>
+            <strong id="customer-phone">-</strong>
+          </div>
 
-        <div class="detail-row">
-          <span>City:</span>
-          <strong id="customer-city">-</strong>
-        </div>
+          <div class="detail-row">
+            <span>Email</span>
+            <strong id="customer-email">-</strong>
+          </div>
 
-        <div class="detail-row">
-          <span>State:</span>
-          <strong id="customer-state">-</strong>
-        </div>
+          <div class="detail-row">
+            <span>Address</span>
+            <strong id="customer-address">-</strong>
+          </div>
 
-        <div class="detail-row">
-          <span>Pincode:</span>
-          <strong id="customer-pincode">-</strong>
+          <div class="detail-row">
+            <span>Area</span>
+            <strong id="customer-area">-</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>City</span>
+            <strong id="customer-city">-</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>State</span>
+            <strong id="customer-state">-</strong>
+          </div>
+
+          <div class="detail-row">
+            <span>Pincode</span>
+            <strong id="customer-pincode">-</strong>
+          </div>
+
         </div>
 
       </section>
@@ -93,47 +137,81 @@ import Layout from "../layouts/Layout.astro";
 
       <section class="details-section">
 
-        <h2>Payment Details</h2>
+        <div class="section-heading">
 
-        <div class="detail-row">
+          <span class="section-number">
+            03
+          </span>
 
-          <span>Payment Method:</span>
-
-          <strong id="payment-method">
-            -
-          </strong>
-
-        </div>
-
-
-        <div
-          class="detail-row"
-          id="payment-id-row"
-        >
-
-          <span>Payment ID:</span>
-
-          <strong id="payment-id">
-            -
-          </strong>
+          <div>
+            <p>PAYMENT</p>
+            <h2>Payment Details</h2>
+          </div>
 
         </div>
 
 
-        <div class="detail-row">
+        <div class="details-list">
 
-          <span>Order ID:</span>
+          <div class="detail-row">
 
-          <strong id="order-id">
-            -
-          </strong>
+            <span>
+              Payment Method
+            </span>
+
+            <strong id="payment-method">
+              -
+            </strong>
+
+          </div>
+
+
+          <div
+            class="detail-row"
+            id="payment-id-row"
+          >
+
+            <span>
+              Payment ID
+            </span>
+
+            <strong id="payment-id">
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="detail-row">
+
+            <span>
+              Order ID
+            </span>
+
+            <strong id="order-id">
+              -
+            </strong>
+
+          </div>
 
         </div>
 
+
+        <!-- STATUS -->
 
         <div class="status-box">
 
-          <span>Payment Status</span>
+          <div>
+
+            <span class="status-label">
+              PAYMENT STATUS
+            </span>
+
+            <p>
+              Your payment status
+            </p>
+
+          </div>
 
           <strong id="payment-status">
             -
@@ -144,12 +222,27 @@ import Layout from "../layouts/Layout.astro";
       </section>
 
 
+      <!-- BUTTON -->
+
       <a
         href="/menu"
         class="shopping-button"
       >
-        Continue Shopping
+
+        <span>
+          Continue Shopping
+        </span>
+
+        <span class="arrow">
+          →
+        </span>
+
       </a>
+
+
+      <p class="bottom-note">
+        Freshly baked with love by Sravs Bakery ♡
+      </p>
 
     </div>
 
@@ -229,9 +322,11 @@ import Layout from "../layouts/Layout.astro";
     if (orderItems) {
 
       orderItems.innerHTML = `
+
         <p class="empty-message">
           No recent order found.
         </p>
+
       `;
 
     }
@@ -247,50 +342,66 @@ import Layout from "../layouts/Layout.astro";
 
 
     if (customerName) {
+
       customerName.textContent =
         customer.name || "-";
+
     }
 
 
     if (customerPhone) {
+
       customerPhone.textContent =
         customer.phone || "-";
+
     }
 
 
     if (customerEmail) {
+
       customerEmail.textContent =
         customer.email || "-";
+
     }
 
 
     if (customerAddress) {
+
       customerAddress.textContent =
         customer.address || "-";
+
     }
 
 
     if (customerArea) {
+
       customerArea.textContent =
         customer.area || "-";
+
     }
 
 
     if (customerCity) {
+
       customerCity.textContent =
         customer.city || "-";
+
     }
 
 
     if (customerState) {
+
       customerState.textContent =
         customer.state || "-";
+
     }
 
 
     if (customerPincode) {
+
       customerPincode.textContent =
         customer.pincode || "-";
+
     }
 
 
@@ -327,9 +438,17 @@ import Layout from "../layouts/Layout.astro";
 
           <div class="order-item">
 
-            <span>
-              ${item.name || "Product"} × ${quantity}
-            </span>
+            <div class="product-info">
+
+              <span class="product-name">
+                ${item.name || "Product"}
+              </span>
+
+              <span class="product-quantity">
+                × ${quantity}
+              </span>
+
+            </div>
 
             <strong>
               ₹${itemTotal.toLocaleString("en-IN")}
@@ -379,8 +498,6 @@ import Layout from "../layouts/Layout.astro";
 
     /* ===================================================
        PAYMENT ID
-       
-       COD DOES NOT HAVE PAYMENT ID
     =================================================== */
 
     if (
@@ -441,6 +558,7 @@ import Layout from "../layouts/Layout.astro";
           ? "PAID ✓"
           : "PENDING";
 
+
       paymentStatus.classList.remove(
         "paid",
         "pending"
@@ -472,49 +590,68 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
 
+  /* =====================================================
+     PAGE
+  ===================================================== */
+
   .success-page {
 
     min-height: 100vh;
 
-    padding: 60px 20px;
+    padding: 75px 20px 100px;
 
     background:
-      linear-gradient(
-        135deg,
-        #fff5f5,
-        #fff0e6,
-        #fdf4ff
-      );
+      #f9f5f1;
 
   }
 
 
+  /* =====================================================
+     CARD
+  ===================================================== */
+
   .success-card {
 
-    max-width: 700px;
+    max-width: 760px;
 
-    margin: auto;
+    margin: 0 auto;
 
-    background: white;
+    padding: 55px 55px 45px;
 
-    padding: 40px;
+    background: #ffffff;
 
-    border-radius: 22px;
+    border: 1px solid #eee3da;
 
     box-shadow:
-      0 12px 40px
-      rgba(80, 40, 50, 0.12);
+      0 20px 60px
+      rgba(60, 40, 25, 0.08);
+
+  }
+
+
+  /* =====================================================
+     SUCCESS HEADER
+  ===================================================== */
+
+  .success-header {
+
+    text-align: center;
+
+    padding-bottom: 35px;
+
+    border-bottom:
+      1px solid #eee3da;
 
   }
 
 
   .success-icon {
 
-    width: 70px;
+    width: 76px;
 
-    height: 70px;
+    height: 76px;
 
-    margin: 0 auto 20px;
+    margin: 0 auto 22px;
 
     display: flex;
 
@@ -524,63 +661,161 @@ import Layout from "../layouts/Layout.astro";
 
     border-radius: 50%;
 
-    background: #e8f7ec;
+    background: #edf5ed;
 
-    color: #24943c;
+    border:
+      1px solid #d7e7d7;
+
+    color: #568064;
+
+    font-family:
+      Georgia,
+      serif;
 
     font-size: 38px;
-
-    font-weight: bold;
 
   }
 
 
-  .success-card h1 {
+  .subtitle {
 
-    text-align: center;
+    margin: 0 0 10px;
 
-    color: #3b2028;
+    color: #a66a45;
 
-    font-size: 32px;
+    font-size: 10px;
 
-    margin-bottom: 10px;
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+  }
+
+
+  .success-header h1 {
+
+    margin: 0;
+
+    color: #2b211c;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 38px;
+
+    font-weight: 500;
+
+    line-height: 1.2;
 
   }
 
 
   .success-message {
 
-    text-align: center;
+    max-width: 500px;
 
-    color: #725c62;
+    margin: 14px auto 0;
 
-    margin-bottom: 35px;
+    color: #756a64;
+
+    font-size: 14px;
+
+    line-height: 1.7;
 
   }
 
+
+  /* =====================================================
+     SECTION
+  ===================================================== */
 
   .details-section {
 
-    margin-top: 30px;
+    margin-top: 38px;
 
-    padding-top: 25px;
-
-    border-top:
-      1px solid #eeeeee;
+    padding-top: 5px;
 
   }
 
 
-  .details-section h2 {
+  .section-heading {
 
-    color: #3b2028;
+    display: flex;
 
-    font-size: 20px;
+    align-items: center;
 
-    margin-bottom: 18px;
+    gap: 15px;
+
+    margin-bottom: 20px;
 
   }
 
+
+  .section-number {
+
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f7eee8;
+
+    color: #a66a45;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+  }
+
+
+  .section-heading p {
+
+    margin: 0 0 3px;
+
+    color: #a66a45;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+  }
+
+
+  .section-heading h2 {
+
+    margin: 0;
+
+    color: #2b211c;
+
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
+
+    font-size: 22px;
+
+    font-weight: 500;
+
+  }
+
+
+  /* =====================================================
+     ORDER ITEMS
+  ===================================================== */
 
   .order-item {
 
@@ -588,26 +823,61 @@ import Layout from "../layouts/Layout.astro";
 
     justify-content: space-between;
 
-    gap: 15px;
+    align-items: center;
 
-    padding: 12px 0;
+    gap: 20px;
+
+    padding: 14px 0;
 
     border-bottom:
-      1px solid #f1f1f1;
+      1px solid #f0e9e4;
 
-    color: #555;
+    color: #514740;
 
-    font-size: 15px;
+    font-size: 14px;
+
+  }
+
+
+  .product-info {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+  }
+
+
+  .product-name {
+
+    color: #2b211c;
+
+    font-weight: 500;
+
+  }
+
+
+  .product-quantity {
+
+    color: #9a8d85;
 
   }
 
 
   .order-item strong {
 
-    color: #333;
+    color: #a66a45;
+
+    font-size: 15px;
 
   }
 
+
+  /* =====================================================
+     TOTAL
+  ===================================================== */
 
   .total-row {
 
@@ -617,23 +887,46 @@ import Layout from "../layouts/Layout.astro";
 
     align-items: center;
 
-    margin-top: 18px;
+    padding: 20px 0;
 
-    padding: 18px 0;
+    margin-top: 5px;
 
     border-top:
-      2px solid #eeeeee;
+      1px solid #ded3ca;
 
-    font-size: 18px;
+  }
+
+
+  .total-row span {
+
+    color: #756a64;
+
+    font-size: 14px;
 
   }
 
 
   .total-row strong {
 
-    color: #8f4058;
+    color: #a66a45;
 
-    font-size: 24px;
+    font-family:
+      Georgia,
+      serif;
+
+    font-size: 25px;
+
+  }
+
+
+  /* =====================================================
+     DELIVERY DETAILS
+  ===================================================== */
+
+  .details-list {
+
+    border-top:
+      1px solid #f0e9e4;
 
   }
 
@@ -644,21 +937,23 @@ import Layout from "../layouts/Layout.astro";
 
     justify-content: space-between;
 
-    gap: 20px;
+    align-items: center;
 
-    padding: 11px 0;
+    gap: 30px;
+
+    padding: 13px 0;
 
     border-bottom:
-      1px solid #f4f4f4;
+      1px solid #f0e9e4;
 
-    font-size: 14px;
+    font-size: 13px;
 
   }
 
 
   .detail-row span {
 
-    color: #777;
+    color: #8a7c73;
 
     flex-shrink: 0;
 
@@ -667,14 +962,20 @@ import Layout from "../layouts/Layout.astro";
 
   .detail-row strong {
 
-    color: #333;
+    color: #3b302a;
 
     text-align: right;
+
+    font-weight: 600;
 
     word-break: break-word;
 
   }
 
+
+  /* =====================================================
+     PAYMENT STATUS
+  ===================================================== */
 
   .status-box {
 
@@ -684,75 +985,107 @@ import Layout from "../layouts/Layout.astro";
 
     align-items: center;
 
-    margin-top: 18px;
+    margin-top: 20px;
 
-    padding: 16px;
+    padding: 18px 20px;
 
-    border-radius: 10px;
+    background: #faf7f4;
 
-    background: #fafafa;
+    border:
+      1px solid #eee3da;
 
   }
 
 
-  .status-box span {
+  .status-label {
 
-    color: #555;
+    display: block;
 
-    font-weight: 600;
+    margin-bottom: 4px;
+
+    color: #a66a45;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+  }
+
+
+  .status-box p {
+
+    margin: 0;
+
+    color: #8a7c73;
+
+    font-size: 12px;
 
   }
 
 
   #payment-status {
 
+    font-size: 13px;
+
     font-weight: 800;
+
+    letter-spacing: 1px;
 
   }
 
 
   #payment-status.paid {
 
-    color: #24943c;
+    color: #568064;
 
   }
 
 
   #payment-status.pending {
 
-    color: #d98a00;
+    color: #b47b20;
 
   }
 
 
+  /* =====================================================
+     BUTTON
+  ===================================================== */
+
   .shopping-button {
 
-    display: block;
+    display: flex;
 
-    margin-top: 35px;
+    align-items: center;
 
-    padding: 15px;
+    justify-content: center;
 
-    text-align: center;
+    gap: 12px;
+
+    margin-top: 42px;
+
+    padding: 16px 24px;
+
+    background: #2b211c;
+
+    color: #ffffff;
 
     text-decoration: none;
 
-    color: white;
-
-    background: #8f4058;
-
-    border-radius: 10px;
+    font-size: 13px;
 
     font-weight: 600;
 
-    transition: 0.3s;
+    transition: all 0.3s ease;
 
   }
 
 
   .shopping-button:hover {
 
-    background: #753449;
+    background: #a66a45;
 
     transform:
       translateY(-2px);
@@ -760,45 +1093,108 @@ import Layout from "../layouts/Layout.astro";
   }
 
 
-  .empty-message {
+  .arrow {
 
-    text-align: center;
-
-    color: #777;
-
-    padding: 20px;
+    font-size: 18px;
 
   }
 
+
+  /* =====================================================
+     BOTTOM NOTE
+  ===================================================== */
+
+  .bottom-note {
+
+    margin: 22px 0 0;
+
+    text-align: center;
+
+    color: #a2958d;
+
+    font-family:
+      Georgia,
+      serif;
+
+    font-size: 12px;
+
+    font-style: italic;
+
+  }
+
+
+  /* =====================================================
+     EMPTY
+  ===================================================== */
+
+  .empty-message {
+
+    padding: 20px;
+
+    text-align: center;
+
+    color: #8a7c73;
+
+    background: #faf7f4;
+
+  }
+
+
+  /* =====================================================
+     MOBILE
+  ===================================================== */
 
   @media (max-width: 600px) {
 
     .success-page {
 
-      padding: 35px 15px;
+      padding: 45px 14px 70px;
 
     }
 
 
     .success-card {
 
-      padding: 25px 20px;
+      padding: 35px 20px;
 
     }
 
 
-    .success-card h1 {
+    .success-header h1 {
 
-      font-size: 27px;
+      font-size: 30px;
+
+    }
+
+
+    .success-message {
+
+      font-size: 13px;
+
+    }
+
+
+    .details-section {
+
+      margin-top: 32px;
+
+    }
+
+
+    .section-heading h2 {
+
+      font-size: 20px;
 
     }
 
 
     .detail-row {
 
+      align-items: flex-start;
+
       flex-direction: column;
 
-      gap: 4px;
+      gap: 5px;
 
     }
 
@@ -806,6 +1202,29 @@ import Layout from "../layouts/Layout.astro";
     .detail-row strong {
 
       text-align: left;
+
+      width: 100%;
+
+    }
+
+
+    .status-box {
+
+      gap: 15px;
+
+    }
+
+
+    .status-box p {
+
+      font-size: 11px;
+
+    }
+
+
+    #payment-status {
+
+      font-size: 11px;
 
     }
 

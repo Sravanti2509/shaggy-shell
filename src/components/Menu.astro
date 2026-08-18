@@ -4,59 +4,184 @@ import cakes from "../data/Products.js";
 
 <section class="menu">
 
-  <div class="menu-heading">
-    <p class="subtitle">OUR MENU</p>
+  <!-- =========================
+       MENU HERO
+  ========================== -->
 
-    <h1>Freshly Baked for You</h1>
+  <div class="menu-hero">
 
-    <p class="description">
-      Delicious cakes and treats made fresh with love.
-    </p>
+    <div class="menu-hero-content">
+
+      <p class="eyebrow">
+        THE SRAVS COLLECTION
+      </p>
+
+      <h1>
+        Something delicious
+        <span>for every moment.</span>
+      </h1>
+
+      <p class="menu-description">
+        Explore our collection of freshly prepared cakes, pastries,
+        savory favorites and sweet treats — crafted with quality
+        ingredients and thoughtful care.
+      </p>
+
+      <div class="menu-highlights">
+
+        <div>
+          <strong>Freshly Baked</strong>
+          <span>Made fresh with care</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+          <strong>Quality Ingredients</strong>
+          <span>Selected with purpose</span>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+          <strong>Made to Delight</strong>
+          <span>For every occasion</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="menu-hero-decoration">
+      <div class="circle"></div>
+      <div class="small-circle"></div>
+      <div class="gold-line"></div>
+    </div>
+
   </div>
+
+
+  <!-- =========================
+       MENU HEADER
+  ========================== -->
+
+  <div class="collection-header">
+
+    <div>
+
+      <p class="eyebrow">
+        OUR FAVORITES
+      </p>
+
+      <h2>
+        Fresh from our kitchen
+      </h2>
+
+    </div>
+
+    <p>
+      Browse our selection and find your next favorite treat.
+    </p>
+
+  </div>
+
+
+  <!-- =========================
+       PRODUCTS
+  ========================== -->
 
   <div class="cake-container">
 
     {
-      cakes.map((cake) => (
-        <div class="cake-card">
+      cakes.map((cake, index) => (
 
-          <img
-            src={cake.image}
-            alt={cake.name}
-          />
+        <article class="cake-card">
 
-          <div class="cake-info">
+          <div class="cake-image-wrapper">
 
-            <h3>{cake.name}</h3>
+            <img
+              src={cake.image}
+              alt={cake.name}
+              loading={index > 3 ? "lazy" : "eager"}
+            />
 
-            <p class="price">
-              &#8377;{cake.price}
-            </p>
-
-            <button
-  class="add-cart"
-  data-name={cake.name}
-  data-price={cake.price}
-  data-image={cake.image}
->
-  Add to Cart &#128722;
-</button>
+            <span class="product-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
 
           </div>
 
-        </div>
+
+          <div class="cake-info">
+
+            <div class="product-top">
+
+              <h3>
+                {cake.name}
+              </h3>
+
+              <p class="price">
+                ₹{cake.price}
+              </p>
+
+            </div>
+
+
+            <p class="product-description">
+              Freshly prepared with quality ingredients
+              for a delicious and satisfying experience.
+            </p>
+
+
+            <button
+              class="add-cart"
+              data-name={cake.name}
+              data-price={cake.price}
+              data-image={cake.image}
+            >
+              <span>Add to Cart</span>
+
+              <span class="arrow">
+                →
+              </span>
+            </button>
+
+          </div>
+
+        </article>
+
       ))
     }
 
   </div>
 
+
+  <!-- =========================
+       BOTTOM MESSAGE
+  ========================== -->
+
+  <div class="menu-bottom">
+
+    <div class="bottom-line"></div>
+
+    <p>
+      Freshly prepared. Thoughtfully crafted. Made for you.
+    </p>
+
+    <div class="bottom-line"></div>
+
+  </div>
+
 </section>
+
 
 <script>
   const buttons = document.querySelectorAll(".add-cart");
 
   buttons.forEach((button) => {
+
     button.addEventListener("click", () => {
+
       const name = button.getAttribute("data-name");
       const price = button.getAttribute("data-price");
       const image = button.getAttribute("data-image");
@@ -68,91 +193,253 @@ import cakes from "../data/Products.js";
         quantity: 1
       };
 
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const cart = JSON.parse(
+        localStorage.getItem("cart") || "[]"
+      );
 
       const existingProduct = cart.find(
         (item) => item.name === product.name
       );
 
       if (existingProduct) {
+
         existingProduct.quantity += 1;
+
       } else {
+
         cart.push(product);
+
       }
 
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+      );
 
       alert(`${name} added to cart!`);
+
     });
+
   });
 </script>
 
 
 <style>
+
+  /* =========================
+     MAIN
+  ========================== */
+
   .menu {
-    padding: 70px 40px;
-    background: linear-gradient(
-      135deg,
-      #fff5f5,
-      #fffaf0,
-      #fdf4ff
-    );
-    text-align: center;
+    background: #ffffff;
     min-height: 100vh;
+    padding-bottom: 90px;
   }
 
-  .menu-heading {
-    margin-bottom: 45px;
-  }
 
-  .subtitle {
-    font-size: 14px;
+  /* =========================
+     COMMON
+  ========================== */
+
+  .eyebrow {
+    margin: 0 0 16px;
+    color: #8a6a38;
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: 3px;
-    font-weight: bold;
-    color: #8f4058;
-    margin-bottom: 10px;
-  }
-
-  .menu-heading h1 {
-    font-size: 36px;
-    color: #3b2028;
-    margin: 0 0 12px;
-  }
-
-  .description {
-    color: #666;
-    font-size: 16px;
   }
 
 
-  /* PRODUCTS */
+  /* =========================
+     MENU HERO
+  ========================== */
 
-  .cake-container {
+  .menu-hero {
+    min-height: 470px;
+    padding: 80px 8%;
     display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 30px;
-
-    max-width: 1100px;
-
-    margin: 0 auto;
-  }
-
-
-  /* CARD */
-
-  .cake-card {
-    background: white;
-
-    border-radius: 15px;
-
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    position: relative;
     overflow: hidden;
 
-    box-shadow:
-      0 5px 20px
-      rgba(0, 0, 0, 0.12);
+    background:
+      linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f7fbff 55%,
+        #eaf2f8 100%
+      );
+  }
 
+
+  .menu-hero-content {
+    max-width: 720px;
+    position: relative;
+    z-index: 2;
+  }
+
+
+  .menu-hero h1 {
+    margin: 0;
+    max-width: 700px;
+    color: #0b1f3a;
+    font-size: clamp(45px, 5vw, 68px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+  }
+
+
+  .menu-hero h1 span {
+    display: block;
+    color: #547896;
+  }
+
+
+  .menu-description {
+    max-width: 620px;
+    margin: 25px 0 35px;
+    color: #596878;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+
+  /* =========================
+     HIGHLIGHTS
+  ========================== */
+
+  .menu-highlights {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+
+  .menu-highlights div:not(.divider) {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+
+  .menu-highlights strong {
+    color: #0b1f3a;
+    font-size: 12px;
+  }
+
+
+  .menu-highlights span {
+    color: #7a8794;
+    font-size: 10px;
+  }
+
+
+  .divider {
+    width: 1px;
+    height: 32px;
+    background: #c9d4de;
+  }
+
+
+  /* =========================
+     DECORATION
+  ========================== */
+
+  .menu-hero-decoration {
+    position: relative;
+    height: 350px;
+  }
+
+
+  .circle {
+    position: absolute;
+    width: 330px;
+    height: 330px;
+    right: 5%;
+    top: 10px;
+    border-radius: 50%;
+    background: #dceaf4;
+  }
+
+
+  .small-circle {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    right: 0;
+    bottom: 20px;
+    border-radius: 50%;
+    background: #0b1f3a;
+  }
+
+
+  .gold-line {
+    position: absolute;
+    width: 130px;
+    height: 1px;
+    background: #c9a96e;
+    right: 22%;
+    top: 55%;
+    transform: rotate(-35deg);
+  }
+
+
+  /* =========================
+     COLLECTION HEADER
+  ========================== */
+
+  .collection-header {
+    max-width: 1150px;
+    margin: 90px auto 45px;
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 30px;
+  }
+
+
+  .collection-header h2 {
+    margin: 0;
+    color: #0b1f3a;
+    font-size: 40px;
+    letter-spacing: -1px;
+  }
+
+
+  .collection-header > p {
+    max-width: 330px;
+    margin: 0;
+    color: #718090;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+
+  /* =========================
+     PRODUCT GRID
+  ========================== */
+
+  .cake-container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 0 25px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+
+  /* =========================
+     CARD
+  ========================== */
+
+  .cake-card {
+    background: #ffffff;
+    border: 1px solid #e4e9ee;
+    overflow: hidden;
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
@@ -160,87 +447,195 @@ import cakes from "../data/Products.js";
 
 
   .cake-card:hover {
-    transform: translateY(-8px);
-
+    transform: translateY(-7px);
     box-shadow:
-      0 12px 30px
-      rgba(0, 0, 0, 0.18);
+      0 20px 45px
+      rgba(11, 31, 58, 0.11);
   }
 
 
-  /* IMAGE */
+  /* =========================
+     IMAGE
+  ========================== */
 
-  .cake-card img {
+  .cake-image-wrapper {
+    height: 285px;
+    position: relative;
+    overflow: hidden;
+    background: #f2f5f8;
+  }
+
+
+  .cake-image-wrapper img {
     width: 100%;
-
-    height: 250px;
-
-    object-fit: cover;
-
+    height: 100%;
     display: block;
+    object-fit: cover;
+    transition: transform 0.45s ease;
   }
 
 
-  /* CARD INFO */
+  .cake-card:hover
+  .cake-image-wrapper img {
+    transform: scale(1.05);
+  }
+
+
+  .product-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,0.94);
+    color: #0b1f3a;
+
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+
+  /* =========================
+     CARD CONTENT
+  ========================== */
 
   .cake-info {
-    padding: 20px;
+    padding: 23px;
+  }
+
+
+  .product-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 15px;
   }
 
 
   .cake-info h3 {
-    margin: 0 0 10px;
-
-    font-size: 21px;
-
-    color: #222;
+    margin: 0;
+    color: #0b1f3a;
+    font-size: 19px;
+    line-height: 1.35;
   }
 
-
-  /* PRICE */
 
   .price {
-    font-size: 18px;
-
-    font-weight: bold;
-
-    color: #8f4058;
-
-    margin-bottom: 18px;
+    margin: 0;
+    color: #8a6a38;
+    font-size: 17px;
+    font-weight: 700;
+    white-space: nowrap;
   }
 
 
-  /* ORDER BUTTON */
+  .product-description {
+    margin: 12px 0 22px;
+    min-height: 42px;
 
-  button {
-    padding: 11px 24px;
+    color: #7a8794;
+    font-size: 13px;
+    line-height: 1.65;
+  }
 
-    border: none;
 
-    border-radius: 6px;
+  /* =========================
+     ADD CART
+  ========================== */
 
-    background: #8f4058;
+  .add-cart {
+    width: 100%;
+    padding: 13px 17px;
 
-    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid #0b1f3a;
+    border-radius: 3px;
+
+    background: #0b1f3a;
+    color: #ffffff;
 
     cursor: pointer;
 
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 700;
 
-    transition: 0.3s;
+    transition: all 0.25s ease;
   }
 
 
-  button:hover {
-    background: #682c3e;
-
-    transform: translateY(-2px);
+  .add-cart:hover {
+    background: #18395d;
   }
 
 
-  /* TABLET */
+  .arrow {
+    font-size: 17px;
+    transition: transform 0.25s ease;
+  }
 
-  @media (max-width: 900px) {
+
+  .add-cart:hover .arrow {
+    transform: translateX(4px);
+  }
+
+
+  /* =========================
+     BOTTOM
+  ========================== */
+
+  .menu-bottom {
+    max-width: 1150px;
+    margin: 80px auto 0;
+    padding: 0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+  }
+
+
+  .menu-bottom p {
+    margin: 0;
+    color: #7b8794;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+
+  .bottom-line {
+    height: 1px;
+    width: 100px;
+    background: #d8e0e7;
+  }
+
+
+  /* =========================
+     TABLET
+  ========================== */
+
+  @media (max-width: 950px) {
+
+    .menu-hero {
+      grid-template-columns: 1fr;
+      padding: 70px 6%;
+    }
+
+
+    .menu-hero-decoration {
+      display: none;
+    }
+
 
     .cake-container {
       grid-template-columns: repeat(2, 1fr);
@@ -249,25 +644,164 @@ import cakes from "../data/Products.js";
   }
 
 
-  /* MOBILE */
+  /* =========================
+     MOBILE
+  ========================== */
 
-  @media (max-width: 600px) {
+  @media (max-width: 650px) {
+
+    .menu {
+      padding-bottom: 60px;
+    }
+
+
+    .menu-hero {
+      min-height: auto;
+      padding: 55px 20px 60px;
+      text-align: center;
+    }
+
+
+    .menu-hero-content {
+      margin: auto;
+    }
+
+
+    .menu-hero h1 {
+      font-size: 42px;
+      letter-spacing: -1.3px;
+    }
+
+
+    .menu-description {
+      font-size: 14px;
+      line-height: 1.75;
+      margin: 22px auto 30px;
+    }
+
+
+    .menu-highlights {
+      justify-content: center;
+      gap: 9px;
+    }
+
+
+    .menu-highlights strong {
+      font-size: 9px;
+    }
+
+
+    .menu-highlights span {
+      font-size: 8px;
+    }
+
+
+    .divider {
+      height: 27px;
+    }
+
+
+    .collection-header {
+      margin: 60px auto 30px;
+      padding: 0 20px;
+
+      display: block;
+    }
+
+
+    .collection-header h2 {
+      font-size: 32px;
+    }
+
+
+    .collection-header > p {
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
 
     .cake-container {
       grid-template-columns: 1fr;
+      padding: 0 20px;
+      gap: 20px;
     }
 
-    .menu {
-      padding: 50px 20px;
+
+    .cake-image-wrapper {
+      height: 260px;
     }
 
-    .menu-heading h1 {
-      font-size: 28px;
+
+    .cake-info {
+      padding: 20px;
     }
 
-    .cake-card img {
-      height: 230px;
+
+    .cake-info h3 {
+      font-size: 18px;
+    }
+
+
+    .product-description {
+      min-height: auto;
+    }
+
+
+    .menu-bottom {
+      padding: 0 20px;
+      gap: 12px;
+      margin-top: 60px;
+    }
+
+
+    .bottom-line {
+      width: 35px;
     }
 
   }
+
+
+  /* =========================
+     SMALL PHONES
+  ========================== */
+
+  @media (max-width: 380px) {
+
+    .menu-hero {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+
+    .menu-hero h1 {
+      font-size: 36px;
+    }
+
+
+    .menu-highlights {
+      gap: 6px;
+    }
+
+
+    .menu-highlights strong {
+      font-size: 8px;
+    }
+
+
+    .menu-highlights span {
+      font-size: 7px;
+    }
+
+
+    .cake-container {
+      padding: 0 16px;
+    }
+
+
+    .collection-header {
+      padding: 0 16px;
+    }
+
+  }
+
 </style>

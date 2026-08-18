@@ -1,38 +1,81 @@
 <header class="header">
+
   <div class="navbar">
 
-    <!-- Logo + Bakery Name -->
+    <!-- BRAND -->
     <a href="/" class="brand">
 
-      <img
-        src="/products/logo.jpg"
-        alt="Sravs Bakery"
-      />
+      <div class="logo-box">
+        <img
+          src="/products/logo.jpg"
+          alt="Sravs Bakery"
+        />
+      </div>
 
-      <span>Sravs Bakery</span>
+      <div class="brand-text">
+        <span class="brand-name">Sravs Bakery</span>
+        <span class="brand-tagline">FRESHLY BAKED</span>
+      </div>
 
     </a>
 
 
-    <!-- Navigation -->
+    <!-- NAVIGATION -->
     <nav>
 
-      <a href="/">Home</a>
+      <a href="/" class="nav-link">
+        Home
+      </a>
 
-      <a href="/menu">Menu</a>
+      <a href="/menu" class="nav-link">
+        Menu
+      </a>
 
-      <a href="/about">About</a>
+      <a href="/about" class="nav-link">
+        About
+      </a>
 
-      <a href="/contact">Contact</a>
+      <a href="/contact" class="nav-link">
+        Contact
+      </a>
 
-      <!-- CHECKOUT / CART -->
+
+      <!-- CHECKOUT -->
       <a href="/checkout" class="cart-link">
 
         <span>Checkout</span>
 
         <span class="cart-wrapper">
 
-          🛒
+          <svg
+            class="cart-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M3 4H5L7.2 14.2C7.31 14.67 7.72 15 8.2 15H17.8C18.28 15 18.69 14.67 18.8 14.2L20.5 7H6"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <circle
+              cx="9"
+              cy="19"
+              r="1.4"
+              fill="currentColor"
+            />
+
+            <circle
+              cx="17"
+              cy="19"
+              r="1.4"
+              fill="currentColor"
+            />
+          </svg>
+
 
           <span
             id="cart-count"
@@ -48,11 +91,11 @@
     </nav>
 
   </div>
+
 </header>
 
 
 <script>
-
   function updateCartCount() {
 
     const cart = JSON.parse(
@@ -61,11 +104,9 @@
 
     const count = cart.reduce(
       (total, item) => {
-
         return total + (
           Number(item.quantity) || 1
         );
-
       },
       0
     );
@@ -74,11 +115,8 @@
       document.getElementById("cart-count");
 
     if (cartCount) {
-
       cartCount.textContent = count;
-
     }
-
   }
 
 
@@ -95,39 +133,44 @@
     "focus",
     updateCartCount
   );
-
 </script>
 
 
 <style>
 
-  /* =========================
+  /* ===============================
      HEADER
-  ========================= */
+  =============================== */
 
   .header {
-
     width: 100%;
 
-    background: white;
+    background: #ffffff;
 
     border-bottom:
-      1px solid #eee;
+      1px solid #e8edf3;
 
+    position: relative;
+
+    z-index: 100;
+
+    box-shadow:
+      0 3px 18px rgba(15, 35, 60, 0.04);
   }
 
 
-  /* =========================
+  /* ===============================
      NAVBAR
-  ========================= */
+  =============================== */
 
   .navbar {
+    max-width: 1250px;
 
-    max-width: 1200px;
+    min-height: 88px;
 
-    margin: auto;
+    margin: 0 auto;
 
-    padding: 8px 40px;
+    padding: 8px 38px;
 
     display: flex;
 
@@ -136,324 +179,447 @@
     justify-content: space-between;
 
     box-sizing: border-box;
-
   }
 
 
-  /* =========================
-     LOGO + NAME
-  ========================= */
+  /* ===============================
+     BRAND
+  =============================== */
 
   .brand {
-
     display: flex;
 
     align-items: center;
 
-    gap: 10px;
+    gap: 12px;
 
     text-decoration: none;
 
     flex-shrink: 0;
-
   }
 
 
-  .brand img {
+  .logo-box {
+    width: 68px;
 
-    width: 110px;
-
-    height: 110px;
-
-    object-fit: contain;
-
-    display: block;
-
-  }
-
-
-  .brand span {
-
-    font-size: 22px;
-
-    font-weight: 700;
-
-    color: #8f4058;
-
-    white-space: nowrap;
-
-  }
-
-
-  /* =========================
-     NAVIGATION
-  ========================= */
-
-  nav {
+    height: 68px;
 
     display: flex;
-
-    align-items: center;
-
-    gap: 30px;
-
-  }
-
-
-  nav a {
-
-    color: #333;
-
-    text-decoration: none;
-
-    font-size: 16px;
-
-    font-weight: 500;
-
-    transition: 0.3s;
-
-    white-space: nowrap;
-
-  }
-
-
-  nav a:hover {
-
-    color: #8f4058;
-
-  }
-
-
-  /* =========================
-     CART
-  ========================= */
-
-  .cart-link {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-  }
-
-
-  .cart-wrapper {
-
-    position: relative;
-
-    display: inline-flex;
 
     align-items: center;
 
     justify-content: center;
 
-    font-size: 24px;
-
     flex-shrink: 0;
-
   }
 
 
-  /* CART NUMBER */
+  .logo-box img {
+    width: 100%;
 
-  .cart-count {
+    height: 100%;
 
-    position: absolute;
+    object-fit: contain;
 
-    top: -9px;
+    display: block;
+  }
 
-    right: -10px;
 
-    min-width: 18px;
+  /* ===============================
+     BRAND TEXT
+  =============================== */
 
-    height: 18px;
+  .brand-text {
+    display: flex;
 
-    padding: 0 4px;
+    flex-direction: column;
 
-    background: #f28c28;
+    justify-content: center;
+  }
 
-    color: white;
 
-    border-radius: 50%;
+  .brand-name {
+    font-family:
+      Georgia,
+      "Times New Roman",
+      serif;
 
-    font-size: 11px;
+    font-size: 25px;
 
     font-weight: 700;
 
-    line-height: 18px;
+    color: #10233f;
 
-    text-align: center;
+    letter-spacing: 0.2px;
 
-    box-sizing: border-box;
-
+    white-space: nowrap;
   }
 
 
-  /* =========================
-     MOBILE
-  ========================= */
+  .brand-tagline {
+    margin-top: 5px;
 
-  @media (max-width: 600px) {
+    font-family: Arial, sans-serif;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    color: #416b94;
+
+    letter-spacing: 3px;
+  }
+
+
+  /* ===============================
+     NAVIGATION
+  =============================== */
+
+  nav {
+    display: flex;
+
+    align-items: center;
+
+    gap: 34px;
+  }
+
+
+  .nav-link {
+    position: relative;
+
+    padding: 8px 0;
+
+    color: #27394f;
+
+    text-decoration: none;
+
+    font-family:
+      Arial,
+      sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.2px;
+
+    transition:
+      color 0.25s ease;
+  }
+
+
+  .nav-link::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: 0;
+
+    width: 0;
+
+    height: 2px;
+
+    background: #416b94;
+
+    border-radius: 2px;
+
+    transition:
+      width 0.25s ease;
+  }
+
+
+  .nav-link:hover {
+    color: #315d88;
+  }
+
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+
+  /* ===============================
+     CHECKOUT BUTTON
+  =============================== */
+
+  .cart-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding:
+      10px 16px;
+
+    border-radius: 8px;
+
+    background: #10233f;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-family:
+      Arial,
+      sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    box-shadow:
+      0 5px 14px
+      rgba(16, 35, 63, 0.16);
+
+    transition:
+      background 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+
+  .cart-link:hover {
+    background: #315d88;
+
+    transform:
+      translateY(-1px);
+
+    box-shadow:
+      0 7px 18px
+      rgba(16, 35, 63, 0.2);
+  }
+
+
+  /* ===============================
+     CART ICON
+  =============================== */
+
+  .cart-wrapper {
+    position: relative;
+
+    width: 22px;
+
+    height: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+  }
+
+
+  .cart-icon {
+    width: 21px;
+
+    height: 21px;
+
+    color: white;
+
+    display: block;
+  }
+
+
+  /* ===============================
+     CART COUNT
+  =============================== */
+
+  .cart-count {
+    position: absolute;
+
+    top: -8px;
+
+    right: -9px;
+
+    min-width: 17px;
+
+    height: 17px;
+
+    padding: 0 4px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    border-radius: 50%;
+
+    background: #d95c5c;
+
+    color: white;
+
+    border:
+      2px solid #10233f;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    line-height: 1;
+  }
+
+
+  /* ===============================
+     TABLET
+  =============================== */
+
+  @media (max-width: 850px) {
 
     .navbar {
+      padding:
+        8px 20px;
+    }
 
-      padding: 8px 10px;
+    nav {
+      gap: 20px;
+    }
+
+    .brand-name {
+      font-size: 22px;
+    }
+  }
+
+
+  /* ===============================
+     MOBILE
+  =============================== */
+
+  @media (max-width: 650px) {
+
+    .navbar {
+      min-height: 68px;
+
+      padding:
+        7px 10px;
 
       gap: 8px;
+    }
 
-      overflow: hidden;
 
+    .logo-box {
+      width: 45px;
+
+      height: 45px;
     }
 
 
     .brand {
-
-      gap: 6px;
-
-      min-width: 0;
-
-      flex: 0 1 auto;
-
+      gap: 7px;
     }
 
 
-    .brand img {
-
-      width: 45px;
-
-      height: 45px;
-
-      flex-shrink: 0;
-
-    }
-
-
-    .brand span {
-
+    .brand-name {
       font-size: 16px;
+    }
 
-      max-width: 105px;
 
-      overflow: hidden;
+    .brand-tagline {
+      font-size: 5px;
 
-      text-overflow: ellipsis;
+      letter-spacing: 2px;
 
+      margin-top: 3px;
     }
 
 
     nav {
-
       gap: 10px;
-
-      flex: 1;
-
-      justify-content: flex-end;
 
       min-width: 0;
 
+      justify-content: flex-end;
     }
 
 
-    nav a {
+    .nav-link {
+      font-size: 10px;
 
-      font-size: 12px;
-
+      padding: 5px 0;
     }
 
 
     .cart-link {
+      padding:
+        8px;
 
-      gap: 3px;
-
+      border-radius: 7px;
     }
 
 
     .cart-link > span:first-child {
-
       display: none;
-
     }
 
 
     .cart-wrapper {
+      width: 21px;
 
-      font-size: 23px;
-
+      height: 21px;
     }
-
-
-    .cart-count {
-
-      top: -8px;
-
-      right: -8px;
-
-      min-width: 17px;
-
-      height: 17px;
-
-      font-size: 10px;
-
-      line-height: 17px;
-
-    }
-
   }
 
 
-  /* =========================
-     VERY SMALL PHONES
-  ========================= */
+  /* ===============================
+     VERY SMALL PHONE
+  =============================== */
 
-  @media (max-width: 380px) {
+  @media (max-width: 390px) {
 
     .navbar {
-
-      padding: 7px 8px;
-
+      padding:
+        6px 7px;
     }
 
 
-    .brand img {
-
+    .logo-box {
       width: 40px;
 
       height: 40px;
-
     }
 
 
-    .brand span {
-
+    .brand-name {
       font-size: 14px;
+    }
 
-      max-width: 85px;
 
+    .brand-tagline {
+      font-size: 4px;
+
+      letter-spacing: 1.5px;
     }
 
 
     nav {
-
       gap: 7px;
-
     }
 
 
-    nav a {
-
-      font-size: 11px;
-
+    .nav-link {
+      font-size: 9px;
     }
 
 
-    .cart-wrapper {
-
-      font-size: 21px;
-
+    .cart-link {
+      padding: 7px;
     }
 
+
+    .cart-icon {
+      width: 19px;
+
+      height: 19px;
+    }
   }
 
 </style>

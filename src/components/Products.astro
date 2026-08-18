@@ -19,17 +19,37 @@ const products = [
 ---
 
 <section class="products">
-  <h2>Our Products</h2>
+  <div class="section-heading">
+    <p class="subtitle">FRESHLY BAKED</p>
+    <h2>Our Products</h2>
+    <div class="heading-line"></div>
+    <p class="description">
+      Delicious treats made with love, fresh ingredients and a touch of sweetness.
+    </p>
+  </div>
 
   <div class="product-container">
     {products.map((product) => (
       <div class="card">
-        <img src={product.image} alt={product.name} />
 
-        <h3>{product.name}</h3>
-        <p>{product.price}</p>
+        <div class="image-wrapper">
+          <img src={product.image} alt={product.name} />
+          <span class="fresh-badge">Fresh</span>
+        </div>
 
-        <button>Order Now</button>
+        <div class="card-content">
+          <h3>{product.name}</h3>
+
+          <div class="card-bottom">
+            <p class="price">{product.price}</p>
+
+            <button>
+              Order Now
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+
       </div>
     ))}
   </div>
@@ -38,34 +58,218 @@ const products = [
 
 <style>
 .products {
-  padding: 40px;
+  padding: 80px 40px;
+  background: #fffaf5;
   text-align: center;
 }
 
-.product-container {
-  display: flex;
-  gap: 25px;
-  justify-content: center;
+/* Heading */
+
+.section-heading {
+  max-width: 650px;
+  margin: 0 auto 50px;
 }
 
+.subtitle {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #a66a45;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 42px;
+  color: #2b211c;
+  font-weight: 600;
+}
+
+.heading-line {
+  width: 55px;
+  height: 2px;
+  background: #a66a45;
+  margin: 18px auto;
+}
+
+.description {
+  margin: 0;
+  color: #756a64;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Products */
+
+.product-container {
+  max-width: 1150px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Card */
+
 .card {
-  width: 250px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px gray;
+  background: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
+  text-align: left;
+
+  box-shadow: 0 10px 35px rgba(65, 43, 31, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 45px rgba(65, 43, 31, 0.15);
+}
+
+/* Image */
+
+.image-wrapper {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
 }
 
 .card img {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+
+  transition: transform 0.5s ease;
 }
 
+.card:hover img {
+  transform: scale(1.06);
+}
+
+.fresh-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+
+  padding: 7px 13px;
+
+  background: #ffffff;
+  color: #6d4936;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  border-radius: 20px;
+}
+
+/* Content */
+
+.card-content {
+  padding: 24px;
+}
+
+.card-content h3 {
+  margin: 0 0 22px;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 23px;
+  font-weight: 600;
+
+  color: #2b211c;
+}
+
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #a66a45;
+}
+
+/* Button */
+
 button {
-  background: black;
-  color: white;
-  padding: 10px 20px;
-  border: none;
+  border: 1px solid #2b211c;
+  background: #2b211c;
+  color: #ffffff;
+
+  padding: 11px 16px;
+
+  font-size: 13px;
+  font-weight: 600;
+
   cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+button span {
+  margin-left: 7px;
+  font-size: 16px;
+}
+
+button:hover {
+  background: transparent;
+  color: #2b211c;
+}
+
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .product-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .products {
+    padding: 60px 20px;
+  }
+
+  .section-heading {
+    margin-bottom: 35px;
+  }
+
+  .section-heading h2 {
+    font-size: 34px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .product-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .image-wrapper {
+    height: 250px;
+  }
+
+  .card-content {
+    padding: 20px;
+  }
+
+  .card-content h3 {
+    font-size: 21px;
+  }
 }
 </style>

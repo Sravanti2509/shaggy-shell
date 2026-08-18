@@ -1,27 +1,56 @@
+```astro
 ---
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Checkout">
+<Layout title="Checkout - Sravs Bakery">
 
-  <div class="checkout-page">
+  <main class="checkout-page">
 
-    <div class="checkout-header">
-      <h1>🛒 Shopping Cart</h1>
-      <p>Review your items before checkout</p>
-    </div>
+    <!-- HERO -->
 
-    <div id="cart-container"></div>
+    <section class="checkout-hero">
 
-    <div id="cart-total"></div>
+      <div class="hero-content">
 
-  </div>
+        <span class="eyebrow">
+          YOUR ORDER
+        </span>
+
+        <h1>
+          Shopping Cart
+        </h1>
+
+        <p>
+          Take a moment to review your selection
+          before completing your order.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- CART -->
+
+    <section class="cart-section">
+
+      <div id="cart-container"></div>
+
+      <div id="cart-total"></div>
+
+    </section>
+
+  </main>
 
 
   <script>
 
-    const cartContainer = document.getElementById("cart-container");
-    const cartTotal = document.getElementById("cart-total");
+    const cartContainer =
+      document.getElementById("cart-container");
+
+    const cartTotal =
+      document.getElementById("cart-total");
 
 
     /* =========================
@@ -29,9 +58,11 @@ import Layout from "../layouts/Layout.astro";
     ========================= */
 
     function getCart() {
+
       return JSON.parse(
         localStorage.getItem("cart") || "[]"
       );
+
     }
 
 
@@ -54,18 +85,25 @@ import Layout from "../layouts/Layout.astro";
 
           <div class="empty-cart">
 
-            <div class="empty-icon">
-              🛒
+            <div class="empty-symbol">
+              ✦
             </div>
 
-            <h2>Your cart is empty</h2>
+            <span class="empty-eyebrow">
+              NOTHING HERE YET
+            </span>
+
+            <h2>
+              Your cart is empty
+            </h2>
 
             <p>
-              Add some delicious products from our menu.
+              Discover something delicious
+              from our freshly baked collection.
             </p>
 
             <a href="/menu">
-              Continue Shopping
+              Explore Our Menu
             </a>
 
           </div>
@@ -75,36 +113,36 @@ import Layout from "../layouts/Layout.astro";
         cartTotal.innerHTML = "";
 
         return;
+
       }
 
 
       let total = 0;
 
 
-      /* =========================
-         CART PRODUCTS
-      ========================= */
+      /* CART PRODUCTS */
 
       cart.forEach((item, index) => {
 
         const price = Number(
-          String(item.price).replace(/[^0-9.]/g, "")
+          String(item.price)
+            .replace(/[^0-9.]/g, "")
         );
 
-        const quantity = Number(item.quantity) || 1;
+        const quantity =
+          Number(item.quantity) || 1;
 
-        const itemTotal = price * quantity;
+        const itemTotal =
+          price * quantity;
 
         total += itemTotal;
 
 
         cartContainer.innerHTML += `
 
-          <div class="cart-item">
+          <article class="cart-item">
 
-            <!-- PRODUCT IMAGE -->
-
-            <div class="image-box">
+            <div class="product-image">
 
               <img
                 src="${item.image}"
@@ -114,86 +152,90 @@ import Layout from "../layouts/Layout.astro";
             </div>
 
 
-            <!-- PRODUCT DETAILS -->
+            <div class="product-details">
 
-            <div class="details">
+              <span class="product-label">
+                FRESHLY BAKED
+              </span>
 
               <h2>
                 ${item.name}
               </h2>
 
-              <p class="price">
+              <p class="unit-price">
                 ₹${price}
               </p>
 
 
-              <!-- QUANTITY -->
+              <div class="product-bottom">
 
-              <div class="quantity">
+                <div class="quantity">
 
-                <button
-                  class="quantity-btn"
-                  data-index="${index}"
-                  data-change="-1"
-                  type="button"
-                >
-                  −
-                </button>
+                  <button
+                    class="quantity-btn"
+                    data-index="${index}"
+                    data-change="-1"
+                    type="button"
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
 
-                <span>
-                  ${quantity}
-                </span>
+                  <span>
+                    ${quantity}
+                  </span>
 
-                <button
-                  class="quantity-btn"
-                  data-index="${index}"
-                  data-change="1"
-                  type="button"
-                >
-                  +
-                </button>
+                  <button
+                    class="quantity-btn"
+                    data-index="${index}"
+                    data-change="1"
+                    type="button"
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
 
-              </div>
+                </div>
 
 
-              <!-- ACTIONS -->
+                <div class="actions">
 
-              <div class="actions">
+                  <button
+                    class="remove"
+                    data-index="${index}"
+                    type="button"
+                  >
+                    Remove
+                  </button>
 
-                <button
-                  class="remove"
-                  data-index="${index}"
-                  type="button"
-                >
-                  Remove
-                </button>
+                  <button
+                    class="save"
+                    data-index="${index}"
+                    type="button"
+                  >
+                    Save for later
+                  </button>
 
-                <span class="separator">
-                  |
-                </span>
-
-                <button
-                  class="save"
-                  data-index="${index}"
-                  type="button"
-                >
-                  Save for later
-                </button>
+                </div>
 
               </div>
 
             </div>
 
-
-            <!-- ITEM TOTAL -->
 
             <div class="item-total">
 
-              ₹${itemTotal}
+              <span>
+                TOTAL
+              </span>
+
+              <strong>
+                ₹${itemTotal}
+              </strong>
 
             </div>
 
-          </div>
+          </article>
 
         `;
 
@@ -206,13 +248,25 @@ import Layout from "../layouts/Layout.astro";
 
       cartTotal.innerHTML = `
 
-        <div class="summary">
+        <aside class="summary">
 
-          <div class="subtotal">
+          <div class="summary-heading">
 
             <span>
-              Subtotal (${cart.length}
-              item${cart.length > 1 ? "s" : ""})
+              ORDER SUMMARY
+            </span>
+
+            <h2>
+              Your Order
+            </h2>
+
+          </div>
+
+
+          <div class="summary-row">
+
+            <span>
+              Subtotal
             </span>
 
             <strong>
@@ -222,20 +276,23 @@ import Layout from "../layouts/Layout.astro";
           </div>
 
 
-          <div class="delivery">
+          <div class="summary-row delivery-row">
 
             <span>
               Delivery
             </span>
 
             <span class="free">
-              FREE
+              Complimentary
             </span>
 
           </div>
 
 
-          <div class="grand-total">
+          <div class="summary-divider"></div>
+
+
+          <div class="total-row">
 
             <span>
               Total
@@ -253,84 +310,92 @@ import Layout from "../layouts/Layout.astro";
             id="payment-btn"
             type="button"
           >
+
             Proceed to Payment
+
+            <span>
+              →
+            </span>
+
           </button>
 
-        </div>
+
+          <p class="secure-note">
+            Secure checkout · Freshly prepared with care
+          </p>
+
+        </aside>
 
       `;
 
 
-      /* =========================
-         QUANTITY BUTTONS
-      ========================= */
+      /* QUANTITY */
 
       document
         .querySelectorAll(".quantity-btn")
         .forEach((button) => {
 
-          button.addEventListener("click", () => {
+          button.addEventListener(
+            "click",
+            () => {
 
-            const index = Number(
-              button.dataset.index
-            );
+              const index =
+                Number(button.dataset.index);
 
-            const change = Number(
-              button.dataset.change
-            );
+              const change =
+                Number(button.dataset.change);
 
-            changeQuantity(index, change);
+              changeQuantity(index, change);
 
-          });
+            }
+          );
 
         });
 
 
-      /* =========================
-         REMOVE BUTTONS
-      ========================= */
+      /* REMOVE */
 
       document
         .querySelectorAll(".remove")
         .forEach((button) => {
 
-          button.addEventListener("click", () => {
+          button.addEventListener(
+            "click",
+            () => {
 
-            const index = Number(
-              button.dataset.index
-            );
+              const index =
+                Number(button.dataset.index);
 
-            removeItem(index);
+              removeItem(index);
 
-          });
+            }
+          );
 
         });
 
 
-      /* =========================
-         SAVE BUTTONS
-      ========================= */
+      /* SAVE */
 
       document
         .querySelectorAll(".save")
         .forEach((button) => {
 
-          button.addEventListener("click", () => {
+          button.addEventListener(
+            "click",
+            () => {
 
-            const index = Number(
-              button.dataset.index
-            );
+              const index =
+                Number(button.dataset.index);
 
-            saveForLater(index);
+              saveForLater(index);
 
-          });
+            }
+          );
 
         });
 
 
-      /* =========================
-         PAYMENT BUTTON
-      ========================= */
+      /* PAYMENT */
 
       const paymentButton =
         document.getElementById("payment-btn");
@@ -356,10 +421,7 @@ import Layout from "../layouts/Layout.astro";
 
       const cart = getCart();
 
-
-      if (!cart[index]) {
-        return;
-      }
+      if (!cart[index]) return;
 
 
       const currentQuantity =
@@ -369,8 +431,6 @@ import Layout from "../layouts/Layout.astro";
       cart[index].quantity =
         currentQuantity + change;
 
-
-      /* REMOVE IF QUANTITY BECOMES ZERO */
 
       if (cart[index].quantity <= 0) {
 
@@ -391,17 +451,14 @@ import Layout from "../layouts/Layout.astro";
 
 
     /* =========================
-       REMOVE PRODUCT
+       REMOVE
     ========================= */
 
     function removeItem(index) {
 
       const cart = getCart();
 
-
-      if (!cart[index]) {
-        return;
-      }
+      if (!cart[index]) return;
 
 
       const productName =
@@ -435,21 +492,17 @@ import Layout from "../layouts/Layout.astro";
 
       const cart = getCart();
 
-
-      if (!cart[index]) {
-        return;
-      }
+      if (!cart[index]) return;
 
 
       const item = cart[index];
 
 
-      let savedItems = JSON.parse(
-        localStorage.getItem("savedItems") || "[]"
-      );
+      let savedItems =
+        JSON.parse(
+          localStorage.getItem("savedItems") || "[]"
+        );
 
-
-      /* CHECK DUPLICATE */
 
       const alreadySaved =
         savedItems.some(
@@ -463,8 +516,6 @@ import Layout from "../layouts/Layout.astro";
 
       }
 
-
-      /* REMOVE FROM CART */
 
       cart.splice(index, 1);
 
@@ -485,7 +536,7 @@ import Layout from "../layouts/Layout.astro";
 
 
       alert(
-        `${item.name} saved for later ❤️`
+        `${item.name} saved for later.`
       );
 
     }
@@ -494,21 +545,25 @@ import Layout from "../layouts/Layout.astro";
     /* =========================
        PAYMENT
     ========================= */
-function proceedToPayment() {
 
-  const cart = getCart();
+    function proceedToPayment() {
 
-  if (cart.length === 0) {
+      const cart = getCart();
 
-    alert("Your cart is empty!");
 
-    return;
+      if (cart.length === 0) {
 
-  }
+        alert("Your cart is empty!");
 
-  window.location.href = "/payment";
+        return;
 
-}
+      }
+
+
+      window.location.href =
+        "/payment";
+
+    }
 
 
     /* =========================
@@ -520,7 +575,6 @@ function proceedToPayment() {
   </script>
 
 
-
   <style>
 
     /* =========================
@@ -529,46 +583,109 @@ function proceedToPayment() {
 
     :global(.checkout-page) {
 
-      max-width: 1000px;
+      min-height: 100vh;
 
-      margin: 40px auto;
+      background:
+        linear-gradient(
+          180deg,
+          #faf8f3 0%,
+          #ffffff 45%,
+          #faf8f3 100%
+        );
 
-      padding: 0 25px;
+      padding-bottom: 90px;
 
-      font-family: Arial, sans-serif;
+      color: #292621;
 
     }
 
 
     /* =========================
-       HEADER
+       HERO
     ========================= */
 
-    :global(.checkout-header) {
+    :global(.checkout-hero) {
 
-      margin-bottom: 25px;
+      padding: 70px 25px 55px;
 
-    }
+      text-align: center;
 
-
-    :global(.checkout-header h1) {
-
-      font-size: 30px;
-
-      margin: 0;
-
-      color: #222;
+      border-bottom: 1px solid #e7e1d8;
 
     }
 
 
-    :global(.checkout-header p) {
+    :global(.hero-content) {
 
-      margin-top: 7px;
+      max-width: 760px;
 
-      color: #777;
+      margin: auto;
+
+    }
+
+
+    :global(.eyebrow),
+    :global(.product-label),
+    :global(.summary-heading span),
+    :global(.empty-eyebrow) {
+
+      display: block;
+
+      font-size: 11px;
+
+      letter-spacing: 3px;
+
+      font-weight: 700;
+
+      color: #a47c45;
+
+    }
+
+
+    :global(.hero-content h1) {
+
+      margin: 13px 0 10px;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 52px;
+
+      font-weight: 500;
+
+      letter-spacing: -1px;
+
+      color: #292621;
+
+    }
+
+
+    :global(.hero-content p) {
+
+      max-width: 520px;
+
+      margin: auto;
+
+      color: #777066;
 
       font-size: 15px;
+
+      line-height: 1.8;
+
+    }
+
+
+    /* =========================
+       CART SECTION
+    ========================= */
+
+    :global(.cart-section) {
+
+      width: min(1100px, calc(100% - 50px));
+
+      margin: 45px auto 0;
 
     }
 
@@ -579,17 +696,25 @@ function proceedToPayment() {
 
     :global(.cart-item) {
 
-      display: flex;
+      display: grid;
+
+      grid-template-columns:
+        150px 1fr 130px;
+
+      gap: 28px;
 
       align-items: center;
 
-      gap: 20px;
+      padding: 25px 0;
 
-      padding: 18px 5px;
+      border-bottom: 1px solid #e6e0d7;
 
-      border-top: 1px solid #e5e5e5;
+    }
 
-      min-height: 140px;
+
+    :global(.cart-item:first-child) {
+
+      border-top: 1px solid #e6e0d7;
 
     }
 
@@ -598,44 +723,37 @@ function proceedToPayment() {
        IMAGE
     ========================= */
 
-    :global(.image-box) {
+    :global(.product-image) {
 
-      width: 120px;
+      width: 150px;
 
-      height: 120px;
-
-      flex-shrink: 0;
+      height: 150px;
 
       overflow: hidden;
 
-      border-radius: 10px;
-
-      background: #f8f8f8;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
+      background: #f1eee8;
 
     }
 
 
-    :global(.image-box img) {
+    :global(.product-image img) {
 
-      width: 120px;
+      width: 100%;
 
-      height: 120px;
-
-      max-width: 120px;
-
-      max-height: 120px;
+      height: 100%;
 
       object-fit: cover;
 
       display: block;
 
-      border-radius: 10px;
+      transition: transform .5s ease;
+
+    }
+
+
+    :global(.cart-item:hover .product-image img) {
+
+      transform: scale(1.05);
 
     }
 
@@ -644,39 +762,55 @@ function proceedToPayment() {
        DETAILS
     ========================= */
 
-    :global(.details) {
+    :global(.product-label) {
 
-      flex: 1;
+      margin-bottom: 8px;
 
-      min-width: 0;
+      font-size: 9px;
+
+      letter-spacing: 2px;
 
     }
 
 
-    :global(.details h2) {
-
-      font-size: 19px;
-
-      font-weight: 600;
+    :global(.product-details h2) {
 
       margin: 0 0 7px;
 
-      color: #222;
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
-      line-height: 1.3;
+      font-size: 22px;
+
+      font-weight: 500;
+
+      color: #292621;
 
     }
 
 
-    :global(.price) {
+    :global(.unit-price) {
 
-      font-size: 15px;
+      margin: 0;
 
-      font-weight: 500;
+      color: #756e64;
 
-      color: #555;
+      font-size: 14px;
 
-      margin: 0 0 10px;
+    }
+
+
+    :global(.product-bottom) {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 28px;
+
+      margin-top: 18px;
 
     }
 
@@ -691,63 +825,48 @@ function proceedToPayment() {
 
       align-items: center;
 
-      gap: 12px;
+      border: 1px solid #d9d2c8;
 
-      margin-top: 5px;
+      height: 36px;
 
     }
 
 
     :global(.quantity-btn) {
 
-      width: 28px;
+      width: 34px;
 
-      height: 28px;
+      height: 34px;
 
-      border: 1px solid #ccc;
+      border: none;
 
-      background: white;
+      background: transparent;
 
-      border-radius: 5px;
+      color: #403a33;
 
-      font-size: 18px;
-
-      line-height: 1;
+      font-size: 17px;
 
       cursor: pointer;
 
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 0;
+      transition: background .2s ease;
 
     }
 
 
     :global(.quantity-btn:hover) {
 
-      background: #f5f5f5;
-
-    }
-
-
-    :global(.quantity-btn:active) {
-
-      transform: scale(0.94);
+      background: #f1eee8;
 
     }
 
 
     :global(.quantity span) {
 
-      min-width: 20px;
+      min-width: 32px;
 
       text-align: center;
 
-      font-size: 15px;
+      font-size: 13px;
 
       font-weight: 600;
 
@@ -762,11 +881,7 @@ function proceedToPayment() {
 
       display: flex;
 
-      align-items: center;
-
-      gap: 9px;
-
-      margin-top: 9px;
+      gap: 18px;
 
     }
 
@@ -780,38 +895,27 @@ function proceedToPayment() {
 
       padding: 0;
 
+      font-size: 12px;
+
       cursor: pointer;
 
-      font-size: 13px;
+      color: #756e64;
+
+      transition: color .2s ease;
 
     }
 
 
-    :global(.remove) {
+    :global(.remove:hover) {
 
-      color: #d32f2f;
-
-    }
-
-
-    :global(.save) {
-
-      color: #1976d2;
+      color: #a3473e;
 
     }
 
 
-    :global(.remove:hover),
     :global(.save:hover) {
 
-      text-decoration: underline;
-
-    }
-
-
-    :global(.separator) {
-
-      color: #ccc;
+      color: #a47c45;
 
     }
 
@@ -822,17 +926,38 @@ function proceedToPayment() {
 
     :global(.item-total) {
 
-      width: 100px;
-
-      flex-shrink: 0;
-
       text-align: right;
 
-      font-size: 17px;
+    }
 
-      font-weight: 700;
 
-      color: #222;
+    :global(.item-total span) {
+
+      display: block;
+
+      margin-bottom: 6px;
+
+      font-size: 9px;
+
+      letter-spacing: 2px;
+
+      color: #a0988c;
+
+    }
+
+
+    :global(.item-total strong) {
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 21px;
+
+      font-weight: 500;
+
+      color: #292621;
 
     }
 
@@ -843,27 +968,52 @@ function proceedToPayment() {
 
     :global(#cart-total) {
 
-      border-top: 1px solid #ddd;
+      display: flex;
 
-      margin-top: 5px;
+      justify-content: flex-end;
 
-      padding: 25px 5px;
+      margin-top: 45px;
 
     }
 
 
     :global(.summary) {
 
-      max-width: 380px;
+      width: 400px;
 
-      margin-left: auto;
+      padding: 30px;
+
+      background: #f5f1e9;
+
+      border: 1px solid #e3dbcf;
 
     }
 
 
-    :global(.subtotal),
-    :global(.delivery),
-    :global(.grand-total) {
+    :global(.summary-heading) {
+
+      margin-bottom: 25px;
+
+    }
+
+
+    :global(.summary-heading h2) {
+
+      margin: 7px 0 0;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 25px;
+
+      font-weight: 500;
+
+    }
+
+
+    :global(.summary-row) {
 
       display: flex;
 
@@ -871,52 +1021,81 @@ function proceedToPayment() {
 
       align-items: center;
 
-      margin-bottom: 13px;
+      margin-bottom: 16px;
 
-      font-size: 15px;
+      font-size: 14px;
 
-    }
-
-
-    :global(.subtotal strong) {
-
-      font-size: 17px;
+      color: #655e55;
 
     }
 
 
-    :global(.delivery) {
+    :global(.summary-row strong) {
 
-      color: #555;
-
-    }
-
-
-    :global(.free) {
-
-      color: #168a45;
+      color: #292621;
 
       font-weight: 600;
 
     }
 
 
-    :global(.grand-total) {
+    :global(.free) {
 
-      border-top: 1px solid #ddd;
+      color: #71805d;
 
-      padding-top: 16px;
+      font-size: 12px;
 
-      margin-top: 15px;
+      font-weight: 600;
+
+    }
+
+
+    :global(.summary-divider) {
+
+      height: 1px;
+
+      background: #dcd3c7;
+
+      margin: 22px 0;
+
+    }
+
+
+    :global(.total-row) {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 25px;
+
+    }
+
+
+    :global(.total-row span) {
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
 
       font-size: 19px;
 
     }
 
 
-    :global(.grand-total strong) {
+    :global(.total-row strong) {
 
-      font-size: 23px;
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 27px;
+
+      font-weight: 500;
 
     }
 
@@ -929,37 +1108,76 @@ function proceedToPayment() {
 
       width: 100%;
 
-      margin-top: 15px;
-
-      padding: 13px 20px;
+      min-height: 52px;
 
       border: none;
 
-      border-radius: 7px;
+      background: #292621;
 
-      background: #f7c948;
+      color: #fff;
 
-      border: 1px solid #e0ad20;
+      padding: 14px 20px;
 
-      font-size: 16px;
+      display: flex;
 
-      font-weight: 600;
+      align-items: center;
+
+      justify-content: space-between;
+
+      font-size: 13px;
+
+      letter-spacing: .5px;
 
       cursor: pointer;
+
+      transition:
+        background .25s ease,
+        transform .25s ease;
+
+    }
+
+
+    :global(.checkout-btn span) {
+
+      font-size: 20px;
+
+      transition: transform .25s ease;
 
     }
 
 
     :global(.checkout-btn:hover) {
 
-      background: #f2b900;
+      background: #a47c45;
+
+    }
+
+
+    :global(.checkout-btn:hover span) {
+
+      transform: translateX(5px);
 
     }
 
 
     :global(.checkout-btn:active) {
 
-      transform: scale(0.99);
+      transform: scale(.99);
+
+    }
+
+
+    :global(.secure-note) {
+
+      margin: 16px 0 0;
+
+      text-align: center;
+
+      color: #8c847a;
+
+      font-size: 10px;
+
+      letter-spacing: .5px;
 
     }
 
@@ -972,32 +1190,67 @@ function proceedToPayment() {
 
       text-align: center;
 
-      padding: 70px 20px;
+      padding: 90px 20px;
 
-      border-top: 1px solid #ddd;
+      border-top: 1px solid #e6e0d7;
+
+      border-bottom: 1px solid #e6e0d7;
 
     }
 
 
-    :global(.empty-icon) {
+    :global(.empty-symbol) {
 
-      font-size: 55px;
+      width: 60px;
 
-      margin-bottom: 15px;
+      height: 60px;
+
+      margin: 0 auto 20px;
+
+      border: 1px solid #d8c9b5;
+
+      border-radius: 50%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      color: #a47c45;
+
+      font-size: 20px;
 
     }
 
 
     :global(.empty-cart h2) {
 
-      margin: 0 0 8px;
+      margin: 10px 0;
+
+      font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+      font-size: 30px;
+
+      font-weight: 500;
 
     }
 
 
     :global(.empty-cart p) {
 
-      color: #777;
+      max-width: 420px;
+
+      margin: auto;
+
+      color: #777066;
+
+      font-size: 14px;
+
+      line-height: 1.7;
 
     }
 
@@ -1006,19 +1259,28 @@ function proceedToPayment() {
 
       display: inline-block;
 
-      margin-top: 15px;
+      margin-top: 25px;
 
-      padding: 11px 22px;
+      padding: 13px 28px;
 
-      background: #f7c948;
+      background: #292621;
 
-      color: #222;
+      color: #fff;
 
       text-decoration: none;
 
-      border-radius: 8px;
+      font-size: 12px;
 
-      font-weight: 600;
+      letter-spacing: .5px;
+
+      transition: background .2s ease;
+
+    }
+
+
+    :global(.empty-cart a:hover) {
+
+      background: #a47c45;
 
     }
 
@@ -1027,107 +1289,91 @@ function proceedToPayment() {
        MOBILE
     ========================= */
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
 
-      :global(.checkout-page) {
+      :global(.checkout-hero) {
 
-        margin: 20px auto;
-
-        padding: 0 12px;
+        padding: 45px 18px 38px;
 
       }
 
 
-      :global(.checkout-header h1) {
+      :global(.hero-content h1) {
 
-        font-size: 25px;
+        font-size: 38px;
+
+      }
+
+
+      :global(.hero-content p) {
+
+        font-size: 13px;
+
+      }
+
+
+      :global(.cart-section) {
+
+        width: calc(100% - 30px);
+
+        margin-top: 25px;
 
       }
 
 
       :global(.cart-item) {
 
-        gap: 12px;
+        grid-template-columns:
+          90px 1fr;
 
-        padding: 15px 0;
+        gap: 15px;
 
-        align-items: center;
+        padding: 20px 0;
 
-      }
-
-
-      :global(.image-box) {
-
-        width: 80px;
-
-        height: 80px;
+        position: relative;
 
       }
 
 
-      :global(.image-box img) {
+      :global(.product-image) {
 
-        width: 80px;
+        width: 90px;
 
-        height: 80px;
-
-      }
-
-
-      :global(.details h2) {
-
-        font-size: 14px;
+        height: 90px;
 
       }
 
 
-      :global(.price) {
+      :global(.product-details h2) {
 
-        font-size: 14px;
+        font-size: 17px;
+
+        padding-right: 55px;
+
+      }
+
+
+      :global(.product-bottom) {
+
+        display: block;
+
+        margin-top: 13px;
 
       }
 
 
       :global(.quantity) {
 
-        gap: 8px;
-
-      }
-
-
-      :global(.quantity-btn) {
-
-        width: 26px;
-
-        height: 26px;
-
-        font-size: 16px;
-
-      }
-
-
-      :global(.item-total) {
-
-        width: auto;
-
-        font-size: 14px;
-
-      }
-
-
-      /* SAVE FOR LATER MOBILE LO KUDA VISIBLE */
-
-      :global(.save),
-      :global(.separator) {
-
-        display: inline-block;
+        width: fit-content;
 
       }
 
 
       :global(.actions) {
 
-        gap: 6px;
+        margin-top: 10px;
+
+        gap: 13px;
 
       }
 
@@ -1135,14 +1381,106 @@ function proceedToPayment() {
       :global(.remove),
       :global(.save) {
 
-        font-size: 11px;
+        font-size: 10px;
+
+      }
+
+
+      :global(.item-total) {
+
+        position: absolute;
+
+        right: 0;
+
+        top: 20px;
+
+      }
+
+
+      :global(.item-total span) {
+
+        display: none;
+
+      }
+
+
+      :global(.item-total strong) {
+
+        font-size: 16px;
+
+      }
+
+
+      :global(#cart-total) {
+
+        margin-top: 30px;
 
       }
 
 
       :global(.summary) {
 
-        max-width: 100%;
+        width: 100%;
+
+        padding: 23px;
+
+      }
+
+
+      :global(.summary-heading h2) {
+
+        font-size: 22px;
+
+      }
+
+
+      :global(.total-row strong) {
+
+        font-size: 24px;
+
+      }
+
+    }
+
+
+    @media (max-width: 380px) {
+
+      :global(.hero-content h1) {
+
+        font-size: 32px;
+
+      }
+
+
+      :global(.cart-section) {
+
+        width: calc(100% - 22px);
+
+      }
+
+
+      :global(.product-image) {
+
+        width: 78px;
+
+        height: 78px;
+
+      }
+
+
+      :global(.cart-item) {
+
+        grid-template-columns:
+          78px 1fr;
+
+        gap: 12px;
+
+      }
+
+
+      :global(.product-details h2) {
+
+        font-size: 15px;
 
       }
 
@@ -1151,3 +1489,4 @@ function proceedToPayment() {
   </style>
 
 </Layout>
+```
